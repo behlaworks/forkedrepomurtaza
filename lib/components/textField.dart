@@ -8,6 +8,7 @@ class CustomTextField extends StatelessWidget {
   final TextInputType inputType;
   final IconData? icon;
   final bool obscure;
+  final String hint;
   final String? Function(String?)? validator;
 
   const CustomTextField(
@@ -15,13 +16,15 @@ class CustomTextField extends StatelessWidget {
       required this.controller,
       required this.inputAction,
       required this.inputType,
-      this.validator, this.icon, required this.obscure})
+      this.validator,
+      this.icon,
+      required this.obscure, required this.hint})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      obscureText: obscure,
+        obscureText: obscure,
         controller: controller,
         textInputAction: inputAction,
         autovalidateMode: AutovalidateMode.onUserInteraction,
@@ -33,6 +36,12 @@ class CustomTextField extends StatelessWidget {
         ),
         cursorColor: Constants.dark,
         decoration: InputDecoration(
+            hintText: hint,
+            hintStyle:  const TextStyle(
+              color: Colors.grey,
+              fontSize: 15,
+              fontWeight: FontWeight.w300,
+            ),
             icon: Icon(
               icon,
               color: Constants.dark,

@@ -37,7 +37,10 @@ dependencies:
   video_player:
   get:
   firebase_core:
+  firebase_auth:
+  cloud_firestore:
   flutter_launcher_icons:
+
 
 flutter_icons:
   android: "launcher_icon"

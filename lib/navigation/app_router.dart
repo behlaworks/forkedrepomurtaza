@@ -1,6 +1,9 @@
+import 'package:a_level_pro/screens/home.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:a_level_pro/models/app_state_manager.dart';
-import 'package:a_level_pro/screens/home.dart';
+import '../screens/onBoarding.dart';
+import '../screens/splashScreeen.dart';
 
 class AppRouter extends RouterDelegate
     with ChangeNotifier, PopNavigatorRouterDelegateMixin {
@@ -22,11 +25,16 @@ class AppRouter extends RouterDelegate
 
   @override
   Widget build(BuildContext context) {
+    User? user = FirebaseAuth.instance.currentUser;
     return Navigator(
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
-          Home.page()
+        if (!appStateManager.isInitialized) SplashScreen.page(),
+        if (appStateManager.isInitialized && user == null)
+          OnboardingScreen.page(),
+        if (appStateManager.isInitialized && user != null)
+          Home.page(),
         ],
     );
   }

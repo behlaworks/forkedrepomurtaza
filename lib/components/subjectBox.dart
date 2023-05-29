@@ -19,78 +19,13 @@ class _SubjectBoxState extends State<SubjectBox> {
   @override
   Widget build(BuildContext context) {
     final AppStateManager myProvider = Provider.of<AppStateManager>(context);
-    Future<void> _showAlertDialog() async {
-      return showDialog<void>(
-        context: context,
-        barrierDismissible: false, // user must tap button!
-        builder: (BuildContext context) {
-          return AlertDialog(
-            backgroundColor: Constants.dark,
-            title: const Text(
-              'Enroll?',
-              style:
-                  TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
-            ),
-            content: SingleChildScrollView(
-              child: ListBody(
-                children: const <Widget>[
-                  Text(
-                    'Enroll and start learning!',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-            actions: <Widget>[
-              TextButton(
-                child: const Text(
-                  'No',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              TextButton(
-                child: const Text(
-                  'Yes',
-                  style: TextStyle(color: Colors.white),
-                ),
-                onPressed: () {
-                  !myProvider.enrolledSubs.contains(widget.name)
-                      ? myProvider.addEnrolledSub(widget.name)
-                      : Null;
-                  Constants.subjects.remove(widget.name);
-                  setState(() {});
-                  Navigator.of(context).pop();
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const PhysicsContentPage()),
-                  );
-                },
-              ),
-            ],
-          );
-        },
-      );
-    }
-
-// --- Button Widget --- //
-    ElevatedButton(
-      onPressed: _showAlertDialog,
-      child: const Text(
-        'Show Alert Dialog',
-        style: TextStyle(fontSize: 24),
-      ),
-    );
     return Ink(
         height: 76,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14), color: Constants.grey),
         child: InkWell(
-          onTap: () => {widget.name == 'Physics' ? _showAlertDialog() : {}},
+          onTap: () => {},
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
