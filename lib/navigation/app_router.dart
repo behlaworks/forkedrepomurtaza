@@ -25,15 +25,14 @@ class AppRouter extends RouterDelegate
 
   @override
   Widget build(BuildContext context) {
-    User? user = FirebaseAuth.instance.currentUser;
     return Navigator(
       key: navigatorKey,
       onPopPage: _handlePopPage,
       pages: [
         if (!appStateManager.isInitialized) SplashScreen.page(),
-        if (appStateManager.isInitialized && user == null)
+        if (appStateManager.isInitialized && !appStateManager.isLoggedIn)
           OnboardingScreen.page(),
-        if (appStateManager.isInitialized && user != null)
+        if (appStateManager.isInitialized && appStateManager.isLoggedIn)
           Home.page(),
         ],
     );

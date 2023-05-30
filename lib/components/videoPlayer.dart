@@ -1,8 +1,8 @@
 import 'package:a_level_pro/components/backButton.dart';
 import 'package:a_level_pro/components/unitBox.dart';
+import 'package:a_level_pro/components/unitDetailModalCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:video_player/video_player.dart';
 
 import '../data/constants.dart';
@@ -20,9 +20,9 @@ class Player extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<PCC>(
       initState: (x) async {
-        //Need to change conditions according preaload page count
+        //Need to change conditions according preload page count
         //Don't load too many pages it will cause performance issue.
-        // Below is for 1 page preaload.
+        // Below is for 1 page preload.
         if (c.api > 1) {
           await c.disposeController(c.api - 2);
         }
@@ -85,7 +85,7 @@ class Player extends StatelessWidget {
                       },
                       child: VideoPlayer(c.videoPlayerControllers[c.api]!),
                     ),
-                    Container(
+                    SizedBox(
                       height: MediaQuery.of(context).size.height,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -101,41 +101,32 @@ class Player extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceEvenly,
-                                children: [
-                                  BlackButton(
-                                    text: 'Material Notes',
-                                    onPressed: () {
-                                      c.videoPlayerControllers[c.api]!.pause();
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        backgroundColor: Colors.transparent,
-                                        builder: (context) => Container(
-                                          height: MediaQuery.of(context).size.height * 0.75,
-                                          decoration: const BoxDecoration(
-                                            color: Colors.white,
-                                            borderRadius: BorderRadius.only(
-                                              topLeft: Radius.circular(25.0),
-                                              topRight: Radius.circular(25.0),
-                                            ),
-                                          ),
-                                          child: const Center(
-                                            child: Text("Modal content goes here"),
-                                          ),
+                              padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
+                              child: BlackButton(
+                                text: 'Unit details',
+                                onPressed: () {
+                                  c.videoPlayerControllers[c.api]!.pause();
+                                  showModalBottomSheet(
+                                    context: context,
+                                    isScrollControlled: true,
+                                    backgroundColor: Colors.transparent,
+                                    builder: (context) => Container(
+                                      height: MediaQuery.of(context)
+                                          .size
+                                          .height *
+                                          0.85,
+                                      decoration: BoxDecoration(
+                                        color: Constants.dark,
+                                        borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(25.0),
+                                          topRight: Radius.circular(25.0),
                                         ),
-                                      );
-                                    },
-                                  ),
-                                  BlackButton(
-                                    text: 'Mark Complete',
-                                    onPressed: () {},
-                                  ),
-                                ],
-                              ))
+                                      ),
+                                      child: UnitDetailModalCard(unit: c.api,),
+                                    ),
+                                  );
+                                },
+                              ),)
                         ],
                       ),
                     ),

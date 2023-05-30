@@ -1,9 +1,9 @@
 import 'dart:async';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class AppStateManager extends ChangeNotifier {
-
   final List _enrolledSubs = ['Physics'];
 
   List get enrolledSubs => _enrolledSubs;
@@ -12,32 +12,20 @@ class AppStateManager extends ChangeNotifier {
     _enrolledSubs.add(sub);
     notifyListeners();
   }
+
   bool _initialized = false;
-  bool _registered = false;
-  bool _loggedIn = false;
-  bool _isLanded = false;
-  bool _goToRegister = false;
-  bool _goToLogin = false;
+  bool _loggedIn = FirebaseAuth.instance.currentUser == null ? false : true;
+
   bool get isInitialized => _initialized;
-
-  bool get registered => _registered;
-
-  bool get goToRegisters => _goToRegister;
-
-  bool get goToLogin => _goToLogin;
 
   bool get isLoggedIn => _loggedIn;
 
-  bool get isLanded => _isLanded;
-
   void initializeApp() async {
-    // final prefs = await SharedPreferences.getInstance();
-    // final String? action = prefs.getString('hash');
     Timer(
       const Duration(milliseconds: 3000),
-          () {
-          _initialized = true;
-          notifyListeners();
+      () {
+        _initialized = true;
+        notifyListeners();
       },
     );
   }
@@ -47,4 +35,8 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
+  void logout() {
+    _loggedIn = false;
+    notifyListeners();
+  }
 }

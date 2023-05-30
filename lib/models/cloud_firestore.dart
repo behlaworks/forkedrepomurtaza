@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService {
   Future<String?> addUser({
@@ -30,5 +31,26 @@ class DatabaseService {
     } catch (e) {
       return 'Error fetching user';
     }
+  }
+
+  Future<List<Map<String, dynamic>>> _loadVideos() async {
+    List<Map<String, dynamic>> files = [];
+    FirebaseStorage storage = FirebaseStorage.instance;
+    final ListResult result = await storage.ref().list();
+    final List<Reference> allFiles = result.items;
+
+    await Future.forEach<Reference>(allFiles, (file) async {
+      final String fileUrl = await file.getDownloadURL();
+      final FullMetadata fileMeta = await file.getMetadata();
+      files.add({
+        "url": fileUrl,
+        "path": file.fullPath,
+        // "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
+        // "description":
+        // fileMeta.customMetadata?['description'] ?? 'No description'
+      });
+    });
+
+    return files;
   }
 }

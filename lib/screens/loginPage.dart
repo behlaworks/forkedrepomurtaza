@@ -4,7 +4,9 @@ import 'package:a_level_pro/screens/home.dart';
 import 'package:a_level_pro/screens/registrationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../data/constants.dart';
+import '../models/app_state_manager.dart';
 import '../models/fire_auth.dart';
 import '../models/validator.dart';
 
@@ -23,6 +25,7 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    final AppStateManager myProvider = Provider.of<AppStateManager>(context);
     return Scaffold(
         body: SingleChildScrollView(
       child: Form(
@@ -146,6 +149,7 @@ class _LoginPageState extends State<LoginPage> {
                                     password: _passwordController.text,
                                   );
                                   if (user != null) {
+                                    myProvider.login();
                                     Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) => const Home()),
