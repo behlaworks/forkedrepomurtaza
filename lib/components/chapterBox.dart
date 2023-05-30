@@ -2,6 +2,7 @@ import 'package:a_level_pro/screens/chapter1.dart';
 import 'package:flutter/material.dart';
 
 import '../data/constants.dart';
+import '../models/cloud_firestore.dart';
 
 class ChapterBox extends StatefulWidget {
   final String name;
@@ -21,9 +22,21 @@ class _ChapterBoxState extends State<ChapterBox> {
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14), color: Constants.grey),
         child: InkWell(
-          onTap: () => {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Chapter1())),
+          onTap: () async {
+            final result = await DatabaseService().listOfTopics(widget.name);
+            final units = [];
+            final urls = [];
+            for (final e in result) {
+              units.add(e['unit']);
+              urls.add(e['url']);
+            }
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Chapters(
+                          urls: urls,
+                          units: units,
+                        )));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

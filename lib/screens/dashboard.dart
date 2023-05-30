@@ -1,3 +1,4 @@
+import 'package:a_level_pro/models/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -32,9 +33,9 @@ class _DashboardState extends State<Dashboard> {
                     borderRadius: const BorderRadius.only(
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20))),
-                child: Column(
+                child: const Column(
                   children: [
-                    const SizedBox(
+                    SizedBox(
                       height: 50,
                     ),
                     Row(
@@ -42,11 +43,11 @@ class _DashboardState extends State<Dashboard> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                          padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             crossAxisAlignment: CrossAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 "Hello",
                                 style: TextStyle(
@@ -68,10 +69,10 @@ class _DashboardState extends State<Dashboard> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.all(30.0),
+                          padding: EdgeInsets.all(30.0),
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            children: const [
+                            children: [
                               Icon(
                                 Icons.notifications_outlined,
                                 color: Colors.white,
@@ -86,7 +87,7 @@ class _DashboardState extends State<Dashboard> {
                 ),
               ),
               Stack(children: [
-                Container(
+                SizedBox(
                   height: MediaQuery.of(context).size.height * 0.6,
                   width: MediaQuery.of(context).size.width,
                   child: Column(
@@ -105,9 +106,9 @@ class _DashboardState extends State<Dashboard> {
                     SizedBox(
                       height: MediaQuery.of(context).size.height * 0.05,
                     ),
-                    Row(
+                    const Row(
                       mainAxisAlignment: MainAxisAlignment.start,
-                      children: const [
+                      children: [
                         Padding(
                           padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                           child: Text(
@@ -125,7 +126,7 @@ class _DashboardState extends State<Dashboard> {
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                      child: Container(
+                      child: SizedBox(
                         width: MediaQuery.of(context).size.width,
                         height: 164,
                         child: ListView(
@@ -151,9 +152,9 @@ class _DashboardState extends State<Dashboard> {
                       padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
                       child: Column(
                         children: [
-                          Row(
+                          const Row(
                             mainAxisAlignment: MainAxisAlignment.start,
-                            children: const [
+                            children: [
                               Text(
                                 "This weeks schedule.",
                                 style: TextStyle(
@@ -167,17 +168,21 @@ class _DashboardState extends State<Dashboard> {
                             height: 8,
                           ),
                           GestureDetector(
-                            onTap: (){},
+                            onTap: () async {
+                              final result =
+                                  await DatabaseService().listOfTopics('Physical quantities and units');
+                              print(result);
+                            },
                             child: Container(
                               height: 80,
                               width: MediaQuery.of(context).size.width,
                               decoration: BoxDecoration(
                                   color: Constants.dark,
                                   borderRadius: BorderRadius.circular(15)),
-                              child: Row(
+                              child: const Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children: [
                                   Padding(
                                     padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
                                     child: Text(

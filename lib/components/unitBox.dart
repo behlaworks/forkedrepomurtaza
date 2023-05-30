@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UnitBox extends StatelessWidget {
-  final int value;
+  final String value;
 
   const UnitBox({Key? key, required this.value}) : super(key: key);
 
@@ -15,7 +15,7 @@ class UnitBox extends StatelessWidget {
           border: Border.all(color: Colors.green, width: 2)),
       child: Center(
         child: Text(
-          value.toString(),
+          value,
           style: const TextStyle(
               color: Colors.green, fontSize: 20, fontWeight: FontWeight.w700),
         ),

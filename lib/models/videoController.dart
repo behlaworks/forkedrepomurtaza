@@ -42,7 +42,7 @@ class PCC extends GetxController {
   }
 
   final List<String> videoURLs = [
-    'https://assets.mixkit.co/videos/preview/mixkit-young-mother-with-her-little-daughter-decorating-a-christmas-tree-39745-large.mp4',
+    'https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/chapter2.mp4?alt=media&token=8f0d9bdb-f309-4979-ad23-f838f30af827',
     'https://assets.mixkit.co/videos/preview/mixkit-mother-with-her-little-daughter-eating-a-marshmallow-in-nature-39764-large.mp4',
     'https://assets.mixkit.co/videos/preview/mixkit-taking-photos-from-different-angles-of-a-model-34421-large.mp4',
     'https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-sign-1232-large.mp4',

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UnitDetailModalCard extends StatelessWidget {
-  final int unit;
+  final String unit;
 
   const UnitDetailModalCard({Key? key, required this.unit}) : super(key: key);
 
@@ -18,7 +18,7 @@ class UnitDetailModalCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
             child: Text(
-              "Unit: ${unit.toString()}",
+              "Unit: $unit",
               style: const TextStyle(
                   fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white),
             ),

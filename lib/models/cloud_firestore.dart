@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 
 class DatabaseService {
   Future<String?> addUser({
@@ -9,7 +8,7 @@ class DatabaseService {
   }) async {
     try {
       CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
+          FirebaseFirestore.instance.collection('users');
       await users.doc(email).set({
         'full_name': fullName,
         'age': age,
@@ -24,7 +23,7 @@ class DatabaseService {
   Future<String?> getUser(String email) async {
     try {
       CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
+          FirebaseFirestore.instance.collection('users');
       final snapshot = await users.doc(email).get();
       final data = snapshot.data() as Map<String, dynamic>;
       return data['full_name'];
@@ -33,24 +32,19 @@ class DatabaseService {
     }
   }
 
-  Future<List<Map<String, dynamic>>> _loadVideos() async {
-    List<Map<String, dynamic>> files = [];
-    FirebaseStorage storage = FirebaseStorage.instance;
-    final ListResult result = await storage.ref().list();
-    final List<Reference> allFiles = result.items;
-
-    await Future.forEach<Reference>(allFiles, (file) async {
-      final String fileUrl = await file.getDownloadURL();
-      final FullMetadata fileMeta = await file.getMetadata();
-      files.add({
-        "url": fileUrl,
-        "path": file.fullPath,
-        // "uploaded_by": fileMeta.customMetadata?['uploaded_by'] ?? 'Nobody',
-        // "description":
-        // fileMeta.customMetadata?['description'] ?? 'No description'
-      });
-    });
-
-    return files;
+  Future listOfTopics(String chapter) async {
+    final List topics = [];
+    try {
+      CollectionReference subjects =
+          FirebaseFirestore.instance.collection('Subjects');
+      final snapshot = await subjects.doc('Physics').collection(chapter).get();
+      final data = snapshot.docs;
+      for (final value in data) {
+        topics.add(value.data());
+      }
+      return topics;
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
