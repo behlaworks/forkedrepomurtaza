@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 
 class UnitDetailModalCard extends StatelessWidget {
   final String unit;
+  final String title;
 
-  const UnitDetailModalCard({Key? key, required this.unit}) : super(key: key);
+  const UnitDetailModalCard({Key? key, required this.unit, required this.title}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,11 +24,11 @@ class UnitDetailModalCard extends StatelessWidget {
                   fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white),
             ),
           ),
-          const Padding(
-            padding: EdgeInsets.fromLTRB(0, 3, 0, 0),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
             child: Text(
-              "Introduction to quantities.",
-              style: TextStyle(
+              title,
+              style: const TextStyle(
                   fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
             ),
           ),

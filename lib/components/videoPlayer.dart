@@ -96,38 +96,62 @@ class Player extends StatelessWidget {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const BackButtonCustom(),
+                                GestureDetector(
+                                  onTap: () async {
+                                    c.disposeAll();
+                                    Constants.Urls = [];
+                                    Constants.units = [];
+                                    Constants.titles = [];
+                                    Navigator.pop(context);
+                                  },
+                                  child: Container(
+                                    height: 42,
+                                    width: 42,
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(8),
+                                        color: Constants.grey),
+                                    child: const Center(
+                                      child: Icon(
+                                        Icons.arrow_back_ios,
+                                        color: Colors.black,
+                                        size: 15,
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 UnitBox(value: Constants.units[i])
                               ],
                             ),
                           ),
                           Padding(
-                              padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
-                              child: BlackButton(
-                                text: 'Unit details',
-                                onPressed: () {
-                                  c.videoPlayerControllers[c.api]!.pause();
-                                  showModalBottomSheet(
-                                    context: context,
-                                    isScrollControlled: true,
-                                    backgroundColor: Colors.transparent,
-                                    builder: (context) => Container(
-                                      height: MediaQuery.of(context)
-                                          .size
-                                          .height *
-                                          0.85,
-                                      decoration: BoxDecoration(
-                                        color: Constants.dark,
-                                        borderRadius: const BorderRadius.only(
-                                          topLeft: Radius.circular(25.0),
-                                          topRight: Radius.circular(25.0),
-                                        ),
+                            padding: const EdgeInsets.fromLTRB(30, 0, 30, 20),
+                            child: BlackButton(
+                              text: 'Unit details',
+                              onPressed: () {
+                                c.videoPlayerControllers[c.api]!.pause();
+                                showModalBottomSheet(
+                                  context: context,
+                                  isScrollControlled: true,
+                                  backgroundColor: Colors.transparent,
+                                  builder: (context) => Container(
+                                    height: MediaQuery.of(context).size.height *
+                                        0.85,
+                                    decoration: BoxDecoration(
+                                      color: Constants.dark,
+                                      borderRadius: const BorderRadius.only(
+                                        topLeft: Radius.circular(25.0),
+                                        topRight: Radius.circular(25.0),
                                       ),
-                                      child: UnitDetailModalCard(unit: Constants.units[i],),
                                     ),
-                                  );
-                                },
-                              ),)
+                                    child: UnitDetailModalCard(
+                                      unit: Constants.units[i],
+                                      title: Constants.titles[i],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          )
                         ],
                       ),
                     ),

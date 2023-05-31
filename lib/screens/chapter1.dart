@@ -31,13 +31,19 @@ class _TopicsState extends State<Topics> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SizedBox(
-        child: processing
-            ? const Center(
-                child: Text(
-                'Fetching complete chapter from backend',
-                style: TextStyle(color: Colors.black),
-              ))
-            : PreloadPageView.builder(
+        child: processing?
+            Container(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              color: Constants.dark,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: Colors.white,
+                  strokeWidth: 4,
+                ),
+              ),
+            )
+        :PreloadPageView.builder(
                 itemBuilder: (ctx, i) {
                   return Player(i: i);
                 },
@@ -48,7 +54,7 @@ class _TopicsState extends State<Topics> {
                 //If you are increasing or decreasing preload page count change accordingly in the player widget
                 preloadPagesCount: 1,
                 controller: PreloadPageController(initialPage: 0),
-                itemCount: c.videoURLs.length,
+                itemCount:Constants.Urls.length,
                 scrollDirection: Axis.vertical,
                 physics: const AlwaysScrollableScrollPhysics(),
               ),

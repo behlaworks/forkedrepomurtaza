@@ -42,6 +42,14 @@ class PCC extends GetxController {
       videoPlayerControllers[i] = null;
     }
   }
+  Future disposeAll() async{
+    for (var i = 0; i < videoPlayerControllers.length; i++){
+      if (videoPlayerControllers[i] != null) {
+        await videoPlayerControllers[i]!.dispose();
+        videoPlayerControllers[i] = null;
+      }
+    }
+  }
 
   final List<String> videoURLs = [
     'https://assets.mixkit.co/videos/preview/mixkit-young-mother-with-her-little-daughter-decorating-a-christmas-tree-39745-large.mp4',
