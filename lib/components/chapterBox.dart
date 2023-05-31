@@ -1,7 +1,8 @@
 import 'package:a_level_pro/screens/chapter1.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../data/constants.dart';
+import '../models/app_state_manager.dart';
 import '../models/cloud_firestore.dart';
 
 class ChapterBox extends StatefulWidget {
@@ -16,6 +17,7 @@ class ChapterBox extends StatefulWidget {
 class _ChapterBoxState extends State<ChapterBox> {
   @override
   Widget build(BuildContext context) {
+    final AppStateManager myProvider = Provider.of<AppStateManager>(context);
     return Ink(
         height: 76,
         width: MediaQuery.of(context).size.width,
@@ -23,20 +25,8 @@ class _ChapterBoxState extends State<ChapterBox> {
             borderRadius: BorderRadius.circular(14), color: Constants.grey),
         child: InkWell(
           onTap: () async {
-            final result = await DatabaseService().listOfTopics(widget.name);
-            final units = [];
-            final urls = [];
-            for (final e in result) {
-              units.add(e['unit']);
-              urls.add(e['url']);
-            }
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => Chapters(
-                          urls: urls,
-                          units: units,
-                        )));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => Topics(name: widget.name,)));
           },
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

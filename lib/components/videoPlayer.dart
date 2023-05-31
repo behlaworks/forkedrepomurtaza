@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
 import '../data/constants.dart';
+import '../models/app_state_manager.dart';
+import '../models/cloud_firestore.dart';
 import '../models/videoController.dart';
 import 'blackButton.dart';
 
 class Player extends StatelessWidget {
   final int i;
-  final List urls;
-  final List units;
 
-  Player({Key? key, required this.i, required this.urls, required this.units}) : super(key: key);
+  Player({Key? key, required this.i}) : super(key: key);
 
   final PCC c = Get.find();
 
@@ -97,7 +97,7 @@ class Player extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 const BackButtonCustom(),
-                                UnitBox(value: units[i])
+                                UnitBox(value: Constants.units[i])
                               ],
                             ),
                           ),
@@ -123,7 +123,7 @@ class Player extends StatelessWidget {
                                           topRight: Radius.circular(25.0),
                                         ),
                                       ),
-                                      child: UnitDetailModalCard(unit: units[i],),
+                                      child: UnitDetailModalCard(unit: Constants.units[i],),
                                     ),
                                   );
                                 },

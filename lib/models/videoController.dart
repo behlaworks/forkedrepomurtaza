@@ -1,5 +1,7 @@
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
+
+import '../data/constants.dart';
 
 class PCC extends GetxController {
   int _api = 0;
@@ -19,7 +21,7 @@ class PCC extends GetxController {
   Future initializePlayer(int i) async {
     print('initializing $i');
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.network(videoURLs[i]);
+    singleVideoController = VideoPlayerController.network(Constants.Urls[i]);
     videoPlayerControllers.add(singleVideoController);
     initilizedIndexes.add(i);
     await videoPlayerControllers[i]!.initialize();
@@ -28,7 +30,7 @@ class PCC extends GetxController {
 
   Future initializeIndexedController(int index) async {
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.network(videoURLs[index]);
+    singleVideoController = VideoPlayerController.network(Constants.Urls[index]);
     videoPlayerControllers[index] = singleVideoController;
     await videoPlayerControllers[index]!.initialize();
     update();
@@ -42,7 +44,7 @@ class PCC extends GetxController {
   }
 
   final List<String> videoURLs = [
-    'https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/chapter2.mp4?alt=media&token=8f0d9bdb-f309-4979-ad23-f838f30af827',
+    'https://assets.mixkit.co/videos/preview/mixkit-young-mother-with-her-little-daughter-decorating-a-christmas-tree-39745-large.mp4',
     'https://assets.mixkit.co/videos/preview/mixkit-mother-with-her-little-daughter-eating-a-marshmallow-in-nature-39764-large.mp4',
     'https://assets.mixkit.co/videos/preview/mixkit-taking-photos-from-different-angles-of-a-model-34421-large.mp4',
     'https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-sign-1232-large.mp4',

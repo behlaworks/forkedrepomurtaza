@@ -12,7 +12,14 @@ class AppStateManager extends ChangeNotifier {
     _enrolledSubs.add(sub);
     notifyListeners();
   }
+  final List _urlList = [];
 
+  List get urlList => _urlList;
+
+  addUrlList(List url) {
+    _urlList.add(url);
+    notifyListeners();
+  }
   bool _initialized = false;
   bool _loggedIn = FirebaseAuth.instance.currentUser == null ? false : true;
 

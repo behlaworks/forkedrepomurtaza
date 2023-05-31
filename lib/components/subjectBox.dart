@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
+import '../models/cloud_firestore.dart';
 
 //these boxes are used for the addSubject page also known as explore page
 
