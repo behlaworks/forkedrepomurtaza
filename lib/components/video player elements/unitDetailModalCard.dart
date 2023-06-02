@@ -4,7 +4,8 @@ class UnitDetailModalCard extends StatelessWidget {
   final String unit;
   final String title;
 
-  const UnitDetailModalCard({Key? key, required this.unit, required this.title}) : super(key: key);
+  const UnitDetailModalCard({Key? key, required this.unit, required this.title})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -14,14 +15,20 @@ class UnitDetailModalCard extends StatelessWidget {
         children: [
           const Padding(
             padding: EdgeInsets.all(0.0),
-            child: Icon(Icons.minimize, size: 40, color: Colors.white,),
+            child: Icon(
+              Icons.minimize,
+              size: 40,
+              color: Colors.white,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
             child: Text(
               "Unit: $unit",
               style: const TextStyle(
-                  fontSize: 25, fontWeight: FontWeight.w700, color: Colors.white),
+                  fontSize: 25,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.white),
             ),
           ),
           Padding(
@@ -29,7 +36,9 @@ class UnitDetailModalCard extends StatelessWidget {
             child: Text(
               title,
               style: const TextStyle(
-                  fontSize: 20, fontWeight: FontWeight.w500, color: Colors.white),
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white),
             ),
           ),
           const SizedBox(
@@ -40,12 +49,12 @@ class UnitDetailModalCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.85,
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(12)),
-            child: Center(
+            child: const Center(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(15, 0, 15, 0),
+                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     Text(
                       "Contents",
                       style: TextStyle(
@@ -66,9 +75,9 @@ class UnitDetailModalCard extends StatelessWidget {
           const SizedBox(
             height: 30,
           ),
-          Row(
+          const Row(
             mainAxisAlignment: MainAxisAlignment.start,
-            children: const [
+            children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(30, 3, 0, 0),
                 child: Text(
@@ -88,14 +97,15 @@ class UnitDetailModalCard extends StatelessWidget {
             width: MediaQuery.of(context).size.width * 0.9,
             height: MediaQuery.of(context).size.height * 0.35,
             decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(23)),
-            child: const Center(
-              child: Text(
-                'No notes required for this unit',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
-              ),
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(23),
+            image: const DecorationImage(image: AssetImage('assets/trialImage.png'), fit: BoxFit.fill)),
+            // child: const Center(
+            //   child: Text(
+            //     'No notes required for this unit',
+            //     textAlign: TextAlign.center,
+            //     style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
+            //   ),
+            // ),
           ),
           const SizedBox(
             height: 35,

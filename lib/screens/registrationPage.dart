@@ -1,8 +1,8 @@
 import 'package:a_level_pro/screens/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../components/blackButton.dart';
-import '../components/textField.dart';
+import '../components/common ui elements/blackButton.dart';
+import '../components/common ui elements/textField.dart';
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
 import '../models/cloud_firestore.dart';

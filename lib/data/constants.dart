@@ -8,4 +8,17 @@ class Constants{
   static List Urls = [];
   static List units = [];
   static List titles = [];
+  static List months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+  static List weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+
+  static int dayCalculator(DateTime date, int weekday) {
+    if(date.weekday > weekday){
+      return (date.subtract(Duration(days: date.weekday - weekday))).day;
+    }else if (date.weekday < weekday){
+      return (date.add(Duration(days: weekday - date.weekday))).day;
+    } else{
+      return date.day;
+    }
+  }
+
 }

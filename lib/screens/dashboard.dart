@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import '../components/subjectBox.dart';
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
+import 'calender.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({Key? key}) : super(key: key);
@@ -168,10 +169,12 @@ class _DashboardState extends State<Dashboard> {
                             height: 8,
                           ),
                           GestureDetector(
-                            onTap: () async {
-                              final result =
-                                  await DatabaseService().listOfTopics('Physical quantities and units');
-                              print(result);
+                            onTap: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const Calender()),
+                              )
                             },
                             child: Container(
                               height: 80,

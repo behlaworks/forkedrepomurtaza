@@ -1,5 +1,5 @@
-import 'package:a_level_pro/components/blackButton.dart';
-import 'package:a_level_pro/components/textField.dart';
+import 'package:a_level_pro/components/common%20ui%20elements/blackButton.dart';
+import 'package:a_level_pro/components/common%20ui%20elements/textField.dart';
 import 'package:a_level_pro/screens/home.dart';
 import 'package:a_level_pro/screens/registrationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';

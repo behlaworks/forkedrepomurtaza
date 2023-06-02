@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/constants.dart';
+import '../../data/constants.dart';
 
 class BlackButton extends StatelessWidget {
   final String text;

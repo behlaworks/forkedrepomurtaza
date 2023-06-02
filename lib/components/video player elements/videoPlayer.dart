@@ -1,14 +1,12 @@
-import 'package:a_level_pro/components/backButton.dart';
-import 'package:a_level_pro/components/unitBox.dart';
-import 'package:a_level_pro/components/unitDetailModalCard.dart';
+import 'package:a_level_pro/components/video%20player%20elements/unitBox.dart';
+import 'package:a_level_pro/components/video%20player%20elements/unitDetailModalCard.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import '../data/constants.dart';
-import '../models/app_state_manager.dart';
-import '../models/cloud_firestore.dart';
-import '../models/videoController.dart';
-import 'blackButton.dart';
+import '../../data/constants.dart';
+import '../../models/videoController.dart';
+import '../common ui elements/blackButton.dart';
 
 class Player extends StatelessWidget {
   final int i;
@@ -52,11 +50,39 @@ class Player extends StatelessWidget {
               height: MediaQuery.of(context).size.height,
               width: MediaQuery.of(context).size.width,
               color: Constants.dark,
-              child: const Center(
-                  child: CircularProgressIndicator(
-                color: Colors.white,
-                strokeWidth: 4,
-              )));
+              child: Stack(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
+                        child: GestureDetector(
+                          onTap: () => {Navigator.pop(context)},
+                          child: Container(
+                            height: 42,
+                            width: 42,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8), color: Constants.grey),
+                            child: const Center(
+                              child: Icon(
+                                Icons.arrow_back_ios,
+                                color: Colors.black,
+                                size: 15,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Center(
+                      child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 4,
+                  )),
+                ],
+              ));
         }
 
         if (i == c.api) {
@@ -67,7 +93,9 @@ class Player extends StatelessWidget {
               c.videoPlayerControllers[c.api]!.play();
             }
           }
-          print('AutoPlaying ${c.api}');
+          if (kDebugMode) {
+            print('AutoPlaying ${c.api}');
+          }
         }
         return Stack(
           children: [
@@ -77,11 +105,15 @@ class Player extends StatelessWidget {
                     GestureDetector(
                       onTap: () {
                         if (c.videoPlayerControllers[c.api]!.value.isPlaying) {
-                          print("paused");
+                          if (kDebugMode) {
+                            print("paused");
+                          }
                           c.videoPlayerControllers[c.api]!.pause();
                         } else {
                           c.videoPlayerControllers[c.api]!.play();
-                          print("playing");
+                          if (kDebugMode) {
+                            print("playing");
+                          }
                         }
                       },
                       child: VideoPlayer(c.videoPlayerControllers[c.api]!),
