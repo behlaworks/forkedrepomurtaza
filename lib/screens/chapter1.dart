@@ -17,6 +17,7 @@ class Topics extends StatefulWidget {
 
 class _TopicsState extends State<Topics> {
   final c = Get.put(PCC());
+  final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool processing = true;
 
   @override
@@ -30,6 +31,8 @@ class _TopicsState extends State<Topics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _key,
+      endDrawer: const Drawer(),
       body: SizedBox(
         child: processing?
             Container(
@@ -49,12 +52,11 @@ class _TopicsState extends State<Topics> {
                 },
                 onPageChanged: (i) async {
                   c.updateAPI(i);
-                  print("length: ${c.videoURLs.length}");
                 },
                 //If you are increasing or decreasing preload page count change accordingly in the player widget
                 preloadPagesCount: 1,
                 controller: PreloadPageController(initialPage: 0),
-                itemCount:Constants.Urls.length,
+                itemCount:Constants.urls.length,
                 scrollDirection: Axis.vertical,
                 physics: const AlwaysScrollableScrollPhysics(),
               ),

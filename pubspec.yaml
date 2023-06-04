@@ -42,6 +42,7 @@ dependencies:
   firebase_storage:
   path:
   flutter_launcher_icons:
+  easy_stepper: ^0.6.0
 
 
 flutter_icons:

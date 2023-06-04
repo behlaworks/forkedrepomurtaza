@@ -1,7 +1,6 @@
 import 'package:a_level_pro/components/weekDisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../data/constants.dart';
 
 class Calender extends StatefulWidget {

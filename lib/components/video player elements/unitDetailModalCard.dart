@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class UnitDetailModalCard extends StatelessWidget {
   final String unit;
   final String title;
+  final List notes;
 
-  const UnitDetailModalCard({Key? key, required this.unit, required this.title})
+  const UnitDetailModalCard(
+      {Key? key, required this.unit, required this.title, required this.notes})
       : super(key: key);
 
   @override
@@ -42,38 +44,7 @@ class UnitDetailModalCard extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 30,
-          ),
-          Container(
-            height: 50,
-            width: MediaQuery.of(context).size.width * 0.85,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(12)),
-            child: const Center(
-              child: Padding(
-                padding: EdgeInsets.fromLTRB(15, 0, 15, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Contents",
-                      style: TextStyle(
-                          fontSize: 22,
-                          fontWeight: FontWeight.w700,
-                          color: Colors.black),
-                    ),
-                    Icon(
-                      Icons.keyboard_arrow_down,
-                      size: 20,
-                      color: Colors.black,
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(
-            height: 30,
+            height: 40,
           ),
           const Row(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -93,35 +64,70 @@ class UnitDetailModalCard extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          Container(
-            width: MediaQuery.of(context).size.width * 0.9,
-            height: MediaQuery.of(context).size.height * 0.35,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(23),
-            image: const DecorationImage(image: AssetImage('assets/trialImage.png'), fit: BoxFit.fill)),
-            // child: const Center(
-            //   child: Text(
-            //     'No notes required for this unit',
-            //     textAlign: TextAlign.center,
-            //     style: TextStyle(fontSize: 23, fontWeight: FontWeight.w500),
-            //   ),
-            // ),
+          Column(
+            children: [
+              notes.isEmpty
+                  ? Container(
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(23)),
+                      child: const Center(
+                        child: Text(
+                          'No notes required for this unit',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              fontSize: 23, fontWeight: FontWeight.w500),
+                        ),
+                      ),
+                    )
+                  : SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      width: MediaQuery.of(context).size.width,
+                      child:
+                          ListView(scrollDirection: Axis.horizontal,
+                              clipBehavior: Clip.hardEdge,
+                              primary: false
+                              , children: [
+                        for (var e in notes)
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width * 0.9,
+                              height: MediaQuery.of(context).size.height * 0.35,
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(23),
+                                  image: DecorationImage(
+                                      image: NetworkImage(e.toString()),
+                                      fit: BoxFit.fill)),
+                            ),
+                          ),
+                      ]),
+                    )
+            ],
           ),
           const SizedBox(
-            height: 35,
+            height: 55,
           ),
-          Container(
-            height: 45,
-            width: MediaQuery.of(context).size.width * 0.53,
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(12)),
-            child: const Center(
-              child: Text(
-                "Mark Complete",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.w700,
-                    color: Colors.black),
+          GestureDetector(
+            onTap: (){
+              Navigator.pop(context);
+            },
+            child: Container(
+              height: 45,
+              width: MediaQuery.of(context).size.width * 0.53,
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(12)),
+              child: const Center(
+                child: Text(
+                  "Mark Complete",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.black),
+                ),
               ),
             ),
           )

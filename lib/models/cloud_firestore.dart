@@ -38,6 +38,7 @@ class DatabaseService {
     final List<String> urls = [];
     final List<String> units = [];
     final List<String> titles = [];
+    final List notes = [];
     try {
       CollectionReference subjects =
           FirebaseFirestore.instance.collection('Subjects');
@@ -50,16 +51,20 @@ class DatabaseService {
         urls.add(a['url'].toString());
         units.add(a['unit'].toString());
         titles.add(a['title'].toString());
+        notes.add(a['notes']);
 
       }
-      Constants.Urls = urls;
+      Constants.urls = urls;
       Constants.units = units;
       Constants.titles = titles;
+      Constants.notes = notes;
+      print(notes);
+      return 'Success';
       // print(PCC.videoURLs.toString());
       // print(PCC.videoURLs.length);
       // return topics;
     } catch (e) {
-      print(e.toString());
+      return 'Fail';
     }
   }
 }

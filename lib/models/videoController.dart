@@ -21,7 +21,7 @@ class PCC extends GetxController {
   Future initializePlayer(int i) async {
     print('initializing $i');
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.network(Constants.Urls[i]);
+    singleVideoController = VideoPlayerController.network(Constants.urls[i]);
     videoPlayerControllers.add(singleVideoController);
     initilizedIndexes.add(i);
     await videoPlayerControllers[i]!.initialize();
@@ -30,7 +30,7 @@ class PCC extends GetxController {
 
   Future initializeIndexedController(int index) async {
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.network(Constants.Urls[index]);
+    singleVideoController = VideoPlayerController.network(Constants.urls[index]);
     videoPlayerControllers[index] = singleVideoController;
     await videoPlayerControllers[index]!.initialize();
     update();
@@ -49,6 +49,8 @@ class PCC extends GetxController {
         videoPlayerControllers[i] = null;
       }
     }
+    initilizedIndexes = [];
+    updateAPI(0);
   }
 
   final List<String> videoURLs = [
