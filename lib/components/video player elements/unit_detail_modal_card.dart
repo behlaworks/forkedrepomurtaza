@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../data/constants.dart';
+
 class UnitDetailModalCard extends StatelessWidget {
   final String unit;
   final String title;
@@ -85,26 +87,48 @@ class UnitDetailModalCard extends StatelessWidget {
                   : SizedBox(
                       height: MediaQuery.of(context).size.height * 0.35,
                       width: MediaQuery.of(context).size.width,
-                      child:
-                          ListView(scrollDirection: Axis.horizontal,
-                              clipBehavior: Clip.hardEdge,
-                              primary: false
-                              , children: [
-                        for (var e in notes)
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                            child: Container(
-                              width: MediaQuery.of(context).size.width * 0.9,
-                              height: MediaQuery.of(context).size.height * 0.35,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(23),
-                                  image: DecorationImage(
-                                      image: NetworkImage(e.toString()),
-                                      fit: BoxFit.fill)),
-                            ),
-                          ),
-                      ]),
+                      child: ListView(
+                          scrollDirection: Axis.horizontal,
+                          clipBehavior: Clip.hardEdge,
+                          primary: false,
+                          children: [
+                            for (var e in notes)
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                child: Container(
+                                  clipBehavior: Clip.hardEdge,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.9,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.35,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(23),
+                                  ),
+                                  child: Image.network(
+                                    e.toString(),
+                                    fit: BoxFit.fill,
+                                    frameBuilder: (context, child, frame,
+                                        wasSynchronouslyLoaded) {
+                                      return child;
+                                    },
+                                    loadingBuilder:
+                                        (context, child, loadingProgress) {
+                                      if (loadingProgress == null) {
+                                        return child;
+                                      } else {
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            color: Constants.dark,
+                                            strokeWidth: 4,
+                                          ),
+                                        );
+                                      }
+                                    },
+                                  ),
+                                ),
+                              ),
+                          ]),
                     )
             ],
           ),
@@ -112,7 +136,7 @@ class UnitDetailModalCard extends StatelessWidget {
             height: 55,
           ),
           GestureDetector(
-            onTap: (){
+            onTap: () {
               Navigator.pop(context);
             },
             child: Container(

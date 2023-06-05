@@ -1,8 +1,5 @@
-import 'package:a_level_pro/components/video%20player%20elements/unitDetailModalCard.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-
 import '../../data/constants.dart';
 import '../../models/videoController.dart';
 import 'contents.dart';
