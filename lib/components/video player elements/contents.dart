@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
 import '../../data/constants.dart';
 
 class Contents extends StatefulWidget {
@@ -53,7 +51,7 @@ class _ContentsState extends State<Contents> {
                     child: Center(
                       child: Text(
                         Constants.titles[i],
-                        style: TextStyle(color: Colors.black),
+                        style: const TextStyle(color: Colors.black),
                       ),
                     ),
                   ),

@@ -1,5 +1,6 @@
 import 'package:a_level_pro/data/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DatabaseService {
   Future<String?> addUser({
@@ -21,13 +22,14 @@ class DatabaseService {
     }
   }
 
-  Future<String?> getUser(String email) async {
+  Future<String?> getUser() async {
     try {
+      var email = FirebaseAuth.instance.currentUser?.email.toString();
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       final snapshot = await users.doc(email).get();
       final data = snapshot.data() as Map<String, dynamic>;
-      return data['full_name'];
+      Constants.completedUnits = data['completed'];
     } catch (e) {
       return 'Error fetching user';
     }
@@ -65,6 +67,20 @@ class DatabaseService {
       // return topics;
     } catch (e) {
       return 'Fail';
+    }
+  }
+
+  Future<String?> updateUnitComplete(String unit) async {
+    try {
+      var email = FirebaseAuth.instance.currentUser?.email.toString();
+      final reference =
+      FirebaseFirestore.instance.collection('users');
+
+
+
+    } catch (e) {
+      print(e.toString());
+      return e.toString();
     }
   }
 }

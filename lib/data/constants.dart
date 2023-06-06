@@ -11,6 +11,7 @@ class Constants{
   static List notes = [];
   static List months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   static List weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
+  static List completedUnits = [];
 
   static int dayCalculator(DateTime date, int weekday) {
     if(date.weekday > weekday){
