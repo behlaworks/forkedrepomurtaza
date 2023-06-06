@@ -129,10 +129,6 @@ class Player extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
-                                      c.disposeAll();
-                                      Constants.urls = [];
-                                      Constants.units = [];
-                                      Constants.titles = [];
                                       Navigator.pop(context);
                                     },
                                     child: Container(

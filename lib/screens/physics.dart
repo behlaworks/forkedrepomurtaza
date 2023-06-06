@@ -1,7 +1,10 @@
 import 'package:a_level_pro/components/common%20ui%20elements/backButton.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import '../components/chapterBox.dart';
 import '../data/constants.dart';
+import '../models/videoController.dart';
 
 class PhysicsContentPage extends StatefulWidget {
   const PhysicsContentPage({Key? key}) : super(key: key);
@@ -11,6 +14,16 @@ class PhysicsContentPage extends StatefulWidget {
 }
 
 class _PhysicsContentPageState extends State<PhysicsContentPage> {
+  @override
+  void initState() async {
+    super.initState();
+    final PCC c = Get.find();
+    c.disposeAll();
+    Constants.urls = [];
+    Constants.units = [];
+    Constants.titles = [];
+    Constants.notes = [];
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
