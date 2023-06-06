@@ -1,9 +1,6 @@
 import 'package:a_level_pro/screens/chapter1.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../data/constants.dart';
-import '../models/app_state_manager.dart';
-import '../models/cloud_firestore.dart';
 
 class ChapterBox extends StatefulWidget {
   final String name;
@@ -17,7 +14,6 @@ class ChapterBox extends StatefulWidget {
 class _ChapterBoxState extends State<ChapterBox> {
   @override
   Widget build(BuildContext context) {
-    final AppStateManager myProvider = Provider.of<AppStateManager>(context);
     return Ink(
         height: 76,
         width: MediaQuery.of(context).size.width,

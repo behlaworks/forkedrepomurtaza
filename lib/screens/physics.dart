@@ -15,16 +15,6 @@ class PhysicsContentPage extends StatefulWidget {
 
 class _PhysicsContentPageState extends State<PhysicsContentPage> {
   @override
-  void initState() async {
-    super.initState();
-    final PCC c = Get.find();
-    c.disposeAll();
-    Constants.urls = [];
-    Constants.units = [];
-    Constants.titles = [];
-    Constants.notes = [];
-  }
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(

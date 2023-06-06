@@ -57,7 +57,7 @@ class Player extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
                         child: GestureDetector(
-                          onTap: () => {Navigator.pop(context)},
+                          onTap: ()=> {Navigator.pop(context)},
                           child: Container(
                             height: 42,
                             width: 42,
@@ -101,21 +101,26 @@ class Player extends StatelessWidget {
               c.videoPlayerControllers.isNotEmpty &&
                       c.videoPlayerControllers[c.api]!.value.isInitialized
                   ? Stack(children: [
-                      GestureDetector(
-                        onTap: () {
-                          if (c.videoPlayerControllers[c.api]!.value.isPlaying) {
-                            if (kDebugMode) {
-                              print("paused");
-                            }
-                            c.videoPlayerControllers[c.api]!.pause();
-                          } else {
-                            c.videoPlayerControllers[c.api]!.play();
-                            if (kDebugMode) {
-                              print("playing");
-                            }
-                          }
-                        },
-                        child: VideoPlayer(c.videoPlayerControllers[c.api]!),
+                      Center(
+                        child: Container(
+                          height: (MediaQuery.of(context).size.width*16)/9,
+                          child: GestureDetector(
+                            onTap: () {
+                              if (c.videoPlayerControllers[c.api]!.value.isPlaying) {
+                                if (kDebugMode) {
+                                  print("paused");
+                                }
+                                c.videoPlayerControllers[c.api]!.pause();
+                              } else {
+                                c.videoPlayerControllers[c.api]!.play();
+                                if (kDebugMode) {
+                                  print("playing");
+                                }
+                              }
+                            },
+                            child: VideoPlayer(c.videoPlayerControllers[c.api]!),
+                          ),
+                        ),
                       ),
                       SizedBox(
                         height: MediaQuery.of(context).size.height,
@@ -129,6 +134,11 @@ class Player extends StatelessWidget {
                                 children: [
                                   GestureDetector(
                                     onTap: () async {
+                                      c.disposeAll();
+                                      Constants.urls = [];
+                                      Constants.units = [];
+                                      Constants.titles = [];
+                                      Constants.notes = [];
                                       Navigator.pop(context);
                                     },
                                     child: Container(
