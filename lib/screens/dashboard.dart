@@ -21,6 +21,7 @@ class _DashboardState extends State<Dashboard> {
   void initState() {
     super.initState();
     DatabaseService().getUser().then((value) => setState(() {
+      print(Constants.completedUnits.toString());
           processing = false;
         }));
   }

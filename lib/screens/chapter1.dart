@@ -1,4 +1,5 @@
 import 'package:a_level_pro/components/video%20player%20elements/videoPlayer.dart';
+import 'package:a_level_pro/models/app_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
@@ -19,6 +20,7 @@ class _TopicsState extends State<Topics> {
   final c = Get.put(PCC());
   final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool processing = true;
+  int lastSeen = 0;
 
   @override
   void initState() {
@@ -26,6 +28,7 @@ class _TopicsState extends State<Topics> {
     DatabaseService().listOfTopics(widget.name).then((value) => setState(() {
           processing = false;
         }));
+
   }
 
   @override
@@ -62,6 +65,7 @@ class _TopicsState extends State<Topics> {
                   },
                   onPageChanged: (i) async {
                     c.updateAPI(i);
+                    AppStateManager().updateLastSeen(i.toString());
                   },
                   //If you are increasing or decreasing preload page count change accordingly in the player widget
                   preloadPagesCount: 1,

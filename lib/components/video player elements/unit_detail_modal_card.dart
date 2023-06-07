@@ -1,8 +1,9 @@
+import 'package:a_level_pro/models/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../../data/constants.dart';
 
-class UnitDetailModalCard extends StatelessWidget {
+class UnitDetailModalCard extends StatefulWidget {
   final String unit;
   final String title;
   final List notes;
@@ -12,7 +13,13 @@ class UnitDetailModalCard extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<UnitDetailModalCard> createState() => _UnitDetailModalCardState();
+}
+
+class _UnitDetailModalCardState extends State<UnitDetailModalCard> {
+  @override
   Widget build(BuildContext context) {
+    bool completed = Constants.completedUnits.contains(widget.unit);
     return SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -28,7 +35,7 @@ class UnitDetailModalCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 25, 0, 0),
             child: Text(
-              "Unit: $unit",
+              "Unit: ${widget.unit}",
               style: const TextStyle(
                   fontSize: 25,
                   fontWeight: FontWeight.w700,
@@ -38,7 +45,7 @@ class UnitDetailModalCard extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.fromLTRB(0, 3, 0, 0),
             child: Text(
-              title,
+              widget.title,
               style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
@@ -68,7 +75,7 @@ class UnitDetailModalCard extends StatelessWidget {
           ),
           Column(
             children: [
-              notes.isEmpty
+              widget.notes.isEmpty
                   ? Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       height: MediaQuery.of(context).size.height * 0.35,
@@ -92,7 +99,7 @@ class UnitDetailModalCard extends StatelessWidget {
                           clipBehavior: Clip.hardEdge,
                           primary: false,
                           children: [
-                            for (var e in notes)
+                            for (var e in widget.notes)
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                 child: Container(
@@ -137,21 +144,40 @@ class UnitDetailModalCard extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              DatabaseService()
+                  .updateUnitComplete(widget.unit)
+                  .then((value) => setState(() {}));
             },
             child: Container(
               height: 45,
               width: MediaQuery.of(context).size.width * 0.53,
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(12)),
-              child: const Center(
-                child: Text(
-                  "Mark Complete",
+              child: Center(
+                child:
+                !completed? const Text(
+                  'Mark Complete',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.w700,
                       color: Colors.black),
-                ),
+                ):
+                 const Padding(
+                   padding: EdgeInsets.all(8.0),
+                   child: Row(
+                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                     children: [
+                       Text(
+                         'Completed',
+                         style: TextStyle(
+                             fontSize: 18,
+                             fontWeight: FontWeight.w700,
+                             color: Colors.black),
+                       ),
+                       Icon(Icons.done, size: 30, color: Colors.green, weight: 15,)
+                     ],
+                   ),
+                 )
               ),
             ),
           )

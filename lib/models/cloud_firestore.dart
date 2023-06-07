@@ -30,12 +30,13 @@ class DatabaseService {
       final snapshot = await users.doc(email).get();
       final data = snapshot.data() as Map<String, dynamic>;
       Constants.completedUnits = data['completed'];
+      return 'Success';
     } catch (e) {
       return 'Error fetching user';
     }
   }
 
-   Future listOfTopics(String chapter) async {
+  Future listOfTopics(String chapter) async {
     final List topics = [];
     final List<String> urls = [];
     final List<String> units = [];
@@ -49,12 +50,11 @@ class DatabaseService {
       for (final value in data) {
         topics.add(value.data());
       }
-      for (final a in topics){
+      for (final a in topics) {
         urls.add(a['url'].toString());
         units.add(a['unit'].toString());
         titles.add(a['title'].toString());
         notes.add(a['notes']);
-
       }
       Constants.urls = urls;
       Constants.units = units;
@@ -74,10 +74,11 @@ class DatabaseService {
     try {
       var email = FirebaseAuth.instance.currentUser?.email.toString();
       final reference =
-      FirebaseFirestore.instance.collection('users');
-
-
-
+          FirebaseFirestore.instance.collection('users').doc(email);
+      reference.update({
+        "completed": FieldValue.arrayUnion([unit])
+      });
+      Constants.completedUnits.add(unit);
     } catch (e) {
       print(e.toString());
       return e.toString();
