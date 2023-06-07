@@ -1,8 +1,10 @@
+import 'package:a_level_pro/models/app_state_manager.dart';
 import 'package:flutter/material.dart';
 import '../../data/constants.dart';
 
 class Contents extends StatefulWidget {
   final int index;
+
   const Contents({Key? key, required this.index}) : super(key: key);
 
   @override
@@ -36,46 +38,61 @@ class _ContentsState extends State<Contents> {
           ),
           Column(
             children: [
-              const SizedBox(height: 20,),
+              const SizedBox(
+                height: 20,
+              ),
               for (var i = 0; i < Constants.titles.length; i++)
-                widget.index != i?
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffF2F5FF),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white, width: 3)),
-                    child: Center(
-                      child: Text(
-                        Constants.titles[i],
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                ):
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: MediaQuery.of(context).size.width * 0.95,
-                    height: 60,
-                    decoration: BoxDecoration(
-                        color: const Color(0xffF2F5FF),
-                        borderRadius: BorderRadius.circular(12),
-                        border: Border.all(color: Colors.white, width: 3)),
-                    child: Center(
-                      child: Text(
-                        "${Constants.titles[i]}: now playing",
-                        style: const TextStyle(color: Colors.black),
-                      ),
-                    ),
-                  ),
-                )
+                widget.index != i
+                    ? Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pop(context);
+                            Constants.controller.jumpToPage(i);
+                            // Constants.controller.animateToPage(i,
+                            //     duration: const Duration(seconds: 5),
+                            //     curve: Curves.decelerate);
+                          },
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.95,
+                            height: 60,
+                            decoration: BoxDecoration(
+                                color: const Color(0xffF2F5FF),
+                                borderRadius: BorderRadius.circular(12),
+                                border:
+                                    Border.all(color: Colors.white, width: 3)),
+                            child: Center(
+                              child: Text(
+                                Constants.titles[i],
+                                style: const TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )
+                    : Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.95,
+                          height: 60,
+                          decoration: BoxDecoration(
+                              color: const Color(0xffF2F5FF),
+                              borderRadius: BorderRadius.circular(12),
+                              border:
+                                  Border.all(color: Colors.white, width: 3)),
+                          child: Center(
+                            child: Text(
+                              "${Constants.titles[i]}: now playing",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ),
+                      )
             ],
           ),
-          const SizedBox(height: 30,)
+          const SizedBox(
+            height: 30,
+          )
         ],
       ),
     );

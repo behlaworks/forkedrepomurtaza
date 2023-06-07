@@ -2,10 +2,12 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppStateManager extends ChangeNotifier {
+  final PreloadPageController _pageController = PreloadPageController(initialPage: 0);
+  PreloadPageController get pageController => _pageController;
   final List _enrolledSubs = ['Physics'];
 
   List get enrolledSubs => _enrolledSubs;

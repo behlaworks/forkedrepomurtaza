@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import 'package:preload_page_view/preload_page_view.dart';
+
 class Constants{
   static Color dark = const Color(0xff07122a);
   static Color grey = const Color(0xffefefef);
@@ -12,6 +14,7 @@ class Constants{
   static List months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   static List weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   static List completedUnits = [];
+  static PreloadPageController controller = PreloadPageController(initialPage: 0);
 
   static int dayCalculator(DateTime date, int weekday) {
     if(date.weekday > weekday){

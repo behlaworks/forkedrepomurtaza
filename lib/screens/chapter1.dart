@@ -69,7 +69,7 @@ class _TopicsState extends State<Topics> {
                   },
                   //If you are increasing or decreasing preload page count change accordingly in the player widget
                   preloadPagesCount: 1,
-                  controller: PreloadPageController(initialPage: 0),
+                  controller: Constants.controller,
                   itemCount: Constants.urls.length,
                   scrollDirection: Axis.vertical,
                   physics: const AlwaysScrollableScrollPhysics(),
