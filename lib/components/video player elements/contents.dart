@@ -1,7 +1,6 @@
-import 'package:a_level_pro/models/app_state_manager.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 import '../../data/constants.dart';
-import '../../models/videoController.dart';
 
 class Contents extends StatefulWidget {
   final int index;
@@ -59,14 +58,38 @@ class _ContentsState extends State<Contents> {
                             width: MediaQuery.of(context).size.width * 0.95,
                             height: 60,
                             decoration: BoxDecoration(
-                                color: const Color(0xffF2F5FF),
+                                color: Constants.completedUnits
+                                        .contains(Constants.units[i])
+                                    ? const Color(0xff1B998B)
+                                    : const Color(0xffF2F5FF),
+                                // color: const Color(0xffF2F5FF),
                                 borderRadius: BorderRadius.circular(12),
                                 border:
-                                    Border.all(color: Colors.white, width: 3)),
-                            child: Center(
-                              child: Text(
-                                Constants.titles[i],
-                                style: const TextStyle(color: Colors.black),
+                                    Border.all(color: Colors.transparent, width: 3)),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.7,
+                                    child: Center(
+                                      child: Flexible(
+                                        child: Text(
+                                          "${Constants.titles[i]}",
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Container(
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.1,
+                                  )
+                                ],
                               ),
                             ),
                           ),
@@ -78,14 +101,41 @@ class _ContentsState extends State<Contents> {
                           width: MediaQuery.of(context).size.width * 0.95,
                           height: 60,
                           decoration: BoxDecoration(
-                              color: const Color(0xffF2F5FF),
+                              color: Constants.completedUnits
+                                  .contains(Constants.units[i])
+                                  ? const Color(0xff1B998B)
+                                  : const Color(0xffF2F5FF),
                               borderRadius: BorderRadius.circular(12),
                               border:
-                                  Border.all(color: Colors.white, width: 3)),
-                          child: Center(
-                            child: Text(
-                              "${Constants.titles[i]}: now playing",
-                              style: const TextStyle(color: Colors.black),
+                                  Border.all(color: Colors.transparent, width: 3)),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.7,
+                                  child: Center(
+                                    child: Flexible(
+                                      child: Text(
+                                        "${Constants.titles[i]}",
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.1,
+                                  child: Center(
+                                    child: Lottie.asset(
+                                      'assets/playingAnimate.json',
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),
