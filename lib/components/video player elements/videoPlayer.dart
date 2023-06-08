@@ -42,14 +42,6 @@ class Player extends StatelessWidget {
         }
       },
       builder: (_) {
-        if (i >= c.videoPlayerControllers.length) {
-          // Handle the case where the index is out of range
-          // You can show an empty container or an error message
-          // based on your application's requirements
-          return const Center(
-            child: Text('Yo whatup', style: TextStyle(color: Colors.black),),
-          );
-        }
         if (c.videoPlayerControllers.isEmpty ||
             c.videoPlayerControllers[c.api] == null ||
             !c.videoPlayerControllers[c.api]!.value.isInitialized) {

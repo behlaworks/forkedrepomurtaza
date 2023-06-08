@@ -43,6 +43,8 @@ dependencies:
   path:
   flutter_launcher_icons:
   shared_preferences:
+  lottie:
+
 
 
 flutter_icons:
