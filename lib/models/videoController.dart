@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-
 import '../data/constants.dart';
 
 class PCC extends GetxController {
@@ -15,6 +14,7 @@ class PCC extends GetxController {
       videoPlayerControllers[_api]!.pause();
     }
     _api = i;
+    print("_api : ${_api.toString()}");
     update();
   }
 
@@ -24,6 +24,8 @@ class PCC extends GetxController {
     singleVideoController = VideoPlayerController.network(Constants.urls[i]);
     videoPlayerControllers.add(singleVideoController);
     initilizedIndexes.add(i);
+    print("videoPlayerControllers: ${videoPlayerControllers.toString()}");
+    print("initialized Indexes: ${initilizedIndexes.toString()}");
     await videoPlayerControllers[i]!.initialize();
     update();
   }
@@ -43,14 +45,16 @@ class PCC extends GetxController {
     }
   }
   Future disposeAll() async{
-    for (var i = 0; i < videoPlayerControllers.length; i++){
-      if (videoPlayerControllers[i] != null) {
-        await videoPlayerControllers[i]!.dispose();
-        videoPlayerControllers[i] = null;
-      }
+    for (var controller in videoPlayerControllers) {
+      controller?.pause();
+      controller?.dispose();
     }
-    initilizedIndexes = [];
-    updateAPI(0);
+    videoPlayerControllers.clear();
+    initilizedIndexes.clear();
+    _api = 0;
+    print(" _api : ${_api.toString()}");
+    print("initialized indexes: ${initilizedIndexes.toString()}");
+    print("videoPlayerController: ${videoPlayerControllers.toString()}");
   }
 
   final List<String> videoURLs = [

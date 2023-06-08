@@ -60,7 +60,6 @@ class DatabaseService {
       Constants.units = units;
       Constants.titles = titles;
       Constants.notes = notes;
-      print(notes);
       return 'Success';
       // print(PCC.videoURLs.toString());
       // print(PCC.videoURLs.length);

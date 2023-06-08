@@ -1,6 +1,7 @@
 import 'package:a_level_pro/models/app_state_manager.dart';
 import 'package:flutter/material.dart';
 import '../../data/constants.dart';
+import '../../models/videoController.dart';
 
 class Contents extends StatefulWidget {
   final int index;
@@ -48,10 +49,11 @@ class _ContentsState extends State<Contents> {
                         child: GestureDetector(
                           onTap: () {
                             Navigator.pop(context);
+                            // PCC().updateAPI(i);
                             Constants.controller.jumpToPage(i);
-                            // Constants.controller.animateToPage(i,
-                            //     duration: const Duration(seconds: 5),
-                            //     curve: Curves.decelerate);
+                            Constants.controller.animateToPage(i,
+                                duration: const Duration(seconds: 5),
+                                curve: Curves.decelerate);
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.95,

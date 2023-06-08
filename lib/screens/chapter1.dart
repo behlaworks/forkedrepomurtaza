@@ -25,10 +25,16 @@ class _TopicsState extends State<Topics> {
   @override
   void initState() {
     super.initState();
-    DatabaseService().listOfTopics(widget.name).then((value) => setState(() {
-          processing = false;
-        }));
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      loadData();
+    });
+  }
 
+  Future<void> loadData() async {
+    await DatabaseService().listOfTopics(widget.name);
+    setState(() {
+      processing = false;
+    });
   }
 
   @override
