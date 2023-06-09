@@ -60,7 +60,7 @@ class _ContentsState extends State<Contents> {
                             decoration: BoxDecoration(
                                 color: Constants.completedUnits
                                         .contains(Constants.units[i])
-                                    ? const Color(0xff1B998B)
+                                    ? const Color(0xffB4E33D)
                                     : const Color(0xffF2F5FF),
                                 // color: const Color(0xffF2F5FF),
                                 borderRadius: BorderRadius.circular(12),
@@ -76,12 +76,10 @@ class _ContentsState extends State<Contents> {
                                     width:
                                         MediaQuery.of(context).size.width * 0.7,
                                     child: Center(
-                                      child: Flexible(
-                                        child: Text(
-                                          "${Constants.titles[i]}",
-                                          style: const TextStyle(
-                                              color: Colors.black),
-                                        ),
+                                      child: Text(
+                                        "${Constants.titles[i]}",
+                                        style: const TextStyle(
+                                            color: Colors.black),
                                       ),
                                     ),
                                   ),
@@ -103,7 +101,7 @@ class _ContentsState extends State<Contents> {
                           decoration: BoxDecoration(
                               color: Constants.completedUnits
                                   .contains(Constants.units[i])
-                                  ? const Color(0xff1B998B)
+                                  ? const Color(0xffB4E33D)
                                   : const Color(0xffF2F5FF),
                               borderRadius: BorderRadius.circular(12),
                               border:
@@ -117,16 +115,14 @@ class _ContentsState extends State<Contents> {
                                   width:
                                       MediaQuery.of(context).size.width * 0.7,
                                   child: Center(
-                                    child: Flexible(
-                                      child: Text(
-                                        "${Constants.titles[i]}",
-                                        style: const TextStyle(
-                                            color: Colors.black),
-                                      ),
+                                    child: Text(
+                                      "${Constants.titles[i]}",
+                                      style: const TextStyle(
+                                          color: Colors.black),
                                     ),
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width:
                                       MediaQuery.of(context).size.width * 0.1,
                                   child: Center(

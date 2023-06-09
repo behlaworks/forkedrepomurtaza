@@ -15,16 +15,6 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool processing = true;
-
-  @override
-  void initState() {
-    super.initState();
-    DatabaseService().getUser().then((value) => setState(() {
-          processing = false;
-        }));
-  }
-
   @override
   Widget build(BuildContext context) {
     final AppStateManager myProvider = Provider.of<AppStateManager>(context);
@@ -36,16 +26,7 @@ class _DashboardState extends State<Dashboard> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-              processing
-                  ? Container(
-                height: MediaQuery.of(context).size.height*0.9,
-                      child: Center(
-                      child: CircularProgressIndicator(
-                        color: Constants.dark,
-                        strokeWidth: 4,
-                      ),
-                    ))
-                  : Column(
+              Column(
                       children: [
                         Container(
                           height: 150,

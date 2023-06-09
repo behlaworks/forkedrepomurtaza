@@ -8,11 +8,16 @@ import '../../data/constants.dart';
 import '../../models/videoController.dart';
 import '../common ui elements/blackButton.dart';
 
-class Player extends StatelessWidget {
+class Player extends StatefulWidget {
   final int i;
 
   const Player({Key? key, required this.i}) : super(key: key);
 
+  @override
+  State<Player> createState() => _PlayerState();
+}
+
+class _PlayerState extends State<Player> {
   @override
   Widget build(BuildContext context) {
     final c = Get.put(PCC());
@@ -27,8 +32,8 @@ class Player extends StatelessWidget {
         if (c.api < c.videoPlayerControllers.length - 2) {
           await c.disposeController(c.api + 2);
         }
-        if (!c.initilizedIndexes.contains(i)) {
-          await c.initializePlayer(i);
+        if (!c.initilizedIndexes.contains(widget.i)) {
+          await c.initializePlayer(widget.i);
         }
         if (c.api > 0) {
           if (c.videoPlayerControllers[c.api - 1] == null) {
@@ -42,6 +47,54 @@ class Player extends StatelessWidget {
         }
       },
       builder: (_) {
+        if (c.videoPlayerControllers.length < widget.i) {
+          return Center(
+              child: Container(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  color: Constants.dark,
+                  child: Stack(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
+                            child: GestureDetector(
+                              onTap: () async {
+                                c.disposeAll();
+                                Constants.urls = [];
+                                Constants.units = [];
+                                Constants.titles = [];
+                                Constants.notes = [];
+                                Navigator.pop(context);
+                              },
+                              child: Container(
+                                height: 42,
+                                width: 42,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8),
+                                    color: Constants.grey),
+                                child: const Center(
+                                  child: Icon(
+                                    Icons.arrow_back_ios,
+                                    color: Colors.black,
+                                    size: 15,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const Center(
+                          child: CircularProgressIndicator(
+                        color: Colors.white,
+                        strokeWidth: 4,
+                      )),
+                    ],
+                  )));
+        }
         if (c.videoPlayerControllers.isEmpty ||
             c.videoPlayerControllers[c.api] == null ||
             !c.videoPlayerControllers[c.api]!.value.isInitialized) {
@@ -57,14 +110,14 @@ class Player extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
                         child: GestureDetector(
-                          onTap: ()async{
-                        c.disposeAll();
-                        Constants.urls = [];
-                        Constants.units = [];
-                        Constants.titles = [];
-                        Constants.notes = [];
-                        Navigator.pop(context);
-                        },
+                          onTap: () async {
+                            c.disposeAll();
+                            Constants.urls = [];
+                            Constants.units = [];
+                            Constants.titles = [];
+                            Constants.notes = [];
+                            Navigator.pop(context);
+                          },
                           child: Container(
                             height: 42,
                             width: 42,
@@ -92,10 +145,10 @@ class Player extends StatelessWidget {
               ));
         }
 
-        if (i == c.api) {
+        if (widget.i == c.api) {
           //If Index equals Auto Play Index
           //Set AutoPlay True Here
-          if (i < c.videoPlayerControllers.length) {
+          if (widget.i < c.videoPlayerControllers.length) {
             if (c.videoPlayerControllers[c.api]!.value.isInitialized) {
               c.videoPlayerControllers[c.api]!.play();
             }
@@ -110,7 +163,7 @@ class Player extends StatelessWidget {
                     c.videoPlayerControllers[c.api]!.value.isInitialized
                 ? Stack(children: [
                     Center(
-                      child: Container(
+                      child: SizedBox(
                         height: (MediaQuery.of(context).size.width * 16) / 9,
                         child: GestureDetector(
                           onTap: () {
@@ -166,8 +219,8 @@ class Player extends StatelessWidget {
                                   ),
                                 ),
                                 UnitBox(
-                                  value: Constants.units[i],
-                                  index: i,
+                                  value: Constants.units[widget.i],
+                                  index: widget.i,
                                 )
                               ],
                             ),
@@ -193,9 +246,9 @@ class Player extends StatelessWidget {
                                       ),
                                     ),
                                     child: UnitDetailModalCard(
-                                      unit: Constants.units[i],
-                                      title: Constants.titles[i],
-                                      notes: Constants.notes[i],
+                                      unit: Constants.units[widget.i],
+                                      title: Constants.titles[widget.i],
+                                      notes: Constants.notes[widget.i],
                                     ),
                                   ),
                                 );

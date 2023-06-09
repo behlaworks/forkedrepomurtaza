@@ -12,6 +12,16 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var snackBar = const SnackBar(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+      backgroundColor: Color(0xffB4E33D),
+      content: Text(
+        'Referral code copied!',
+        style: TextStyle(
+            color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+      ),
+    );
     final AppStateManager myProvider = Provider.of<AppStateManager>(context);
     return AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle.light,
@@ -28,10 +38,10 @@ class ProfilePage extends StatelessWidget {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20))),
-                  child: Column(
+                  child: const Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
-                    children: const [
+                    children: [
                       SizedBox(
                         height: 40,
                       ),
@@ -68,7 +78,7 @@ class ProfilePage extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                       child: Text(
-                        "Personal statistics",
+                        "Your referral code: ",
                         style: TextStyle(
                             fontSize: 22,
                             color: Constants.dark,
@@ -78,82 +88,44 @@ class ProfilePage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(10, 5, 0, 0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  '1',
-                                  style: TextStyle(
-                                      fontSize: 46,
-                                      color: Constants.dark,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: -0.1),
-                                ),
-                                Text(
-                                  'Subject in progress',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Constants.dark,
-                                      fontWeight: FontWeight.w300,
-                                      letterSpacing: -0.1),
-                                ),
-                              ],
-                            ),
-                          ),
+                Container(
+                  width: MediaQuery.of(context).size.width * 0.95,
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: Constants.dark,
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(14, 8, 8, 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          Constants.referralId.toString(),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 16,
+                              fontWeight: FontWeight.w800),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 0, 0),
-                        child: Container(
-                          height: 150,
-                          width: 150,
-                          decoration: BoxDecoration(
-                              color: Colors.grey[300],
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Center(
-                            child: Column(
-                              children: [
-                                Text(
-                                  '4',
-                                  style: TextStyle(
-                                      fontSize: 46,
-                                      color: Constants.dark,
-                                      fontWeight: FontWeight.w900,
-                                      letterSpacing: -0.1),
-                                ),
-                                Text(
-                                  'Days streak',
-                                  textAlign: TextAlign.center,
-                                  style: TextStyle(
-                                      fontSize: 18,
-                                      color: Constants.dark,
-                                      fontWeight: FontWeight.w300,
-                                      letterSpacing: -0.1),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
+                        IconButton(
+                            onPressed: () {
+                              Clipboard.setData(
+                                      ClipboardData(text: Constants.referralId.toString()))
+                                  .then((value) {
+                                //only if ->
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }); // -> show a notification
+                            },
+                            icon: const Icon(
+                              Icons.content_copy,
+                              color: Colors.white,
+                            ))
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height * 0.13,
+                  height: MediaQuery.of(context).size.height * 0.27,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),

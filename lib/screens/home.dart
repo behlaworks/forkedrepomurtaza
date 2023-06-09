@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:a_level_pro/models/pages.dart';
 import 'package:a_level_pro/data/constants.dart';
 
+import '../models/cloud_firestore.dart';
+
 class Home extends StatefulWidget {
   static MaterialPage page() {
     return MaterialPage(
@@ -32,12 +34,24 @@ class _HomeState extends State<Home> {
       _selectedIndex = index;
     });
   }
+  bool processing = true;
 
+  @override
+  void initState() {
+    super.initState();
+    DatabaseService().getUser().then((value) => setState(() {
+      processing = false;
+    }));
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child: !processing? _widgetOptions.elementAt(_selectedIndex):
+        CircularProgressIndicator(
+          color: Constants.dark,
+          strokeWidth: 4,
+        ),
       ),
       bottomNavigationBar: SizedBox(
         height: MediaQuery.of(context).size.height*0.11,

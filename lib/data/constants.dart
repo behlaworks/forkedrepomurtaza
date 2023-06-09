@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'dart:ui';
 
 import 'package:preload_page_view/preload_page_view.dart';
@@ -8,6 +9,7 @@ class Constants{
   static List<String> subjects = ['Mathematics', 'Computer', 'Chemistry', 'Biology', 'English', 'Business', 'Accounts', 'Economics'];
   static List<String> physicsChapters = ['Physical quantities and units', 'Kinematics', 'Dynamics', 'Forces, density and pressure', 'Work, energy and power', 'Deformation of solids', 'Waves', 'Superposition', 'Electricity', 'D.C circuits', 'Particle Physics'];
   static List urls = [];
+  static String referralId = '';
   static List units = [];
   static List titles = [];
   static List notes = [];
@@ -24,6 +26,17 @@ class Constants{
     } else{
       return date.day;
     }
+  }
+
+  // this function is used to generate referral code. this should be
+  static String generateRandomString(){
+    final random = Random();
+    const allChars='AaBbCcDdlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1EeFfGgHhIiJjKkL234567890';
+    // below statement will generate a random string of length using the characters
+    // and length provided to it
+    final randomString = List.generate(15,
+            (index) => allChars[random.nextInt(allChars.length)]).join();
+    return randomString;    // return the generated string
   }
 
 }

@@ -11,7 +11,7 @@ class WeekDisplay extends StatefulWidget {
 class _WeekDisplayState extends State<WeekDisplay> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
