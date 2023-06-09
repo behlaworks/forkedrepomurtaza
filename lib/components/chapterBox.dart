@@ -25,7 +25,7 @@ class _ChapterBoxState extends State<ChapterBox> {
             color: const Color(0xffF2F5FF)),
         child: InkWell(
           onTap: () async {
-            widget.name == 'Physical quantities and units'
+            widget.name == 'Physical quantities and units' || Constants.numberOfReferrals > 4
                 ? Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -48,14 +48,23 @@ class _ChapterBoxState extends State<ChapterBox> {
                               fontSize: 20,
                               fontWeight: FontWeight.w700),
                         )),
-                        content: const SizedBox(
+                        content: SizedBox(
                             height: 50,
                             child: Center(
-                                child: Text("refer to 5 friends to unlock!",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.w500)))),
+                                child: Column(
+                                  children: [
+                                    const Text("refer to 5 friends to unlock!",
+                                        style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600)),
+                                    Text("Current referrals: ${Constants.numberOfReferrals}",
+                                        style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w600)),
+                                  ],
+                                ))),
                         actions: [
                           Center(
                             child: ElevatedButton(
@@ -80,7 +89,7 @@ class _ChapterBoxState extends State<ChapterBox> {
                     });
           },
           child: Stack(children: [
-            widget.name == 'Physical quantities and units'
+            widget.name == 'Physical quantities and units' || Constants.numberOfReferrals > 4
                 ? Container(
                     width: MediaQuery.of(context).size.width * widget.ratio,
                     height: 76,
@@ -106,7 +115,7 @@ class _ChapterBoxState extends State<ChapterBox> {
                     )
                   ],
                 ),
-                widget.name != 'Physical quantities and units'
+                widget.name != 'Physical quantities and units' && Constants.numberOfReferrals < 5
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Icon(Icons.lock),

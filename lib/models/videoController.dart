@@ -62,6 +62,7 @@ class PCC extends GetxController {
     if (index >= 0 && index < videoPlayerControllers.length) {
       if (videoPlayerControllers[index] == null) {
         late VideoPlayerController singleVideoController;
+        print('$index : ${videoPlayerControllers.length}');
         singleVideoController = VideoPlayerController.network(Constants.urls[index]);
         videoPlayerControllers[index] = singleVideoController;
         await videoPlayerControllers[index]!.initialize();

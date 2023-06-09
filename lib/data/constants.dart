@@ -16,6 +16,7 @@ class Constants{
   static List months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'Jul', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
   static List weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   static List completedUnits = [];
+  static int numberOfReferrals = 0;
   static PreloadPageController controller = PreloadPageController(initialPage: 0);
 
   static int dayCalculator(DateTime date, int weekday) {

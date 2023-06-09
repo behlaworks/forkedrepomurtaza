@@ -17,7 +17,7 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
   @override
   void initState() {
     super.initState();
-    DatabaseService().unitCompletionCalculator(1.toString()).then((value) {
+    DatabaseService().unitCompletionCalculator().then((value) {
       for (var i = 0; i < Constants.physicsChapters.length; i++) {
         if (i < value.length) {
           ratios.add(value[i]);

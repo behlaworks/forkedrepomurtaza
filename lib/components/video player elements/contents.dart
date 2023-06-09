@@ -127,7 +127,7 @@ class _ContentsState extends State<Contents> {
                                       MediaQuery.of(context).size.width * 0.1,
                                   child: Center(
                                     child: Lottie.asset(
-                                      'assets/playingAnimate.json',
+                                      'assets/play.json',
                                     ),
                                   ),
                                 )

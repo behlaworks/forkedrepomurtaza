@@ -1,9 +1,12 @@
 import 'package:a_level_pro/data/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 
 class DatabaseService {
-  //TODO: create a loop which generated the random string again and again until it is unique from the database.
+  // This function runs simultaneously with the registration function in order to create a document of the user
+  //The doc id is the email address of the user. It also generates referral code using generateRandomString()
+  //function.
   Future<String?> addUser({
     required String fullName,
     required String age,
@@ -24,16 +27,19 @@ class DatabaseService {
         'full_name': fullName,
         'age': age,
         'referralID': referralId,
-        'completed': []
+        'referrals': 0
       });
 
       return 'success';
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       return e.toString();
     }
   }
 
+  // this function runs when home page opens and fetches the user data to show on the screen.
   Future<String?> getUser() async {
     try {
       var email = FirebaseAuth.instance.currentUser?.email.toString();
@@ -41,14 +47,45 @@ class DatabaseService {
           FirebaseFirestore.instance.collection('users');
       final snapshot = await users.doc(email).get();
       final data = snapshot.data() as Map<String, dynamic>;
-      Constants.completedUnits = data['completed'];
       Constants.referralId = data['referralID'];
+      Constants.numberOfReferrals = data['referrals'];
       return 'Success';
     } catch (e) {
       return 'Error fetching user';
     }
   }
 
+  // function used while registering for referring others.
+  Future<String?> addReferral(String code) async {
+    try {
+      var found = false;
+      var email = '';
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('users');
+      final snapshot = await users.get();
+      final data = snapshot.docs;
+      for (final user in data) {
+        var info = user.data() as Map<String, dynamic>;
+        if (info['referralID'].toString() == code) {
+          email = user.id;
+          found = true;
+        }
+      }
+
+      if (found) {
+        final user = FirebaseFirestore.instance.collection('users').doc(email);
+        user.update({'referrals': FieldValue.increment(1)});
+        return 'Successful';
+      } else {
+        return 'Referral id not found';
+      }
+    } catch (e) {
+      return 'Error fetching user';
+    }
+  }
+
+// This function runs when the video player is opened. It takes the name of the chapter, and fetches all the
+  // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future listOfTopics(String chapter) async {
     final List topics = [];
     final List<String> urls = [];
@@ -82,53 +119,67 @@ class DatabaseService {
     }
   }
 
-  Future<String?> updateUnitComplete(String unit) async {
+  //this function is a topic specific function as it just marks a topic complete. It also updates the constants
+  // list to update the contents page instantly without another database call.
+  Future updateUnitComplete(String unit) async {
     try {
+      var name = (double.parse(unit)).toInt();
       var email = FirebaseAuth.instance.currentUser?.email.toString();
-      final reference =
-          FirebaseFirestore.instance.collection('users').doc(email);
+      final reference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(email)
+          .collection('Completed')
+          .doc('Physics');
       reference.update({
-        "completed": FieldValue.arrayUnion([unit])
+        name.toString(): FieldValue.arrayUnion([unit])
       });
       Constants.completedUnits.add(unit);
-      return 'hello';
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       return e.toString();
     }
   }
 
-  Future unitCompletionCalculator(String unit) async {
+  // This function runs when a subject is selected and all its chapter names are loaded as well as how much
+  //progress has been made on each chapter. Its fetches totals and units completed and calculates the ratios
+  //and saves that ratio in the constants for quick access.
+  Future unitCompletionCalculator() async {
     try {
       List ratios = [];
       List completed = [];
       List total = [];
       var email = FirebaseAuth.instance.currentUser?.email.toString();
       final reference2 =
-      FirebaseFirestore.instance.collection('Subjects').doc('Physics');
+          FirebaseFirestore.instance.collection('Subjects').doc('Physics');
       final snapshot2 = await reference2.get();
       final data2 = snapshot2.data() as Map<String, dynamic>;
       data2.forEach((key, value) {
         total.add(value.toString());
       });
-      final reference =
-      FirebaseFirestore.instance.collection('users').doc(email).collection('Completed').doc('Physics');
+      final reference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(email)
+          .collection('Completed')
+          .doc('Physics');
       final snapshot = await reference.get();
       final data = snapshot.data() as Map<String, dynamic>;
       data.forEach((key, value) {
         var count = 0;
-        for(var v in value){
-         completed.add(v.toString());
-         count ++;
+        for (var v in value) {
+          completed.add(v.toString());
+          count++;
         }
-        ratios.add(count/(int.parse(data2[key])));
+        ratios.add(count / (int.parse(data2[key])));
       });
       Constants.completedUnits = completed;
       total = [];
       return ratios;
-
     } catch (e) {
-      print(e.toString());
+      if (kDebugMode) {
+        print(e.toString());
+      }
       return e.toString();
     }
   }

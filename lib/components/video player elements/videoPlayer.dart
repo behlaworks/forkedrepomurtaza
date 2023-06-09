@@ -26,21 +26,21 @@ class _PlayerState extends State<Player> {
         //Need to change conditions according preload page count
         //Don't load too many pages it will cause performance issue.
         // Below is for 1 page preload.
-        if (c.api > 1) {
+        if (c.api > 1 || c.api < c.videoPlayerControllers.length) {
           await c.disposeController(c.api - 2);
         }
-        if (c.api < c.videoPlayerControllers.length - 2) {
+        if (c.api < c.videoPlayerControllers.length - 2 || c.api < c.videoPlayerControllers.length) {
           await c.disposeController(c.api + 2);
         }
-        if (!c.initilizedIndexes.contains(widget.i)) {
+        if (!c.initilizedIndexes.contains(widget.i) || c.api < c.videoPlayerControllers.length) {
           await c.initializePlayer(widget.i);
         }
-        if (c.api > 0) {
+        if (c.api > 0 || c.api < c.videoPlayerControllers.length) {
           if (c.videoPlayerControllers[c.api - 1] == null) {
             await c.initializeIndexedController(c.api - 1);
           }
         }
-        if (c.api < c.videoPlayerControllers.length - 1) {
+        if (c.api < c.videoPlayerControllers.length - 1 || c.api < c.videoPlayerControllers.length) {
           if (c.videoPlayerControllers[c.api + 1] == null) {
             await c.initializeIndexedController(c.api + 1);
           }
