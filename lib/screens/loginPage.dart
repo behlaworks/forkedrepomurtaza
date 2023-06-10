@@ -85,7 +85,6 @@ class _LoginPageState extends State<LoginPage> {
                                     controller: _emailController,
                                     inputAction: TextInputAction.next,
                                     inputType: TextInputType.emailAddress,
-                                    icon: Icons.email,
                                     obscure: false,
                                     validator: (value) =>
                                         Validator.validateEmail(email: value)),
@@ -100,7 +99,6 @@ class _LoginPageState extends State<LoginPage> {
                                   controller: _passwordController,
                                   inputAction: TextInputAction.done,
                                   inputType: TextInputType.visiblePassword,
-                                  icon: Icons.password,
                                   obscure: true,
                                   validator: (value) =>
                                       Validator.validatePassword(password: value),

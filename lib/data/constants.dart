@@ -18,6 +18,10 @@ class Constants{
   static List completedUnits = [];
   static int numberOfReferrals = 0;
   static PreloadPageController controller = PreloadPageController(initialPage: 0);
+  static String name = '';
+  static String age = '';
+  static String email = '';
+  static String referrerEmail = '';
 
   static int dayCalculator(DateTime date, int weekday) {
     if(date.weekday > weekday){

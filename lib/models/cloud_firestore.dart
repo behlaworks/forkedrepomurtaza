@@ -7,7 +7,7 @@ class DatabaseService {
   // This function runs simultaneously with the registration function in order to create a document of the user
   //The doc id is the email address of the user. It also generates referral code using generateRandomString()
   //function.
-  Future<String?> addUser({
+  Future addUser({
     required String fullName,
     required String age,
     required String email,
@@ -29,6 +29,10 @@ class DatabaseService {
         'referralID': referralId,
         'referrals': 0
       });
+      if(Constants.referrerEmail != ''){
+          final user = FirebaseFirestore.instance.collection('users').doc(Constants.referrerEmail);
+          user.update({'referrals': FieldValue.increment(1)});
+      }
 
       return 'success';
     } catch (e) {
@@ -56,10 +60,9 @@ class DatabaseService {
   }
 
   // function used while registering for referring others.
-  Future<String?> addReferral(String code) async {
+  Future addReferral(String code) async {
     try {
       var found = false;
-      var email = '';
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       final snapshot = await users.get();
@@ -67,23 +70,38 @@ class DatabaseService {
       for (final user in data) {
         var info = user.data() as Map<String, dynamic>;
         if (info['referralID'].toString() == code) {
-          email = user.id;
-          found = true;
+          Constants.referrerEmail = user.id;
+          return true;
         }
       }
+      return found;
 
-      if (found) {
-        final user = FirebaseFirestore.instance.collection('users').doc(email);
-        user.update({'referrals': FieldValue.increment(1)});
-        return 'Successful';
-      } else {
-        return 'Referral id not found';
-      }
+      // if (found) {
+
+      //   return true;
+      // } else {
+      //   return false;
+      // }
     } catch (e) {
       return 'Error fetching user';
     }
   }
-
+  Future emailExists(String email) async {
+    try {
+      CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
+      final snapshot = await users.get();
+      final data = snapshot.docs;
+      for (final user in data) {
+        if(user.id == email){
+          return false;
+        }
+      }
+      return true;
+    } catch (e) {
+      return 'Error fetching user';
+    }
+  }
 // This function runs when the video player is opened. It takes the name of the chapter, and fetches all the
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future listOfTopics(String chapter) async {

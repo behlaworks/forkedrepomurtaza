@@ -6,7 +6,6 @@ class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
   final TextInputAction inputAction;
   final TextInputType inputType;
-  final IconData? icon;
   final bool obscure;
   final String hint;
   final String? Function(String?)? validator;
@@ -17,7 +16,6 @@ class CustomTextField extends StatelessWidget {
       required this.inputAction,
       required this.inputType,
       this.validator,
-      this.icon,
       required this.obscure, required this.hint})
       : super(key: key);
 
