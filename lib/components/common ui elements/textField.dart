@@ -29,9 +29,9 @@ class CustomTextField extends StatelessWidget {
         textInputAction: inputAction,
         autovalidateMode: AutovalidateMode.onUserInteraction,
         keyboardType: inputType,
-        style: TextStyle(
-          color: Constants.dark,
-          fontSize: 17,
+        style: const TextStyle(
+          color: Colors.black,
+          fontSize: 19,
           fontWeight: FontWeight.w600,
         ),
         cursorColor: Constants.dark,
@@ -42,26 +42,20 @@ class CustomTextField extends StatelessWidget {
               fontSize: 15,
               fontWeight: FontWeight.w300,
             ),
-            icon: Icon(
-              icon,
-              color: Constants.dark,
-            ),
             contentPadding:
-                const EdgeInsets.symmetric(vertical: 10, horizontal: 10.0),
+                const EdgeInsets.symmetric(vertical: 20, horizontal: 20.0),
             focusedBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1, color: Constants.dark),
+                borderSide: BorderSide(width: 3, color: Constants.dark),
                 borderRadius: BorderRadius.circular(8)),
             enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(width: 1, color: Constants.grey),
+                borderSide: BorderSide(width: 1, color: Constants.dark),
                 borderRadius: BorderRadius.circular(8)),
             focusedErrorBorder: OutlineInputBorder(
                 borderSide: const BorderSide(width: 1, color: Colors.red),
                 borderRadius: BorderRadius.circular(8)),
             errorBorder: OutlineInputBorder(
                 borderSide: const BorderSide(width: 1, color: Colors.red),
-                borderRadius: BorderRadius.circular(8)),
-            filled: true,
-            fillColor: Constants.grey),
+                borderRadius: BorderRadius.circular(8)),),
         validator: validator);
   }
 }

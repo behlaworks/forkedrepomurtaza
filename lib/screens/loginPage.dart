@@ -34,162 +34,135 @@ class _LoginPageState extends State<LoginPage> {
           children: [
             _processing
                 ? Container(
-              height: MediaQuery.of(context).size.height,
+                    height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Center(
                         child: CircularProgressIndicator(
-                    color: Constants.dark,
-                    strokeWidth: 3,
-                  )))
-                : Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            height: 275,
-                            width: 275,
-                            decoration: const BoxDecoration(
-                                image: DecorationImage(
-                                    image: AssetImage('assets/black.jpg'),
-                                    fit: BoxFit.fill)),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 120,
+                      color: Constants.dark,
+                      strokeWidth: 3,
+                    )))
+                : Container(
+              height: MediaQuery.of(context).size.height,
+                  child: Stack(
+                      children: [
+                         Padding(
+                          padding: const EdgeInsets.fromLTRB(25, 50, 0, 0),
+                          child: GestureDetector(
+                            onTap: () => {Navigator.pop(context)},
+                            child: Container(
+                              height: 42,
+                              width: 42,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8), color: Constants.grey),
+                              child: const Center(
+                                child: Icon(
+                                  Icons.arrow_back_ios,
+                                  color: Colors.black,
+                                  size: 15,
                                 ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: const [
-                                    SizedBox(
-                                      width: 70,
-                                    ),
-                                    Text(
-                                      'Login',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 30,
-                                          fontWeight: FontWeight.w700),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: CustomTextField(
-                          hint: 'Email',
-                            controller: _emailController,
-                            inputAction: TextInputAction.next,
-                            inputType: TextInputType.emailAddress,
-                            icon: Icons.email,
-                            obscure: false,
-                            validator: (value) =>
-                                Validator.validateEmail(email: value)),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                        child: CustomTextField(
-                          hint: 'Password',
-                          controller: _passwordController,
-                          inputAction: TextInputAction.done,
-                          inputType: TextInputType.visiblePassword,
-                          icon: Icons.password,
-                          obscure: true,
-                          validator: (value) =>
-                              Validator.validatePassword(password: value),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 25, 0),
-                            child: TextButton(
-                                onPressed: () => {},
-                                child: const Text(
-                                  'Forgot Password?',
-                                  style: TextStyle(
-                                      color: Colors.blue,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w400),
-                                )),
-                          )
-                        ],
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.18,
-                      ),
-                      Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                            child: BlackButton(
-                              text: 'Login',
-                              onPressed: () async {
-                                if (_formKey.currentState!.validate()) {
-                                  setState(() {
-                                    _processing = true;
-                                  });
-                                  User? user =
-                                      await FireAuth.signInUsingEmailPassword(
-                                    email: _emailController.text,
-                                    password: _passwordController.text,
-                                  );
-                                  if (user != null) {
-                                    myProvider.login();
-                                    Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
-                                          builder: (context) => const Home()),
-                                    );
-                                  }
-                                }
-                              },
-                            ),
-                          ),
-                          Container(
-                            height: 50,
-                            child: Center(
-                              child: Text(
-                                'OR',
-                                style: TextStyle(
-                                    color: Constants.dark,
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.bold),
                               ),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
-                            child: BlackButton(
-                              text: 'Register',
-                              onPressed: () {
-                                Navigator.of(context).pushReplacement(
-                                  MaterialPageRoute(
-                                      builder: (context) => const RegistrationPage()),
-                                );
-                              },
-                            ),
+                        ),
+                        Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Welcome Back!',
+                                style: TextStyle(
+                                    color: Constants.dark,
+                                    fontSize: 30,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                              const SizedBox(
+                                height: 60,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                                child: CustomTextField(
+                                    hint: 'Email',
+                                    controller: _emailController,
+                                    inputAction: TextInputAction.next,
+                                    inputType: TextInputType.emailAddress,
+                                    icon: Icons.email,
+                                    obscure: false,
+                                    validator: (value) =>
+                                        Validator.validateEmail(email: value)),
+                              ),
+                              const SizedBox(
+                                height: 10,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(25, 0, 25, 0),
+                                child: CustomTextField(
+                                  hint: 'Password',
+                                  controller: _passwordController,
+                                  inputAction: TextInputAction.done,
+                                  inputType: TextInputType.visiblePassword,
+                                  icon: Icons.password,
+                                  obscure: true,
+                                  validator: (value) =>
+                                      Validator.validatePassword(password: value),
+                                ),
+                              ),
+                              const SizedBox(
+                                height: 5,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(0, 0, 25, 0),
+                                    child: TextButton(
+                                        onPressed: () => {},
+                                        child: const Text(
+                                          'Forgot Password?',
+                                          style: TextStyle(
+                                              color: Colors.blue,
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w400),
+                                        )),
+                                  )
+                                ],
+                              ),
+                            ],
                           ),
-                          const SizedBox(
-                            height: 30,
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(25, 0, 25, 25),
+                              child: BlackButton(
+                                text: 'Login',
+                                onPressed: () async {
+                                  if (_formKey.currentState!.validate()) {
+                                    setState(() {
+                                      _processing = true;
+                                    });
+                                    User? user =
+                                        await FireAuth.signInUsingEmailPassword(
+                                      email: _emailController.text,
+                                      password: _passwordController.text,
+                                    );
+                                    if (user != null) {
+                                      myProvider.login();
+                                      Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(
+                                            builder: (context) => const Home()),
+                                      );
+                                    }
+                                  }
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                ),
           ],
         ),
       ),

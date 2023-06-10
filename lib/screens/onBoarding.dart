@@ -1,5 +1,6 @@
 import 'package:a_level_pro/components/common%20ui%20elements/blackButton.dart';
 import 'package:a_level_pro/screens/loginPage.dart';
+import 'package:a_level_pro/screens/registrationPage.dart';
 import 'package:flutter/material.dart';
 
 import '../data/constants.dart';
@@ -12,6 +13,7 @@ class OnboardingScreen extends StatefulWidget {
         key: ValueKey(Pages.onboarding),
         child: const OnboardingScreen());
   }
+
   const OnboardingScreen({Key? key}) : super(key: key);
 
   @override
@@ -40,21 +42,64 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   "Let's revolutionize education together!",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                      color: Constants.dark, fontSize: 30, fontWeight: FontWeight.w900),
+                      color: Constants.dark,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w900),
                 ),
               ),
-              SizedBox(height: MediaQuery.of(context).size.height*0.15,),
-              Padding(
-                padding: const EdgeInsets.all(13.0),
-                child: BlackButton(text: "Get Started", onPressed: (){
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const LoginPage()),
-                  );
-                }),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const LoginPage()),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    minWidth: MediaQuery.of(context).size.width*0.45,
+                    height: 56,
+                    color: Constants.dark,
+                    child: const Center(
+                        child: Text(
+                      'Login',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 15,
+                          fontWeight: FontWeight.w700),
+                    )),
+                  ),
+                  SizedBox(width: MediaQuery.of(context).size.width*0.03,),
+                  MaterialButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const RegistrationPage()),
+                      );
+                    },
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    minWidth: MediaQuery.of(context).size.width*0.45,
+                    height: 56,
+                    color: Constants.dark,
+                    child: const Center(
+                        child: Text(
+                          'Register',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700),
+                        )),
+                  )
+                ],
               )
-
             ],
           ),
         ),
