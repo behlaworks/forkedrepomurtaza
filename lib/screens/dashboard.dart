@@ -1,4 +1,3 @@
-import 'package:a_level_pro/models/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -8,7 +7,8 @@ import '../models/app_state_manager.dart';
 import 'calender.dart';
 
 class Dashboard extends StatefulWidget {
-  const Dashboard({Key? key}) : super(key: key);
+  final String name;
+  const Dashboard({Key? key, required this.name}) : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -36,9 +36,9 @@ class _DashboardState extends State<Dashboard> {
                               borderRadius: const BorderRadius.only(
                                   bottomLeft: Radius.circular(20),
                                   bottomRight: Radius.circular(20))),
-                          child: const Column(
+                          child: Column(
                             children: [
-                              SizedBox(
+                              const SizedBox(
                                 height: 50,
                               ),
                               Row(
@@ -47,26 +47,26 @@ class _DashboardState extends State<Dashboard> {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                    padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        Text(
+                                        const Text(
                                           "Hello",
                                           style: TextStyle(
                                               fontSize: 16,
                                               color: Colors.grey,
                                               fontWeight: FontWeight.normal),
                                         ),
-                                        SizedBox(
+                                        const SizedBox(
                                           height: 2.5,
                                         ),
                                         Text(
-                                          "Murtaza Mustafa 👋",
-                                          style: TextStyle(
+                                          "${widget.name} 👋",
+                                          style: const TextStyle(
                                               fontSize: 20,
                                               color: Colors.white,
                                               fontWeight: FontWeight.w900),
@@ -74,7 +74,7 @@ class _DashboardState extends State<Dashboard> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
+                                  const Padding(
                                     padding: EdgeInsets.all(30.0),
                                     child: Column(
                                       mainAxisAlignment:

@@ -20,45 +20,55 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  String name = '';
+  String age = '';
+  String referralID = '';
   int _selectedIndex = 1;
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    AddSubjectPage(),
-    Dashboard(),
-    ProfilePage()
-  ];
 
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
+
   bool processing = true;
 
   @override
   void initState() {
     super.initState();
-    DatabaseService().getUser().then((value) => setState(() {
-      processing = false;
-    }));
+    DatabaseService().getUser().then((value) {
+      name = value['full_name'];
+      age = value['age'];
+      referralID = value['referralID'];
+      setState(() {
+        processing = false;
+      });
+    });
   }
+
   @override
   Widget build(BuildContext context) {
+    final List<Widget> widgetOptions = <Widget>[
+      const AddSubjectPage(),
+      Dashboard(name: name,),
+      ProfilePage(name: name, age: age, refID: referralID,)
+    ];
     return Scaffold(
       body: Center(
-        child: !processing? _widgetOptions.elementAt(_selectedIndex):
-        CircularProgressIndicator(
-          color: Constants.dark,
-          strokeWidth: 4,
-        ),
+        child: !processing
+            ? widgetOptions.elementAt(_selectedIndex)
+            : CircularProgressIndicator(
+                color: Constants.dark,
+                strokeWidth: 4,
+              ),
       ),
       bottomNavigationBar: SizedBox(
-        height: MediaQuery.of(context).size.height*0.11,
+        height: MediaQuery.of(context).size.height * 0.11,
         child: BottomNavigationBar(
           backgroundColor: Constants.dark,
           items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(icon: Icon(Icons.add), label: 'Add Subject'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.add), label: 'Add Subject'),
             BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Dashboard'),
             BottomNavigationBarItem(icon: Icon(Icons.person), label: 'Profile'),
           ],

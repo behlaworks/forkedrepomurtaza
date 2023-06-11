@@ -8,7 +8,10 @@ import '../data/constants.dart';
 import '../models/app_state_manager.dart';
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  final String name;
+  final String age;
+  final String refID;
+  const ProfilePage({Key? key, required this.name, required this.age, required this.refID}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,28 +41,28 @@ class ProfilePage extends StatelessWidget {
                       borderRadius: const BorderRadius.only(
                           bottomLeft: Radius.circular(20),
                           bottomRight: Radius.circular(20))),
-                  child: const Column(
+                  child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
+                      const SizedBox(
                         height: 40,
                       ),
                       Text(
-                        "Murtaza Mustafa",
-                        style: TextStyle(
+                        name,
+                        style: const TextStyle(
                             fontSize: 22,
                             color: Colors.white,
                             fontWeight: FontWeight.w900),
                       ),
                       Text(
-                        "Age: 19",
-                        style: TextStyle(
+                        "Age: $age",
+                        style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.w900),
                       ),
-                      Text(
+                      const Text(
                         "INTAKE: June '23",
                         style: TextStyle(
                             fontSize: 18,
@@ -100,7 +103,7 @@ class ProfilePage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          Constants.referralId.toString(),
+                          refID,
                           style: const TextStyle(
                               color: Colors.white,
                               fontSize: 16,

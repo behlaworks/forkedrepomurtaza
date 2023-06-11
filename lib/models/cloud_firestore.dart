@@ -29,9 +29,17 @@ class DatabaseService {
         'referralID': referralId,
         'referrals': 0
       });
-      if(Constants.referrerEmail != ''){
-          final user = FirebaseFirestore.instance.collection('users').doc(Constants.referrerEmail);
-          user.update({'referrals': FieldValue.increment(1)});
+      final reference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(email)
+          .collection('Completed')
+          .doc('Physics');
+      await reference.set({'1': []});
+      if (Constants.referrerEmail != '') {
+        final user = FirebaseFirestore.instance
+            .collection('users')
+            .doc(Constants.referrerEmail);
+        user.update({'referrals': FieldValue.increment(1)});
       }
 
       return 'success';
@@ -44,7 +52,7 @@ class DatabaseService {
   }
 
   // this function runs when home page opens and fetches the user data to show on the screen.
-  Future<String?> getUser() async {
+  Future getUser() async {
     try {
       var email = FirebaseAuth.instance.currentUser?.email.toString();
       CollectionReference users =
@@ -53,7 +61,7 @@ class DatabaseService {
       final data = snapshot.data() as Map<String, dynamic>;
       Constants.referralId = data['referralID'];
       Constants.numberOfReferrals = data['referrals'];
-      return 'Success';
+      return data;
     } catch (e) {
       return 'Error fetching user';
     }
@@ -86,14 +94,15 @@ class DatabaseService {
       return 'Error fetching user';
     }
   }
+
   Future emailExists(String email) async {
     try {
       CollectionReference users =
-      FirebaseFirestore.instance.collection('users');
+          FirebaseFirestore.instance.collection('users');
       final snapshot = await users.get();
       final data = snapshot.docs;
       for (final user in data) {
-        if(user.id == email){
+        if (user.id == email) {
           return false;
         }
       }
@@ -102,6 +111,7 @@ class DatabaseService {
       return 'Error fetching user';
     }
   }
+
 // This function runs when the video player is opened. It takes the name of the chapter, and fetches all the
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future listOfTopics(String chapter) async {
@@ -193,6 +203,16 @@ class DatabaseService {
       });
       Constants.completedUnits = completed;
       total = [];
+      if (ratios == null) {
+        ratios = List.filled(Constants.physicsChapters.length, 0);
+      } else {
+        print(ratios.length.toString());
+        var sub = Constants.physicsChapters.length;
+        var rat = ratios.length;
+        for (var i = 0; i < (sub - rat); i++) {
+          ratios.add(0);
+        }
+      }
       return ratios;
     } catch (e) {
       if (kDebugMode) {

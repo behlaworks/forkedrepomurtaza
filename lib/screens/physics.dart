@@ -12,19 +12,12 @@ class PhysicsContentPage extends StatefulWidget {
 }
 
 class _PhysicsContentPageState extends State<PhysicsContentPage> {
-  List ratios = [];
-
+List ratios = [];
   @override
   void initState() {
     super.initState();
     DatabaseService().unitCompletionCalculator().then((value) {
-      for (var i = 0; i < Constants.physicsChapters.length; i++) {
-        if (i < value.length) {
-          ratios.add(value[i]);
-        } else {
-          ratios.add(0);
-        }
-      }
+      ratios = value;
       setState(() {
         processing = false;
       });
