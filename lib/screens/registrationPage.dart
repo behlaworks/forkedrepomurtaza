@@ -554,7 +554,39 @@ class _PasswordPageState extends State<PasswordPage> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               const Home()));
+                                            }else{
+                                              setState(() {
+                                                _isProcessing = false;
+                                              });
+                                              var snackBar =SnackBar(
+                                                shape: const RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+                                                backgroundColor: const Color(0xffB4E33D),
+                                                content: Text(
+                                                  result,
+                                                  style: const TextStyle(
+                                                      color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                                ),
+                                              );
+                                              ScaffoldMessenger.of(context)
+                                                  .showSnackBar(snackBar);
                                             }
+                                          } else{
+                                            setState(() {
+                                              _isProcessing = false;
+                                            });
+                                            var snackBar = SnackBar(
+                                              shape: const RoundedRectangleBorder(
+                                                  borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+                                              backgroundColor: const Color(0xffB4E33D),
+                                              content: Text(
+                                                message,
+                                                style: const TextStyle(
+                                                    color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                              ),
+                                            );
+                                            ScaffoldMessenger.of(context)
+                                                .showSnackBar(snackBar);
                                           }
                                         }
                                       }),

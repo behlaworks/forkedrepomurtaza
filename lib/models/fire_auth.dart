@@ -28,7 +28,7 @@ class FireAuth {
     return 'Success';
   }
 
-  static Future<User?> signInUsingEmailPassword({
+  static Future signInUsingEmailPassword({
     required String email,
     required String password,
   }) async {
@@ -44,12 +44,14 @@ class FireAuth {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email.');
+        return 'user not found';
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided.');
+        return 'incorrect password';
       }
     }
 
-    return user;
+    return 'success';
   }
 // static Future<User?> signInWithGoogle({required BuildContext context}) async {
 //   FirebaseAuth auth = FirebaseAuth.instance;

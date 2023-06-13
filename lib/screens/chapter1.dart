@@ -25,7 +25,7 @@ class _TopicsState extends State<Topics> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       loadData();
     });
   }

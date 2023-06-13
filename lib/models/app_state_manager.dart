@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class AppStateManager extends ChangeNotifier {
-  final PreloadPageController _pageController = PreloadPageController(initialPage: 0);
+  final PreloadPageController _pageController =
+      PreloadPageController(initialPage: 0);
+
   PreloadPageController get pageController => _pageController;
   final List _enrolledSubs = ['Physics'];
 
@@ -16,6 +19,7 @@ class AppStateManager extends ChangeNotifier {
     _enrolledSubs.add(sub);
     notifyListeners();
   }
+
   final List _urlList = [];
 
   List get urlList => _urlList;
@@ -24,6 +28,7 @@ class AppStateManager extends ChangeNotifier {
     _urlList.add(url);
     notifyListeners();
   }
+
   bool _initialized = false;
   bool _loggedIn = FirebaseAuth.instance.currentUser == null ? false : true;
 
@@ -55,12 +60,13 @@ class AppStateManager extends ChangeNotifier {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setString('lastSeen', unit);
   }
+
   Future<int> fetchLastSeen() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final String? lastSeen = prefs.getString('lastSeen');
-    if (lastSeen == Null){
+    if (lastSeen == Null) {
       return 0;
-    } else{
+    } else {
       return lastSeen as int;
     }
   }

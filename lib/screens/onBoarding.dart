@@ -1,4 +1,3 @@
-import 'package:a_level_pro/components/common%20ui%20elements/blackButton.dart';
 import 'package:a_level_pro/screens/loginPage.dart';
 import 'package:a_level_pro/screens/registrationPage.dart';
 import 'package:flutter/material.dart';

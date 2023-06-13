@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:preload_page_view/preload_page_view.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Constants{
   static Color dark = const Color(0xff07122a);
@@ -42,6 +43,16 @@ class Constants{
     final randomString = List.generate(15,
             (index) => allChars[random.nextInt(allChars.length)]).join();
     return randomString;    // return the generated string
+  }
+  static Future<String> _extractVideoUrl() async {
+    final extractor = YoutubeExplode();
+    const videoId = 'EysVhq62624';
+    final streamManifest =
+    await extractor.videos.streamsClient.getManifest(videoId);
+    final streamInfo = streamManifest.muxed.withHighestBitrate();
+    extractor.close();
+    print("url: ${streamInfo.url.toString()}");
+    return streamInfo.url.toString();
   }
 
 }

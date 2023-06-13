@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 import '../components/subjectBox.dart';
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
@@ -15,6 +16,17 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
+  @override
+  void initState(){
+    super.initState();
+    final extractor = YoutubeExplode();
+    const videoId = 'CVHo7y9oh9g';
+    extractor.videos.streamsClient.getManifest(videoId).then((value){
+        final streamInfo = value.muxed.withHighestBitrate();
+        extractor.close();
+        print("url: ${streamInfo.url.toString()}");
+    });
+  }
   @override
   Widget build(BuildContext context) {
     final AppStateManager myProvider = Provider.of<AppStateManager>(context);

@@ -1,7 +1,6 @@
 import 'package:a_level_pro/components/common%20ui%20elements/blackButton.dart';
 import 'package:a_level_pro/components/common%20ui%20elements/textField.dart';
 import 'package:a_level_pro/screens/home.dart';
-import 'package:a_level_pro/screens/registrationPage.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -33,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         child: Column(
           children: [
             _processing
-                ? Container(
+                ? SizedBox(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Center(
@@ -41,7 +40,7 @@ class _LoginPageState extends State<LoginPage> {
                       color: Constants.dark,
                       strokeWidth: 3,
                     )))
-                : Container(
+                : SizedBox(
               height: MediaQuery.of(context).size.height,
                   child: Stack(
                       children: [
@@ -140,17 +139,33 @@ class _LoginPageState extends State<LoginPage> {
                                     setState(() {
                                       _processing = true;
                                     });
-                                    User? user =
+                                    var user =
                                         await FireAuth.signInUsingEmailPassword(
                                       email: _emailController.text,
                                       password: _passwordController.text,
                                     );
-                                    if (user != null) {
+                                    if (user == 'success') {
                                       myProvider.login();
                                       Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) => const Home()),
                                       );
+                                    }else{
+                                      setState(() {
+                                        _processing = false;
+                                      });
+                                      var snackBar =SnackBar(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
+                                        backgroundColor: const Color(0xffB4E33D),
+                                        content: Text(
+                                          user,
+                                          style: const TextStyle(
+                                              color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(snackBar);
                                     }
                                   }
                                 },
