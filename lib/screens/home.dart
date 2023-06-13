@@ -37,12 +37,18 @@ class _HomeState extends State<Home> {
   void initState() {
     super.initState();
     DatabaseService().getUser().then((value) {
+      if(value != 'error'){
       name = value['full_name'];
       age = value['age'];
       referralID = value['referralID'];
       setState(() {
         processing = false;
-      });
+      });}
+      else{
+        setState(() {
+          processing = false;
+        });
+      }
     });
   }
 

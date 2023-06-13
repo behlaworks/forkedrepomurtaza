@@ -2,11 +2,22 @@ import 'package:a_level_pro/data/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class DatabaseService {
   // This function runs simultaneously with the registration function in order to create a document of the user
   //The doc id is the email address of the user. It also generates referral code using generateRandomString()
   //function.
+  Future<String> extractVideoUrl(String id) async {
+    final extractor = YoutubeExplode();
+    final videoId = id;
+    final streamManifest =
+        await extractor.videos.streamsClient.getManifest(videoId);
+    final streamInfo = streamManifest.muxed.withHighestBitrate();
+    extractor.close();
+    return streamInfo.url.toString();
+  }
+
   Future addUser({
     required String fullName,
     required String age,
@@ -55,6 +66,7 @@ class DatabaseService {
   Future getUser() async {
     try {
       var email = FirebaseAuth.instance.currentUser?.email.toString();
+      print(email);
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       final snapshot = await users.doc(email).get();
@@ -63,7 +75,7 @@ class DatabaseService {
       Constants.numberOfReferrals = data['referrals'];
       return data;
     } catch (e) {
-      return 'Error fetching user';
+      return 'error';
     }
   }
 
@@ -114,34 +126,34 @@ class DatabaseService {
 
 // This function runs when the video player is opened. It takes the name of the chapter, and fetches all the
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
-  Future listOfTopics(String chapter) async {
-    final List topics = [];
-    final List<String> urls = [];
-    final List<String> units = [];
-    final List<String> titles = [];
-    final List notes = [];
+  Future<String> listOfTopics(String chapter) async {
     try {
-      CollectionReference subjects =
-          FirebaseFirestore.instance.collection('Subjects');
+      CollectionReference subjects = FirebaseFirestore.instance.collection('Subjects');
       final snapshot = await subjects.doc('Physics').collection(chapter).get();
       final data = snapshot.docs;
-      for (final value in data) {
-        topics.add(value.data());
-      }
-      for (final a in topics) {
-        urls.add(a['url'].toString());
+
+      List<Future<String>> extractUrlFutures = [];
+      List<String> units = [];
+      List<String> titles = [];
+      List<dynamic> notes = [];
+
+      for (var value in data) {
+        var a = value.data();
         units.add(a['unit'].toString());
         titles.add(a['title'].toString());
         notes.add(a['notes']);
+        extractUrlFutures.add(extractVideoUrl(a['url']));
       }
-      Constants.urls = urls;
+
+      List<String> links = await Future.wait<String>(extractUrlFutures);
+
+      Constants.urls = links;
       Constants.units = units;
       Constants.titles = titles;
       Constants.notes = notes;
+
+
       return 'Success';
-      // print(PCC.videoURLs.toString());
-      // print(PCC.videoURLs.length);
-      // return topics;
     } catch (e) {
       return 'Fail';
     }
