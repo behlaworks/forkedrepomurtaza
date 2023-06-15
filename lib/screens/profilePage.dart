@@ -11,7 +11,8 @@ class ProfilePage extends StatelessWidget {
   final String name;
   final String age;
   final String refID;
-  const ProfilePage({Key? key, required this.name, required this.age, required this.refID}) : super(key: key);
+  final String intake;
+  const ProfilePage({Key? key, required this.name, required this.age, required this.refID, required this.intake}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -62,9 +63,9 @@ class ProfilePage extends StatelessWidget {
                             color: Colors.white,
                             fontWeight: FontWeight.w900),
                       ),
-                      const Text(
-                        "INTAKE: June '23",
-                        style: TextStyle(
+                      Text(
+                        "INTAKE: $intake",
+                        style: const TextStyle(
                             fontSize: 18,
                             color: Colors.white,
                             fontWeight: FontWeight.w900),

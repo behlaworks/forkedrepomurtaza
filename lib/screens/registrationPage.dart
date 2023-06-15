@@ -383,7 +383,7 @@ class _ReferralPageState extends State<ReferralPage> {
                                               Navigator.of(context).push(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          const PasswordPage()));
+                                                          const CieDatePage()));
                                               setState(() {
                                                 _isProcessing = false;
                                               });
@@ -393,7 +393,7 @@ class _ReferralPageState extends State<ReferralPage> {
                                           Navigator.of(context).push(
                                               MaterialPageRoute(
                                                   builder: (context) =>
-                                                      const PasswordPage()));
+                                                      const CieDatePage()));
                                         }
                                       }),
                                 ),
@@ -546,12 +546,11 @@ class _PasswordPageState extends State<PasswordPage> {
                                           );
                                           if (message.contains('Success')) {
                                             final result =
-                                                await DatabaseService().addUser(
-                                              fullName: Constants.name,
-                                              age: Constants.age,
-                                              email: Constants.email,
-                                            );
+                                                await DatabaseService().addUser();
                                             if (result!.contains('success')) {
+                                              Constants.name = '';
+                                              Constants.age = '';
+                                              Constants.email = '';
                                               myProvider.login();
                                               Navigator.of(context)
                                                   .pushReplacement(
@@ -619,6 +618,157 @@ class _PasswordPageState extends State<PasswordPage> {
                     ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CieDatePage extends StatefulWidget {
+  const CieDatePage({Key? key}) : super(key: key);
+
+  @override
+  State<CieDatePage> createState() => _CieDatePageState();
+}
+
+class _CieDatePageState extends State<CieDatePage> {
+  var placeholder = 'Winter 23';
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              child: Stack(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(25, 50, 0, 0),
+                    child: GestureDetector(
+                      onTap: () => {Navigator.pop(context)},
+                      child: Container(
+                        height: 42,
+                        width: 42,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: Constants.grey),
+                        child: const Center(
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.black,
+                            size: 15,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        "When are you appearing for your examinations?",
+                        style: TextStyle(
+                            color: Constants.dark,
+                            fontSize: 30,
+                            fontWeight: FontWeight.w900),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(
+                        height: 50,
+                      ),
+                      Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                              Radio(
+                                activeColor: Constants.dark,
+                                value: 'Winter 23',
+                                groupValue: placeholder,
+                                onChanged: (value) {
+                                  setState(() {
+                                    placeholder = value!;
+                                  });
+                                },
+                              ),
+                              const SizedBox(width: 10,),
+                              const Text(
+                                'Winter \'23',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                              Radio(
+                                activeColor: Constants.dark,
+                                value: 'Summer 23',
+                                groupValue: placeholder,
+                                onChanged: (value) {
+                                  setState(() {
+                                    placeholder = value!;
+                                  });
+                                },
+                              ),
+                              const SizedBox(width: 10,),
+                              const Text(
+                                'Summer \'23',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              SizedBox(width: MediaQuery.of(context).size.width*0.2,),
+                              Radio(
+                                activeColor: Constants.dark,
+                                value: 'Not confirmed',
+                                groupValue: placeholder,
+                                onChanged: (value) {
+                                  setState(() {
+                                    placeholder = value!;
+                                  });
+                                },
+                              ),
+                              const SizedBox(width: 10,),
+                              const Text(
+                                'Not confirmed',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.w600),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                  Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(25, 0, 25, 25),
+                      child: BlackButton(
+                          text: 'Continue',
+                          onPressed: () {
+                            Constants.examDate = placeholder;
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const PasswordPage()));
+                          }),
+                    ),
+                  ]),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );

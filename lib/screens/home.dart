@@ -23,6 +23,7 @@ class _HomeState extends State<Home> {
   String name = '';
   String age = '';
   String referralID = '';
+  String intake = '';
   int _selectedIndex = 1;
 
   void _onItemTapped(int index) {
@@ -41,6 +42,7 @@ class _HomeState extends State<Home> {
       name = value['full_name'];
       age = value['age'];
       referralID = value['referralID'];
+      intake = value['examSeries'];
       setState(() {
         processing = false;
       });}
@@ -57,7 +59,7 @@ class _HomeState extends State<Home> {
     final List<Widget> widgetOptions = <Widget>[
       const AddSubjectPage(),
       Dashboard(name: name,),
-      ProfilePage(name: name, age: age, refID: referralID,)
+      ProfilePage(name: name, age: age, refID: referralID, intake: intake)
     ];
     return Scaffold(
       body: Center(

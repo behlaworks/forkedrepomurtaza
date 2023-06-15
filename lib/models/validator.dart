@@ -17,7 +17,10 @@ class Validator {
     if (age.isEmpty) {
       return 'Age cannot be empty.';
     }
+    try{
     if(int.parse(age) > 100 || int.parse(age) < 5){
+      return 'Enter a valid age';
+    }} catch(e){
       return 'Enter a valid age';
     }
 

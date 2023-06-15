@@ -18,11 +18,7 @@ class DatabaseService {
     return streamInfo.url.toString();
   }
 
-  Future addUser({
-    required String fullName,
-    required String age,
-    required String email,
-  }) async {
+  Future addUser() async {
     List referrals = [];
     try {
       CollectionReference users =
@@ -34,15 +30,16 @@ class DatabaseService {
       while (referrals.contains(referralId)) {
         referralId = Constants.generateRandomString();
       }
-      await users.doc(email).set({
-        'full_name': fullName,
-        'age': age,
+      await users.doc(Constants.email).set({
+        'full_name': Constants.name,
+        'age': Constants.age,
         'referralID': referralId,
-        'referrals': 0
+        'referrals': 0,
+        'examSeries': Constants.examDate
       });
       final reference = FirebaseFirestore.instance
           .collection('users')
-          .doc(email)
+          .doc(Constants.email)
           .collection('Completed')
           .doc('Physics');
       await reference.set({'1': []});
@@ -128,7 +125,8 @@ class DatabaseService {
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future<String> listOfTopics(String chapter) async {
     try {
-      CollectionReference subjects = FirebaseFirestore.instance.collection('Subjects');
+      CollectionReference subjects =
+          FirebaseFirestore.instance.collection('Subjects');
       final snapshot = await subjects.doc('Physics').collection(chapter).get();
       final data = snapshot.docs;
 
@@ -151,7 +149,6 @@ class DatabaseService {
       Constants.units = units;
       Constants.titles = titles;
       Constants.notes = notes;
-
 
       return 'Success';
     } catch (e) {
@@ -215,16 +212,13 @@ class DatabaseService {
       });
       Constants.completedUnits = completed;
       total = [];
-      if (ratios == null) {
-        ratios = List.filled(Constants.physicsChapters.length, 0);
-      } else {
-        print(ratios.length.toString());
-        var sub = Constants.physicsChapters.length;
-        var rat = ratios.length;
-        for (var i = 0; i < (sub - rat); i++) {
-          ratios.add(0);
-        }
+      print(ratios.length.toString());
+      var sub = Constants.physicsChapters.length;
+      var rat = ratios.length;
+      for (var i = 0; i < (sub - rat); i++) {
+        ratios.add(0);
       }
+
       return ratios;
     } catch (e) {
       if (kDebugMode) {

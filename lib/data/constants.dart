@@ -23,6 +23,7 @@ class Constants{
   static String age = '';
   static String email = '';
   static String referrerEmail = '';
+  static String examDate = '';
 
   static int dayCalculator(DateTime date, int weekday) {
     if(date.weekday > weekday){
