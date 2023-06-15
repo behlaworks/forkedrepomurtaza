@@ -12,7 +12,7 @@ class BackButtonCustom extends StatelessWidget {
         height: 42,
         width: 42,
         decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(8), color: Colors.grey),
+            borderRadius: BorderRadius.circular(8), color: Constants.grey),
         child: const Center(
           child: Icon(
             Icons.arrow_back_ios,

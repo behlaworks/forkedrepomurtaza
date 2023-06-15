@@ -89,6 +89,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
                             inputAction: TextInputAction.done,
                             inputType: TextInputType.number,
                             obscure: false,
+                            validator: (value) =>
+                                Validator.validateAge(age: value),
                           ),
                         ),
                       ],
@@ -347,9 +349,9 @@ class _ReferralPageState extends State<ReferralPage> {
                                     inputAction: TextInputAction.done,
                                     inputType: TextInputType.text,
                                     obscure: false,
-                                    validator: (value) {
-                                      return null;
-                                    }),
+                                    validator: (value) =>
+                                        Validator.validateReferral(
+                                            code: value)),
                               ),
                             ],
                           ),
@@ -499,9 +501,9 @@ class _PasswordPageState extends State<PasswordPage> {
                                     inputAction: TextInputAction.next,
                                     inputType: TextInputType.visiblePassword,
                                     obscure: true,
-                                    validator: (value) {
-                                      return null;
-                                    }),
+                                    validator: (value) =>
+                                        Validator.validatePassword(
+                                            password: value)),
                               ),
                               const SizedBox(
                                 height: 10,
@@ -515,9 +517,11 @@ class _PasswordPageState extends State<PasswordPage> {
                                     inputAction: TextInputAction.done,
                                     inputType: TextInputType.visiblePassword,
                                     obscure: true,
-                                    validator: (value) {
-                                      return null;
-                                    }),
+                                    validator: (value) =>
+                                        Validator.validatePasswordAgain(
+                                            current: value,
+                                            previous:
+                                                _passwordController.text)),
                               ),
                             ],
                           ),
@@ -554,35 +558,53 @@ class _PasswordPageState extends State<PasswordPage> {
                                                       MaterialPageRoute(
                                                           builder: (context) =>
                                                               const Home()));
-                                            }else{
+                                            } else {
                                               setState(() {
                                                 _isProcessing = false;
                                               });
-                                              var snackBar =SnackBar(
-                                                shape: const RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
-                                                backgroundColor: const Color(0xffB4E33D),
+                                              var snackBar = SnackBar(
+                                                shape:
+                                                    const RoundedRectangleBorder(
+                                                        borderRadius:
+                                                            BorderRadius.vertical(
+                                                                top: Radius
+                                                                    .circular(
+                                                                        12))),
+                                                backgroundColor:
+                                                    const Color(0xffB4E33D),
                                                 content: Text(
                                                   result,
                                                   style: const TextStyle(
-                                                      color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                                      color: Colors.black,
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                          FontWeight.w600),
                                                 ),
                                               );
                                               ScaffoldMessenger.of(context)
                                                   .showSnackBar(snackBar);
                                             }
-                                          } else{
+                                          } else {
                                             setState(() {
                                               _isProcessing = false;
                                             });
                                             var snackBar = SnackBar(
-                                              shape: const RoundedRectangleBorder(
-                                                  borderRadius: BorderRadius.vertical(top: Radius.circular(12))),
-                                              backgroundColor: const Color(0xffB4E33D),
+                                              shape:
+                                                  const RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.vertical(
+                                                              top: Radius
+                                                                  .circular(
+                                                                      12))),
+                                              backgroundColor:
+                                                  const Color(0xffB4E33D),
                                               content: Text(
                                                 message,
                                                 style: const TextStyle(
-                                                    color: Colors.black, fontSize: 15, fontWeight: FontWeight.w600),
+                                                    color: Colors.black,
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                        FontWeight.w600),
                                               ),
                                             );
                                             ScaffoldMessenger.of(context)

@@ -18,7 +18,6 @@ class Topics extends StatefulWidget {
 
 class _TopicsState extends State<Topics> {
   final c = Get.put(PCC());
-  final GlobalKey<ScaffoldState> _key = GlobalKey();
   bool processing = true;
   int lastSeen = 0;
 
@@ -50,8 +49,6 @@ class _TopicsState extends State<Topics> {
         return true;
       },
       child: Scaffold(
-        key: _key,
-        endDrawer: const Drawer(),
         body: SizedBox(
           child: processing
               ? Container(

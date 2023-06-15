@@ -5,9 +5,10 @@ import '../data/constants.dart';
 class PCC extends GetxController {
   int _api = 0;
   List<VideoPlayerController?> videoPlayerControllers = [];
-  List<int> initilizedIndexes = [];
+  List<int> _initializedIndexes = [];
   bool autoplay = true;
   int get api => _api;
+  List<int> get initializedIndexes => _initializedIndexes;
 
   void updateAPI(int i) {
     if (videoPlayerControllers[_api] != null) {
@@ -41,7 +42,7 @@ class PCC extends GetxController {
     }
 
     videoPlayerControllers[i] = singleVideoController;
-    initilizedIndexes.add(i);
+    initializedIndexes.add(i);
 
     for (var e in videoPlayerControllers) {
       if (e != null) {
@@ -52,10 +53,25 @@ class PCC extends GetxController {
     }
 
     print("videoPlayerControllers: ${hello.toString()}");
-    print("initialized Indexes: ${initilizedIndexes.toString()}");
+    print("initialized Indexes: ${initializedIndexes.toString()}");
 
     await videoPlayerControllers[i]!.initialize();
     update();
+
+    // Preload adjacent videos
+    await preloadAdjacentVideos(i);
+  }
+
+  Future preloadAdjacentVideos(int currentIndex) async {
+    // Preload video one before the current video
+    if (currentIndex > 0) {
+      await initializeIndexedController(currentIndex - 1);
+    }
+
+    // Preload video one after the current video
+    if (currentIndex < Constants.urls.length - 1) {
+      await initializeIndexedController(currentIndex + 1);
+    }
   }
 
   Future initializeIndexedController(int index) async {
@@ -77,7 +93,17 @@ class PCC extends GetxController {
       videoPlayerControllers[i] = null;
     }
   }
-  Future disposeAll() async{
+
+  Future<void> disposeAllExceptTarget(int targetIndex) async {
+    // Dispose all video controllers except the target video
+    for (int i = 0; i < videoPlayerControllers.length; i++) {
+      if (i != targetIndex) {
+        await disposeController(i);
+      }
+    }
+  }
+
+  Future disposeAll() async {
     // Create a copy of the list to avoid modifying it while iterating
     final List<VideoPlayerController?> controllersCopy = List.from(videoPlayerControllers);
 
@@ -88,21 +114,11 @@ class PCC extends GetxController {
 
     // Clear the original list
     videoPlayerControllers.clear();
-    initilizedIndexes.clear();
+    initializedIndexes.clear();
     _api = 0;
     update();
     print(" _api : ${_api.toString()}");
-    print("initialized indexes: ${initilizedIndexes.toString()}");
+    print("initialized indexes: ${initializedIndexes.toString()}");
     print("videoPlayerController: ${videoPlayerControllers.toString()}");
   }
-
-  final List<String> videoURLs = [
-    'https://assets.mixkit.co/videos/preview/mixkit-young-mother-with-her-little-daughter-decorating-a-christmas-tree-39745-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-mother-with-her-little-daughter-eating-a-marshmallow-in-nature-39764-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-taking-photos-from-different-angles-of-a-model-34421-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-girl-in-neon-sign-1232-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-winter-fashion-cold-looking-woman-concept-video-39874-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-womans-feet-splashing-in-the-pool-1261-large.mp4',
-    'https://assets.mixkit.co/videos/preview/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4'
-  ];
 }

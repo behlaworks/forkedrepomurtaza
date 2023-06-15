@@ -10,6 +10,55 @@ class Validator {
     return null;
   }
 
+  static String? validateAge({required String? age}) {
+    if (age == null) {
+      return null;
+    }
+    if (age.isEmpty) {
+      return 'Age cannot be empty.';
+    }
+    if(int.parse(age) > 100 || int.parse(age) < 5){
+      return 'Enter a valid age';
+    }
+
+    return null;
+  }
+  static String? validateReferral({required String? code}) {
+    if (code == null) {
+      return null;
+    }
+    if(code.isEmpty){
+      return null;
+    }
+    if (code.length < 15) {
+      return 'invalid referral code';
+    }
+
+    return null;
+  }
+  static String? validatePassword({required String? password}) {
+    if (password == null) {
+      return null;
+    }
+    if (password.length < 8) {
+      return 'min. 8 characters for password ';
+    }
+
+    return null;
+  }
+  static String? validatePasswordAgain({required String? current, required String? previous}) {
+    if (current == null) {
+      return null;
+    }
+    if (current.isEmpty){
+      return 'Cannot be empty';
+    }
+    if (current != previous) {
+      return 'passwords do not match.';
+    }
+
+    return null;
+  }
   static String? validateEmail({required String? email}) {
     if (email == null) {
       return null;
@@ -26,16 +75,4 @@ class Validator {
     return null;
   }
 
-  static String? validatePassword({required String? password}) {
-    if (password == null) {
-      return null;
-    }
-    if (password.isEmpty) {
-      return 'Password can\'t be empty';
-    } else if (password.length < 6) {
-      return 'Enter a password with length at least 6';
-    }
-
-    return null;
-  }
 }
