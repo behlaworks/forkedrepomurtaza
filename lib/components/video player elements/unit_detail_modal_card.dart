@@ -144,9 +144,14 @@ class _UnitDetailModalCardState extends State<UnitDetailModalCard> {
           ),
           GestureDetector(
             onTap: () {
-              DatabaseService()
-                  .updateUnitComplete(widget.unit)
-                  .then((value) => setState(() {}));
+              if (!completed) {
+                DatabaseService()
+                    .updateUnitComplete(widget.unit)
+                    .then((value) => setState(() {}));
+                Navigator.pop(context);
+              } else {
+                Navigator.pop(context);
+              }
             },
             child: Container(
               height: 45,
@@ -154,31 +159,35 @@ class _UnitDetailModalCardState extends State<UnitDetailModalCard> {
               decoration: BoxDecoration(
                   color: Colors.white, borderRadius: BorderRadius.circular(12)),
               child: Center(
-                child:
-                !completed? const Text(
-                  'Mark Complete',
-                  style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700,
-                      color: Colors.black),
-                ):
-                 const Padding(
-                   padding: EdgeInsets.all(8.0),
-                   child: Row(
-                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                     children: [
-                       Text(
-                         'Completed',
-                         style: TextStyle(
-                             fontSize: 18,
-                             fontWeight: FontWeight.w700,
-                             color: Colors.black),
-                       ),
-                       Icon(Icons.done, size: 30, color: Colors.green, weight: 15,)
-                     ],
-                   ),
-                 )
-              ),
+                  child: !completed
+                      ? const Text(
+                          'Mark Complete',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w700,
+                              color: Colors.black),
+                        )
+                      : const Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Completed',
+                                style: TextStyle(
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.w700,
+                                    color: Colors.black),
+                              ),
+                              Icon(
+                                Icons.done,
+                                size: 30,
+                                color: Colors.green,
+                                weight: 15,
+                              )
+                            ],
+                          ),
+                        )),
             ),
           )
         ],

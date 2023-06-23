@@ -82,7 +82,7 @@ class _CalenderState extends State<Calender> {
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.5,
                 child: const Center(
-                  child:Text('Feature coming soon!', style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),),
+                  child:Text('Start tracking to schedule your academic year!',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),),
                 ),
               )
 
