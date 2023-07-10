@@ -7,34 +7,19 @@ import '../data/constants.dart';
 import '../models/cloud_firestore.dart';
 import '../models/videoController.dart';
 
-class Topics extends StatefulWidget {
-  final String name;
+class TopicsPlayer extends StatefulWidget {
+  final int index;
 
-  const Topics({Key? key, required this.name}) : super(key: key);
+  const TopicsPlayer({Key? key, required this.index}) : super(key: key);
 
   @override
-  State<Topics> createState() => _TopicsState();
+  State<TopicsPlayer> createState() => _TopicsPlayerState();
 }
 
-class _TopicsState extends State<Topics> {
+class _TopicsPlayerState extends State<TopicsPlayer> {
   final c = Get.put(PCC());
-  bool processing = true;
+  bool processing = false;
   int lastSeen = 0;
-
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      loadData();
-    });
-  }
-
-  Future<void> loadData() async {
-    await DatabaseService().listOfTopics(widget.name);
-    setState(() {
-      processing = false;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

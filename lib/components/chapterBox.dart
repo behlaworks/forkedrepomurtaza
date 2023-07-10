@@ -1,12 +1,14 @@
-import 'package:a_level_pro/screens/chapter1.dart';
+import 'package:a_level_pro/screens/topicsPlayer.dart';
 import 'package:flutter/material.dart';
 import '../data/constants.dart';
+import '../screens/topics.dart';
 
 class ChapterBox extends StatefulWidget {
   final String name;
   final num ratio;
+  final int unit;
 
-  const ChapterBox({Key? key, required this.name, required this.ratio})
+  const ChapterBox({Key? key, required this.name, required this.ratio, required this.unit})
       : super(key: key);
 
   @override
@@ -27,11 +29,17 @@ class _ChapterBoxState extends State<ChapterBox> {
           onTap: () async {
             widget.name == 'Physical quantities and units' || Constants.numberOfReferrals > 4
                 ? Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => Topics(
-                              name: widget.name,
-                            )))
+                context,
+                MaterialPageRoute(
+                    builder: (context) => Topics(
+                      unit: widget.unit,
+                    )))
+                // ? Navigator.push(
+                //     context,
+                //     MaterialPageRoute(
+                //         builder: (context) => TopicsPlayer(
+                //               name: widget.name,
+                //             )))
                 : showDialog(
                     context: context,
                     builder: (BuildContext context) {

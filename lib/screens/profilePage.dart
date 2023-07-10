@@ -1,10 +1,8 @@
 import 'package:a_level_pro/components/common%20ui%20elements/blackButton.dart';
-import 'package:a_level_pro/screens/startTracking.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
 
@@ -43,7 +41,7 @@ class ProfilePage extends StatelessWidget {
           body: SingleChildScrollView(
               child: Column(children: [
             Container(
-                height: MediaQuery.of(context).size.height * 0.36,
+                height: MediaQuery.of(context).size.height * 0.27,
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
                     color: Constants.dark,
@@ -51,12 +49,9 @@ class ProfilePage extends StatelessWidget {
                         bottomLeft: Radius.circular(20),
                         bottomRight: Radius.circular(20))),
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    const SizedBox(
-                      height: 40,
-                    ),
                     SizedBox(
                       width: MediaQuery.of(context).size.width * 0.7,
                       height: MediaQuery.of(context).size.height * 0.2,
@@ -68,7 +63,7 @@ class ProfilePage extends StatelessWidget {
                             height: 100,
                           ),
                           const SizedBox(
-                            width: 40,
+                            width: 70,
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -96,143 +91,6 @@ class ProfilePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    Container(
-                        alignment: Alignment.center,
-                        width: MediaQuery.of(context).size.width * 0.8,
-                        height: MediaQuery.of(context).size.height * 0.09,
-                        child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Material(
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(8)),
-                                child: InkWell(
-                                  onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => const StartTracking()));
-                                  },
-                                  splashColor: Colors.amber,
-                                  child: Ink(
-                                    width: MediaQuery.of(context).size.width *
-                                        0.65,
-                                    height: 45,
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8)),
-                                    child: const Center(
-                                      child: Text(
-                                        'Start tracking',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 17,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  showDialog(
-                                      context: context,
-                                      builder: (BuildContext context) {
-                                        return AlertDialog(
-                                          scrollable: true,
-                                          backgroundColor: const Color(0xffB4E33D),
-                                          shape: const RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(12))),
-                                          title: const Center(
-                                              child: Text(
-                                            "What is 'Start tracking' ?",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontSize: 20,
-                                                fontWeight: FontWeight.w900),
-                                          )),
-                                          content: SizedBox(
-                                              height: MediaQuery.of(context)
-                                                      .size
-                                                      .height *
-                                                  0.4,
-                                              child: const Center(
-                                                  child: SingleChildScrollView(
-                                                child: Column(
-                                                  children: [
-                                                    Text(
-                                                        "Introducing the revolutionary 'Start Tracking' feature, a game-changer in student productivity and progress monitoring.",
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w800)),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Text(
-                                                        "This intelligent tool effortlessly manages subjects, examination dates, and syllabus completion, ensuring optimal time allocation for comprehensive coverage. By leveraging advanced algorithms, it divides the syllabus into manageable study slots, reducing overwhelm and creating a structured plan.",
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w800)),
-                                                    SizedBox(
-                                                      height: 8,
-                                                    ),
-                                                    Text(
-                                                        "Furthermore, 'Start Tracking' provides insightful analytics, offering students in-depth performance metrics and progress tracking, empowering them to make informed decisions, customize their approach, and maximize their learning potential. With 'Start Tracking', students embark on a guided journey to academic excellence, unlocking their true potential and achieving success one step at a time.",
-                                                        textAlign:
-                                                            TextAlign.start,
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w800)),
-                                                  ],
-                                                ),
-                                              ))),
-                                          actions: [
-                                            Center(
-                                              child: ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                style: ButtonStyle(
-                                                    fixedSize:
-                                                        MaterialStateProperty
-                                                            .all(const Size
-                                                                    .fromWidth(
-                                                                200)),
-                                                    backgroundColor:
-                                                        MaterialStateProperty
-                                                            .all(Colors.black)),
-                                                child: const Text(
-                                                  "Back",
-                                                  style: TextStyle(
-                                                      color: Colors.white,
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        );
-                                      });
-                                },
-                                child: Image.asset(
-                                  'assets/question-mark.png',
-                                  height: 24,
-                                ),
-                              )
-                            ]))
                   ],
                 )),
             const SizedBox(
@@ -291,7 +149,7 @@ class ProfilePage extends StatelessWidget {
               ),
             ),
             SizedBox(
-              height: MediaQuery.of(context).size.height * 0.27,
+              height: MediaQuery.of(context).size.height * 0.37,
             ),
             Padding(
               padding: const EdgeInsets.fromLTRB(15, 0, 15, 15),

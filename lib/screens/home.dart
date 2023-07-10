@@ -1,4 +1,5 @@
 import 'package:a_level_pro/screens/addSubjectPage.dart';
+import 'package:a_level_pro/screens/chatBot.dart';
 import 'package:a_level_pro/screens/dashboard.dart';
 import 'package:a_level_pro/screens/profilePage.dart';
 import 'package:flutter/material.dart';
@@ -57,7 +58,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> widgetOptions = <Widget>[
-      const AddSubjectPage(),
+      ChatbotPage(),
       Dashboard(name: name,),
       ProfilePage(name: name, age: age, refID: referralID, intake: intake)
     ];
