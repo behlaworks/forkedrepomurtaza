@@ -1,5 +1,5 @@
-import 'package:a_level_pro/screens/loginPage.dart';
-import 'package:a_level_pro/screens/registrationPage.dart';
+import 'package:aire/screens/loginPage.dart';
+import 'package:aire/screens/registrationPage.dart';
 import 'package:flutter/material.dart';
 
 import '../data/constants.dart';

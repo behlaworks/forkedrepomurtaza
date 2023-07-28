@@ -29,7 +29,7 @@ class PCC extends GetxController {
     }
 
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.network(Constants.urls[i]);
+    singleVideoController = VideoPlayerController.networkUrl(Constants.urls[i]);
 
     if (videoPlayerControllers.length <= i) {
       // Expand the list to accommodate the new index
@@ -79,7 +79,7 @@ class PCC extends GetxController {
       if (videoPlayerControllers[index] == null) {
         late VideoPlayerController singleVideoController;
         print('$index : ${videoPlayerControllers.length}');
-        singleVideoController = VideoPlayerController.network(Constants.urls[index]);
+        singleVideoController = VideoPlayerController.networkUrl(Constants.urls[index]);
         videoPlayerControllers[index] = singleVideoController;
         await videoPlayerControllers[index]!.initialize();
         update();

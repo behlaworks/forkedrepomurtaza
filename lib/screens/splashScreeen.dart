@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:a_level_pro/models/pages.dart';
+import 'package:aire/models/pages.dart';
 
 import '../models/app_state_manager.dart';
 
@@ -47,7 +47,6 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xff07122a),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,7 +58,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 width: _width,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage('assets/A-level Pro.png'), fit: BoxFit.cover),),
+                      image: AssetImage('assets/logo.png'), fit: BoxFit.cover),),
               ),
             ),
           ],

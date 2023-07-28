@@ -1,4 +1,4 @@
-import 'package:a_level_pro/screens/physics.dart';
+import 'package:aire/screens/physics.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../data/constants.dart';
@@ -116,31 +116,57 @@ class _SubjectBoxDashState extends State<SubjectBoxDash> {
             )
           },
           child: Container(
-            height: 120,
-            width: 120,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(12),
-              color: Constants.dark,
-            ),
-            child: Center(
-              child: Text(
-                widget.name.substring(0, 3),
-                style: const TextStyle(
-                    color: Colors.white,
-                    fontSize: 30,
-                    fontWeight: FontWeight.bold),
+              height: 80,
+              width: MediaQuery.of(context).size.width * 0.9,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(12),
+                color: const Color(0xffA6CFD5),
               ),
-            ),
-          ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        width: 80,
+                        height: 80,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Colors.white,
+                        ),
+                        child: Center(
+                          child: Image.asset(
+                            'assets/atom.png',
+                            height: 60,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        width: 20,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            widget.name,
+                            style: const TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.w600),
+                          ),
+                          const Text(
+                            "5 videos",
+                            style: TextStyle(fontSize: 13),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                    child: Image.asset("assets/next.png", height: 30,),
+                  )
+                ],
+              )),
         ),
-        Padding(
-          padding: const EdgeInsets.fromLTRB(5, 5, 0, 0),
-          child: Text(
-            widget.name,
-            style: const TextStyle(
-                fontSize: 15, color: Colors.black, fontWeight: FontWeight.bold),
-          ),
-        )
       ],
     );
   }

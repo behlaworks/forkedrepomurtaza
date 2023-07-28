@@ -1,10 +1,10 @@
-import 'package:a_level_pro/screens/topicsPlayer.dart';
+import 'package:aire/screens/topicsPlayer.dart';
+import 'package:aire/screens/unit.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
 import '../components/common ui elements/backButton.dart';
 import '../data/constants.dart';
 import '../models/cloud_firestore.dart';
-import '../models/videoController.dart';
 
 class Topics extends StatefulWidget {
   final int unit;
@@ -37,79 +37,82 @@ class _TopicsState extends State<Topics> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: processing
-          ? Center(
-              child: CircularProgressIndicator(
-                color: Constants.dark,
-                strokeWidth: 4,
-              ),
-            )
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * .29,
-                  decoration: const BoxDecoration(
-                      borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20)),
-                      color: Color(0xff0b2667)),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      const Padding(
-                        padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
-                        child: BackButtonCustom(),
-                      ),
-                      SizedBox(
-                        height: MediaQuery.of(context).size.height * 0.1,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(20, 0, 0, 20),
-                        child: Text(
-                          "Unit ${widget.unit.toString()}",
-                          style: const TextStyle(
-                              fontSize: 30,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                    ],
-                  ),
+        body: processing
+            ? Center(
+                child: CircularProgressIndicator(
+                  color: Constants.dark,
+                  strokeWidth: 4,
                 ),
-                SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height * 0.6975,
-                  child: ContainedTabBarView(
-                    tabBarProperties:
-                        TabBarProperties(indicatorColor: Constants.dark),
-                    tabs: const [
-                      Text('Sub topics',
-                          style: TextStyle(
-                            color: Colors.black,
-                          )),
-                      Text('Practice', style: TextStyle(color: Colors.black))
-                    ],
-                    views: const [
-                      SubTopicList(),
-                      Center(
-                        child: Text(
-                          'Practice unit 1.',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w700),
-                        ),
+              )
+            : SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'assets/nextrev.png',
+                              height: 30,
+                            ),
+                          )
+                        ],
                       ),
-                    ],
-                    onChange: (index) => print(index),
-                  ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      height: 180,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(15.0),
+                            child: Container(
+                              height: 70,
+                              width: 70,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(8),
+                                  color: Colors.white),
+                              child: Center(
+                                  child: Image.asset(
+                                'assets/atom.png',
+                                height: 50,
+                              )),
+                            ),
+                          ),
+                          const Text(
+                            "Physics",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w600, fontSize: 18),
+                          ),
+                          const SizedBox(height: 5,),
+                          Text(
+                              "Unit ${widget.unit} : ${Constants.physicsChapters[widget.unit - 1]}")
+                        ],
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        height: MediaQuery.of(context).size.height * 0.63,
+                        child: const SubTopicList()),
+                  ],
                 ),
-              ],
-            ),
-    );
+              ));
   }
 }
 
@@ -118,75 +121,67 @@ class SubTopicList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const SizedBox(
-          height: 20,
-        ),
-        for (var i = 0; i < Constants.titles.length; i++)
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => TopicsPlayer(index: i,)));
-              },
-              child: Container(
-                width: MediaQuery.of(context).size.width * 0.95,
-                height: 64,
-                decoration: BoxDecoration(
-                    color: Colors.black,
-                    // color: const Color(0xffF2F5FF),
-                    borderRadius: BorderRadius.circular(25),
-                    border: Border.all(color: Colors.transparent, width: 3)),
+    return SizedBox(
+      // height: MediaQuery.of(context).size.height * 0.7,
+      width: MediaQuery.of(context).size.width * 0.7,
+      child: ListView(
+        children: [
+          for (var i = 0; i < Constants.titles.length; i++)
+            Padding(
+                padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            (i + 1).toString(),
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Container(
-                            height: 40,
-                            decoration: BoxDecoration(
-                                color: Constants.completedUnits
-                                    .contains(Constants.units[i])
-                                    ? const Color(0xffB4E33D)
-                                    : Colors.white, shape: BoxShape.circle),
-                            child: const Icon(
-                              Icons.play_arrow,
-                              size: 30,
-                              color: Colors.black,
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Container(
+                      clipBehavior: Clip.hardEdge,
+                      height: 75,
+                      width: MediaQuery.of(context).size.width * 0.8,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: const Color(0xffECCFC3)),
+                      child: InkWell(
+                        onTap: () async {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => UnitPage(unit: i,)));
+                          // Navigator.push(
+                          //     context,
+                          //     MaterialPageRoute(
+                          //         builder: (context) => TopicsPlayer(
+                          //               index: i,
+                          //             )));
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
+                              children: [
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  (i + 1).toString(),
+                                  style: const TextStyle(
+                                      fontSize: 17,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  Constants.titles[i],
+                                  style: const TextStyle(
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                              ],
                             ),
-                          ),
-                          const SizedBox(width: 10,),
-                          Text(
-                            "${Constants.titles[i]}",
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w600),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          )
-      ],
+                          ],
+                        ),
+                      )),
+                )),
+        ],
+      ),
     );
   }
 }

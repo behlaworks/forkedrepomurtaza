@@ -1,4 +1,4 @@
-import 'package:a_level_pro/data/constants.dart';
+import 'package:aire/data/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -187,12 +187,14 @@ class DatabaseService {
       List ratios = [];
       List completed = [];
       List total = [];
+      int hello = 0;
       var email = FirebaseAuth.instance.currentUser?.email.toString();
       final reference2 =
           FirebaseFirestore.instance.collection('Subjects').doc('Physics');
       final snapshot2 = await reference2.get();
       final data2 = snapshot2.data() as Map<String, dynamic>;
       data2.forEach((key, value) {
+        hello += int.parse(value);
         total.add(value.toString());
       });
       final reference = FirebaseFirestore.instance
@@ -209,17 +211,17 @@ class DatabaseService {
           count++;
         }
         ratios.add(count / (int.parse(data2[key])));
+
       });
       Constants.completedUnits = completed;
       total = [];
-      print(ratios.length.toString());
       var sub = Constants.physicsChapters.length;
       var rat = ratios.length;
       for (var i = 0; i < (sub - rat); i++) {
         ratios.add(0);
       }
-
-      return ratios;
+      var x = (completed.length/hello) * 100;
+      return x;
     } catch (e) {
       if (kDebugMode) {
         print(e.toString());

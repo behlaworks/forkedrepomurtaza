@@ -1,7 +1,5 @@
-import 'package:a_level_pro/components/common%20ui%20elements/backButton.dart';
-import 'package:a_level_pro/models/cloud_firestore.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
+import 'package:aire/models/cloud_firestore.dart';
 import '../components/chapterBox.dart';
 import '../data/constants.dart';
 
@@ -13,13 +11,13 @@ class PhysicsContentPage extends StatefulWidget {
 }
 
 class _PhysicsContentPageState extends State<PhysicsContentPage> {
-  List ratios = [];
+  int completedPercent = 0;
 
   @override
   void initState() {
     super.initState();
     DatabaseService().unitCompletionCalculator().then((value) {
-      ratios = value;
+      completedPercent = value.toInt();
       setState(() {
         processing = false;
       });
@@ -38,87 +36,175 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                   strokeWidth: 4,
                 ),
               )
-            : Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * .29,
-                    decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20),
-                            bottomRight: Radius.circular(20)),
-                        color: Color(0xff0b2667)),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(20, 30, 0, 0),
-                          child: BackButtonCustom(),
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.1,
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.fromLTRB(20, 0, 0, 20),
-                          child: Text(
-                            "Physics",
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ],
+            : SafeArea(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.pop(context);
+                            },
+                            child: Image.asset(
+                              'assets/nextrev.png',
+                              height: 30,
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.6975,
-                    child: ContainedTabBarView(
-                      tabBarProperties:
-                          TabBarProperties(indicatorColor: Constants.dark),
-                      tabs: const [
-                        Text('Units',
-                            style: TextStyle(
-                              color: Colors.black,
-                            )),
-                        Text('Past Papers',
-                            style: TextStyle(color: Colors.black))
-                      ],
-                      views: [
-                        Content(ratios: ratios),
-                        const Center(
-                          child: Text(
-                            'Past Papers coming soon',
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                      ],
-                      onChange: (index) => print(index),
+                    const SizedBox(
+                      height: 10,
                     ),
-                  ),
-                ],
+                    Container(
+                      height: 180,
+                      width: MediaQuery.of(context).size.width * 0.9,
+                      decoration: BoxDecoration(
+                          color: Colors.grey[300],
+                          borderRadius: BorderRadius.circular(25)),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(15.0),
+                                    child: Container(
+                                      height: 70,
+                                      width: 70,
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(8),
+                                          color: Colors.white),
+                                      child: Center(
+                                          child: Image.asset(
+                                        'assets/atom.png',
+                                        height: 50,
+                                      )),
+                                    ),
+                                  ),
+                                  const Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        "Physics",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w700, fontSize: 18),
+                                      ),
+                                      Text(
+                                        "5 videos",
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500, fontSize: 13),
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xfff2f3f7),
+                                        borderRadius: BorderRadius.circular(30)
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Text("$completedPercent% Completed", style: const TextStyle(fontSize: 12),),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Container(
+                                  height: 40,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: Colors.white
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                      "Units",
+                                      style: TextStyle(
+                                        fontSize: 12
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                        "Practice",
+                                        style: TextStyle(
+                                        fontSize: 12
+                                    ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  height: 40,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: Colors.white
+                                  ),
+                                  child: const Center(
+                                    child: Text(
+                                        "Past Papers",
+                                      style: TextStyle(
+                                          fontSize: 10
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                    const SizedBox(height: 20,),
+                    SizedBox(
+                      width: MediaQuery.of(context).size.width * 0.95,
+                      height: MediaQuery.of(context).size.height * 0.63,
+                      child: const Content()
+                    ),
+                  ],
+                ),
               ));
   }
 }
 
 class Content extends StatelessWidget {
-  final List ratios;
 
-  const Content({Key? key, required this.ratios}) : super(key: key);
+  const Content({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.of(context).size.height * 0.7,
+      // height: MediaQuery.of(context).size.height * 0.7,
+      width: MediaQuery.of(context).size.width * 0.7,
       child: ListView(
         children: [
           for (var i = 0; i < Constants.physicsChapters.length; i++)
@@ -126,9 +212,9 @@ class Content extends StatelessWidget {
                 padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
                 child: ChapterBox(
                   name: Constants.physicsChapters[i],
-                  ratio: ratios[i],
-                  unit: i+1,
+                  unit: i + 1,
                 )),
+
         ],
       ),
     );

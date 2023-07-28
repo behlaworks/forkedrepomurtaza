@@ -1,4 +1,4 @@
-import 'package:a_level_pro/components/weekDisplay.dart';
+import 'package:aire/components/weekDisplay.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../data/constants.dart';

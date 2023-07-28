@@ -1,4 +1,4 @@
-import 'package:a_level_pro/data/constants.dart';
+import 'package:aire/data/constants.dart';
 import 'package:flutter/material.dart';
 
 class WeekDisplay extends StatefulWidget {

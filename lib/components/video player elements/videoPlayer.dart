@@ -1,5 +1,5 @@
-import 'package:a_level_pro/components/video%20player%20elements/unit_box.dart';
-import 'package:a_level_pro/components/video%20player%20elements/unit_detail_modal_card.dart';
+import 'package:aire/components/video%20player%20elements/unit_box.dart';
+import 'package:aire/components/video%20player%20elements/unit_detail_modal_card.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

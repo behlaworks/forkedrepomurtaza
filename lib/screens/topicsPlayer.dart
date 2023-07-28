@@ -1,5 +1,5 @@
-import 'package:a_level_pro/components/video%20player%20elements/videoPlayer.dart';
-import 'package:a_level_pro/models/app_state_manager.dart';
+import 'package:aire/components/video%20player%20elements/videoPlayer.dart';
+import 'package:aire/models/app_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
