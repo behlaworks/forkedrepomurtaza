@@ -55,6 +55,7 @@ class _HomeState extends State<Home> {
       // ProfilePage(name: name, age: age, refID: referralID, intake: intake)
     ];
     return Scaffold(
+      backgroundColor: const Color(0xfff2f3f7),
       body: Center(
         child: !processing
             ? widgetOptions.elementAt(_selectedIndex)
@@ -108,8 +109,8 @@ class _HomeState extends State<Home> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset('assets/house.png', height: 30,),
-                              const Text('Home', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),)
+                              Image.asset('assets/diamond.png', height: 30,),
+                              const Text('Premium', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),)
                             ],
                           ),
                         ),

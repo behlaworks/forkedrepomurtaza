@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:video_player/video_player.dart';
-import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 import '../data/constants.dart';
+import '../models/cloud_firestore.dart';
 
 class UnitPage extends StatefulWidget {
   final int unit;
@@ -40,6 +41,8 @@ class _UnitPageState extends State<UnitPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool completed =
+        Constants.completedUnits.contains(Constants.units[widget.unit]);
     return Scaffold(
       backgroundColor: const Color(0xfff2f3f7),
       body: SafeArea(
@@ -64,7 +67,7 @@ class _UnitPageState extends State<UnitPage> {
               ),
             ),
             Text(
-              "${Constants.units[widget.unit]} : ${Constants.physicsChapters[widget.unit]}",
+              "${Constants.units[widget.unit]} : ${Constants.titles[widget.unit]}",
               style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
             ),
             const SizedBox(
@@ -88,14 +91,31 @@ class _UnitPageState extends State<UnitPage> {
             ),
             Padding(
               padding: const EdgeInsets.all(23.0),
-              child: Container(
-                height: 60,
-                width: MediaQuery.of(context).size.width * 0.8,
-                decoration: BoxDecoration(
-                    color: Colors.deepOrangeAccent,
-                    borderRadius: BorderRadius.circular(12)),
-                child: const Center(
-                  child: Text("Mark Complete"),
+              child: GestureDetector(
+                onTap: () {
+                  print("💖💖💖💖💖💖💖💖💖💖");
+                  if (!completed) {
+                    DatabaseService()
+                        .updateUnitComplete((Constants.units[widget.unit]))
+                        .then((value) => setState(() {
+                              completed = true;
+                            }));
+                  }
+                },
+                child: Container(
+                  height: 60,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                      color: !completed
+                          ? const Color(0xffEFD28D)
+                          : const Color(0xff55D6BE),
+                      borderRadius: BorderRadius.circular(12)),
+                  child: Center(
+                    child: Text(
+                      !completed ? "Mark Complete?" : "Completed 👍",
+                      style: const TextStyle(fontWeight: FontWeight.w600),
+                    ),
+                  ),
                 ),
               ),
             )

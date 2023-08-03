@@ -12,6 +12,7 @@ class PhysicsContentPage extends StatefulWidget {
 
 class _PhysicsContentPageState extends State<PhysicsContentPage> {
   int completedPercent = 0;
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -28,6 +29,12 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
 
   @override
   Widget build(BuildContext context) {
+    final List<Widget> widgetOptions = <Widget>[
+      const Content(),
+      const Practice(),
+      const PastPapers()
+      // ProfilePage(name: name, age: age, refID: referralID, intake: intake)
+    ];
     return Scaffold(
         body: processing
             ? Center(
@@ -79,7 +86,8 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                       height: 70,
                                       width: 70,
                                       decoration: BoxDecoration(
-                                          borderRadius: BorderRadius.circular(8),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
                                           color: Colors.white),
                                       child: Center(
                                           child: Image.asset(
@@ -89,17 +97,20 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                     ),
                                   ),
                                   const Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Text(
                                         "Physics",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w700, fontSize: 18),
+                                            fontWeight: FontWeight.w700,
+                                            fontSize: 18),
                                       ),
                                       Text(
                                         "5 videos",
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500, fontSize: 13),
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 13),
                                       ),
                                     ],
                                   )
@@ -112,12 +123,15 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                        color: const Color(0xfff2f3f7),
-                                        borderRadius: BorderRadius.circular(30)
-                                      ),
+                                          color: const Color(0xfff2f3f7),
+                                          borderRadius:
+                                              BorderRadius.circular(30)),
                                       child: Padding(
                                         padding: const EdgeInsets.all(2.0),
-                                        child: Text("$completedPercent% Completed", style: const TextStyle(fontSize: 12),),
+                                        child: Text(
+                                          "$completedPercent% Completed",
+                                          style: const TextStyle(fontSize: 12),
+                                        ),
                                       ),
                                     )
                                   ],
@@ -130,50 +144,65 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  height: 40,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    color: Colors.white
-                                  ),
-                                  child: const Center(
-                                    child: Text(
-                                      "Units",
-                                      style: TextStyle(
-                                        fontSize: 12
+                                GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      _selectedIndex = 0;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 70,
+                                    decoration: BoxDecoration(
+                                      border: Border.all(color: _selectedIndex == 0? Colors.red :Colors.transparent , width: 3),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: const Center(
+                                      child: Text(
+                                        "Units",
+                                        style: TextStyle(fontSize: 12),
                                       ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 40,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: const Center(
-                                    child: Text(
+                                GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      _selectedIndex = 1;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 70,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: _selectedIndex == 1? Colors.red :Colors.transparent , width: 3),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: const Center(
+                                      child: Text(
                                         "Practice",
-                                        style: TextStyle(
-                                        fontSize: 12
-                                    ),
+                                        style: TextStyle(fontSize: 12),
+                                      ),
                                     ),
                                   ),
                                 ),
-                                Container(
-                                  height: 40,
-                                  width: 70,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(10),
-                                      color: Colors.white
-                                  ),
-                                  child: const Center(
-                                    child: Text(
+                                GestureDetector(
+                                  onTap: (){
+                                    setState(() {
+                                      _selectedIndex = 2;
+                                    });
+                                  },
+                                  child: Container(
+                                    height: 40,
+                                    width: 70,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(color: _selectedIndex == 2? Colors.red :Colors.transparent , width: 3),
+                                        borderRadius: BorderRadius.circular(10),
+                                        color: Colors.white),
+                                    child: const Center(
+                                      child: Text(
                                         "Past Papers",
-                                      style: TextStyle(
-                                          fontSize: 10
+                                        style: TextStyle(fontSize: 10),
                                       ),
                                     ),
                                   ),
@@ -184,12 +213,13 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                         ],
                       ),
                     ),
-                    const SizedBox(height: 20,),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.95,
-                      height: MediaQuery.of(context).size.height * 0.63,
-                      child: const Content()
+                    const SizedBox(
+                      height: 20,
                     ),
+                    SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.95,
+                        height: MediaQuery.of(context).size.height * 0.63,
+                        child: widgetOptions.elementAt(_selectedIndex)),
                   ],
                 ),
               ));
@@ -197,7 +227,6 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
 }
 
 class Content extends StatelessWidget {
-
   const Content({Key? key}) : super(key: key);
 
   @override
@@ -214,9 +243,30 @@ class Content extends StatelessWidget {
                   name: Constants.physicsChapters[i],
                   unit: i + 1,
                 )),
-
         ],
       ),
+    );
+  }
+}
+
+class Practice extends StatelessWidget {
+  const Practice({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("Practice"),
+    );
+  }
+}
+
+class PastPapers extends StatelessWidget {
+  const PastPapers({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Text("Past Papers"),
     );
   }
 }

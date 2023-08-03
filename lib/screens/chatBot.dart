@@ -28,8 +28,9 @@ class ChatbotPage extends StatefulWidget {
 }
 
 class _ChatbotPageState extends State<ChatbotPage> {
+  bool _isSendingMessage = false;
   List<ChatMessage> messages = [
-    ChatMessage(
+    const ChatMessage(
         message:
             'Hey! This is your personal counselor. You can ask your queries here either about your course content or your academics.',
         isUserMessage: false),
@@ -39,6 +40,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
 
   void _sendMessage() async {
     final userMessage = _textEditingController.text;
+    _textEditingController.clear();
     if (userMessage.isNotEmpty) {
       setState(() {
         messages.insert(
@@ -48,6 +50,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
             isUserMessage: true,
           ),
         );
+        _isSendingMessage = true; // Set _isSendingMessage to true while the API call is in progress
       });
 
       // Call the API and get the chatbot's response
@@ -63,16 +66,19 @@ class _ChatbotPageState extends State<ChatbotPage> {
               isUserMessage: false,
             ),
           );
+          _isSendingMessage = false; // Set _isSendingMessage back to false after receiving the API response
         });
       } catch (e) {
         // Handle API call errors
         print('Error: $e');
+        _isSendingMessage = false; // Set _isSendingMessage back to false on API call error
       }
 
-      _textEditingController
-          .clear(); // Clear the input field after sending message
+      _textEditingController.clear(); // Clear the input field after sending message
     }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -175,10 +181,19 @@ class _ChatbotPageState extends State<ChatbotPage> {
                         ),
                       ),
                     ),
+                    !_isSendingMessage?
                     IconButton(
                       icon: const Icon(Icons.send),
                       onPressed: _sendMessage,
-                    ),
+                    ):
+                        const SizedBox(
+                          height: 25,
+                          width: 25,
+                          child: CircularProgressIndicator(
+                            color: Colors.black,
+                          ),
+                        )
+
                   ],
                 ),
               ),
@@ -222,7 +237,8 @@ class ChatMessage extends StatelessWidget {
                 ),
                 child: Text(
                   message,
-                  style: const TextStyle(fontSize: 14.0, fontWeight: FontWeight.w600),
+                  style: const TextStyle(
+                      fontSize: 14.0, fontWeight: FontWeight.w600),
                 ),
               ),
             ),
