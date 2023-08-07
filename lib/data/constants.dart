@@ -18,7 +18,6 @@ class Constants{
   static List weekdays = ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'];
   static List completedUnits = [];
   static int numberOfReferrals = 0;
-  static PreloadPageController controller = PreloadPageController();
   static String name = '';
   static String age = '';
   static String email = '';

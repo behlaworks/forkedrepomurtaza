@@ -115,57 +115,61 @@ class _SubjectBoxDashState extends State<SubjectBoxDash> {
                   builder: (context) => const PhysicsContentPage()),
             )
           },
-          child: Container(
-              height: 80,
-              width: MediaQuery.of(context).size.width * 0.9,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: const Color(0xffA6CFD5),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      Container(
-                        width: 80,
-                        height: 80,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.white,
-                        ),
-                        child: Center(
-                          child: Image.asset(
-                            'assets/atom.png',
-                            height: 60,
+          child: Material(
+          borderRadius: BorderRadius.circular(12),
+            elevation: 5,
+            child: Container(
+                height: 80,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: const Color(0xffcce0f7),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      children: [
+                        Container(
+                          width: 80,
+                          height: 80,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white,
+                          ),
+                          child: Center(
+                            child: Image.asset(
+                              'assets/atom.png',
+                              height: 60,
+                            ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            widget.name,
-                            style: const TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.w600),
-                          ),
-                          const Text(
-                            "5 videos",
-                            style: TextStyle(fontSize: 13),
-                          )
-                        ],
-                      ),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
-                    child: Image.asset("assets/next.png", height: 30,),
-                  )
-                ],
-              )),
+                        const SizedBox(
+                          width: 20,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              widget.name,
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.w600),
+                            ),
+                            const Text(
+                              "5 videos",
+                              style: TextStyle(fontSize: 13),
+                            )
+                          ],
+                        ),
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 20, 0),
+                      child: Image.asset("assets/next.png", height: 30,),
+                    )
+                  ],
+                )),
+          ),
         ),
       ],
     );

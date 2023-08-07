@@ -3,6 +3,7 @@ import 'package:video_player/video_player.dart';
 import '../data/constants.dart';
 
 class PCC extends GetxController {
+  bool paused = false;
   int _api = 0;
   List<VideoPlayerController?> videoPlayerControllers = [];
   List<int> _initializedIndexes = [];
@@ -29,7 +30,7 @@ class PCC extends GetxController {
     }
 
     late VideoPlayerController singleVideoController;
-    singleVideoController = VideoPlayerController.networkUrl(Constants.urls[i]);
+    singleVideoController = VideoPlayerController.networkUrl(Uri.parse(Constants.urls[i]));
 
     if (videoPlayerControllers.length <= i) {
       // Expand the list to accommodate the new index
@@ -79,7 +80,7 @@ class PCC extends GetxController {
       if (videoPlayerControllers[index] == null) {
         late VideoPlayerController singleVideoController;
         print('$index : ${videoPlayerControllers.length}');
-        singleVideoController = VideoPlayerController.networkUrl(Constants.urls[index]);
+        singleVideoController = VideoPlayerController.networkUrl(Uri.parse(Constants.urls[index]));
         videoPlayerControllers[index] = singleVideoController;
         await videoPlayerControllers[index]!.initialize();
         update();
@@ -93,7 +94,19 @@ class PCC extends GetxController {
       videoPlayerControllers[i] = null;
     }
   }
-
+  void togglePaused() {
+    if (videoPlayerControllers.isNotEmpty &&
+        api >= 0 &&
+        api < videoPlayerControllers.length &&
+        videoPlayerControllers[api]!.value.isInitialized) {
+      if (videoPlayerControllers[api]!.value.isPlaying) {
+        videoPlayerControllers[api]!.pause();
+      } else {
+        videoPlayerControllers[api]!.play();
+      }
+    }
+    update(); // Notify listeners that the state has changed
+  }
   Future<void> disposeAllExceptTarget(int targetIndex) async {
     // Dispose all video controllers except the target video
     for (int i = 0; i < videoPlayerControllers.length; i++) {

@@ -1,3 +1,4 @@
+import 'package:aire/screens/premium.dart';
 import 'package:aire/screens/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -13,7 +14,12 @@ class Dashboard extends StatefulWidget {
   final String refID;
   final String intake;
 
-  const Dashboard({Key? key, required this.name, required this.age, required this.refID, required this.intake}) : super(key: key);
+  const Dashboard({Key? key,
+    required this.name,
+    required this.age,
+    required this.refID,
+    required this.intake})
+      : super(key: key);
 
   @override
   State<Dashboard> createState() => _DashboardState();
@@ -43,17 +49,21 @@ class _DashboardState extends State<Dashboard> {
                           Row(
                             children: [
                               GestureDetector(
-                                onTap: (){
+                                onTap: () {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ProfilePage(name: widget.name, age: widget.age, refID: widget.refID, intake: widget.intake,)),
-                                  );
+                                        builder: (context) =>
+                                            ProfilePage(name: widget.name,
+                                                age: widget.age,
+                                                refID: widget.refID,
+                                                intake: widget.intake)),);
                                 },
-                                  child: Image.asset(
-                                'assets/profile.png',
-                                height: 40,
-                              )),
+                                child: Image.asset(
+                                  'assets/profile.png',
+                                  height: 40,
+                                ),
+                              ),
                               const SizedBox(
                                 width: 10,
                               ),
@@ -68,14 +78,21 @@ class _DashboardState extends State<Dashboard> {
                             children: [
                               Image.asset(
                                 'assets/bell.png',
-                                height: 40,
+                                height: 35,
                               ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Image.asset(
-                                'assets/menu.png',
-                                height: 40,
+                              const SizedBox(width: 10,),
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => const PremiumSubscriptions()),
+                                  );
+                                },
+                                child: Image.asset(
+                                  'assets/diamond.png',
+                                  height: 30,
+                                ),
                               ),
                             ],
                           )
@@ -85,7 +102,10 @@ class _DashboardState extends State<Dashboard> {
                     Column(
                       children: [
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.05,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.05,
                         ),
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -108,15 +128,18 @@ class _DashboardState extends State<Dashboard> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                           child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: 110,
+                            width: MediaQuery
+                                .of(context)
+                                .size
+                                .width,
+                            height: MediaQuery.of(context).size.height* 0.33,
                             child: ListView(
                               scrollDirection: Axis.vertical,
                               children: [
                                 for (var item in myProvider.enrolledSubs)
                                   Padding(
                                     padding:
-                                        const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                    const EdgeInsets.fromLTRB(5, 0, 5, 0),
                                     child: SubjectBoxDash(name: item),
                                   ),
                               ],
@@ -135,25 +158,26 @@ class _DashboardState extends State<Dashboard> {
                                             Radius.circular(12))),
                                     title: const Center(
                                         child: Text(
-                                      "In development!",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700),
-                                    )),
+                                          "In development!",
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w700),
+                                        )),
                                     content: const SizedBox(
                                         height: 50,
                                         child: Center(
                                             child: Column(
-                                          children: [
-                                            Text("Payment gateway coming soon!",
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 12,
-                                                    fontWeight:
+                                              children: [
+                                                Text(
+                                                    "Payment gateway coming soon!",
+                                                    style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 12,
+                                                        fontWeight:
                                                         FontWeight.w600)),
-                                          ],
-                                        ))),
+                                              ],
+                                            ))),
                                     actions: [
                                       Center(
                                         child: ElevatedButton(
@@ -162,12 +186,12 @@ class _DashboardState extends State<Dashboard> {
                                           },
                                           style: ButtonStyle(
                                               fixedSize:
-                                                  MaterialStateProperty.all(
-                                                      const Size.fromWidth(
-                                                          200)),
+                                              MaterialStateProperty.all(
+                                                  const Size.fromWidth(
+                                                      200)),
                                               backgroundColor:
-                                                  MaterialStateProperty.all(
-                                                      Colors.white)),
+                                              MaterialStateProperty.all(
+                                                  Colors.white)),
                                           child: const Text(
                                             "Back",
                                             style: TextStyle(
@@ -180,23 +204,41 @@ class _DashboardState extends State<Dashboard> {
                                   );
                                 });
                           },
-                          child: Container(
-                            height: 60,
-                            width: MediaQuery.of(context).size.width * 0.8,
-                            decoration: BoxDecoration(
-                                color: const Color(0xffCBC0D3),
-                                borderRadius: BorderRadius.circular(12)),
-                            child: const Center(
-                              child: Text(
-                                "Add new",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
+                          child: Material(
+                            borderRadius: BorderRadius.circular(12),
+                            elevation: 6,
+                            child: Container(
+                              height: 60,
+                              width: MediaQuery
+                                  .of(context)
+                                  .size
+                                  .width * 0.8,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xffd2beda),
+                                  borderRadius: BorderRadius.circular(12)),
+                              child: const Center(
+                                child: Text(
+                                  "Add new",
+                                  style: TextStyle(
+                                      fontSize: 17, fontWeight: FontWeight.w600),
+                                ),
                               ),
                             ),
                           ),
                         ),
+                        SizedBox(height: MediaQuery.of(context).size.height * 0.04,),
+                        Container(
+                          height: 2,
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          decoration: BoxDecoration(
+                            border: Border.all(color: Colors.black)
+                          ),
+                        ),
                         SizedBox(
-                          height: MediaQuery.of(context).size.height * 0.24,
+                          height: MediaQuery
+                              .of(context)
+                              .size
+                              .height * 0.04,
                         ),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
@@ -218,46 +260,54 @@ class _DashboardState extends State<Dashboard> {
                                 height: 8,
                               ),
                               GestureDetector(
-                                onTap: () => {
+                                onTap: () =>
+                                {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
                                         builder: (context) => const Calender()),
                                   )
                                 },
-                                child: Container(
-                                  height: 80,
-                                  width: MediaQuery.of(context).size.width,
-                                  decoration: BoxDecoration(
-                                      color: Constants.dark,
-                                      borderRadius: BorderRadius.circular(15)),
-                                  child: const Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                        child: Text(
-                                          "Calendar",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w900),
+                                child: Material(
+                                  borderRadius: BorderRadius.circular(15),
+                                  elevation: 5,
+                                  child: Container(
+                                    height: 70,
+                                    width: MediaQuery
+                                        .of(context)
+                                        .size
+                                        .width,
+                                    decoration: BoxDecoration(
+                                        color: const Color(0xff9bc1b3),
+                                        borderRadius: BorderRadius.circular(15)),
+                                    child: const Row(
+                                      mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                      CrossAxisAlignment.center,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                          EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                          child: Text(
+                                            "Calendar",
+                                            style: TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w700),
+                                          ),
                                         ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 0, 20, 0),
-                                        child: Icon(
-                                          Icons.chevron_right,
-                                          size: 30,
-                                          color: Colors.white,
-                                        ),
-                                      )
-                                    ],
+                                        Padding(
+                                          padding:
+                                          EdgeInsets.fromLTRB(0, 0, 20, 0),
+                                          child: Icon(
+                                            Icons.chevron_right,
+                                            size: 30,
+                                            color: Colors.black,
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )

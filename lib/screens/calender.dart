@@ -20,69 +20,65 @@ class _CalenderState extends State<Calender> {
           backgroundColor: Colors.white,
           body: Column(
             children: [
-              Container(
-                height: 300,
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                    color: Constants.dark,
-                    borderRadius: const BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20))),
-                child: Column(
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
-                          child: GestureDetector(
-                            onTap: () => {Navigator.pop(context)},
-                            child: Container(
-                              height: 42,
-                              width: 42,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Constants.grey),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.arrow_back_ios,
+              Material(
+                elevation: 10,
+            borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20)),
+                child: Container(
+                  height: 300,
+                  width: MediaQuery.of(context).size.width,
+                  decoration: const BoxDecoration(
+                      color: Color(0xffF3D34A),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(20),
+                          bottomRight: Radius.circular(20))),
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
+                            child: GestureDetector(
+                              onTap: () => {Navigator.pop(context)},
+                              child: Image.asset('assets/nextrev.png', height: 30,)
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 30,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            child: Text(
+                              '${Constants.months[DateTime.now().month - 1]}, ${DateTime.now().year}',
+                              style: const TextStyle(
                                   color: Colors.black,
-                                  size: 15,
-                                ),
+                                  fontSize: 35,
+                                  fontWeight: FontWeight.w900
                               ),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 30,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(15, 0, 0, 0),
-                          child: Text(
-                            '${Constants.months[DateTime.now().month - 1]}, ${DateTime.now().year}',
-                            style: const TextStyle(
-                                color: Colors.white,
-                                fontSize: 35,
-                                fontWeight: FontWeight.w900
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: 40,),
-                    const WeekDisplay()
-                  ],
+                        ],
+                      ),
+                      const SizedBox(height: 40,),
+                      const WeekDisplay()
+                    ],
+                  ),
                 ),
               ),
               SizedBox(
                 height: MediaQuery.of(context).size.height*0.5,
                 child: const Center(
-                  child:Text('Start tracking to schedule your academic year!',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),),
+                  child:Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text('Subscribe to create a personalized schedule!',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),),
+                  ),
                 ),
               )
 

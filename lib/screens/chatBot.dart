@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
@@ -50,7 +51,8 @@ class _ChatbotPageState extends State<ChatbotPage> {
             isUserMessage: true,
           ),
         );
-        _isSendingMessage = true; // Set _isSendingMessage to true while the API call is in progress
+        _isSendingMessage =
+            true; // Set _isSendingMessage to true while the API call is in progress
       });
 
       // Call the API and get the chatbot's response
@@ -66,19 +68,22 @@ class _ChatbotPageState extends State<ChatbotPage> {
               isUserMessage: false,
             ),
           );
-          _isSendingMessage = false; // Set _isSendingMessage back to false after receiving the API response
+          _isSendingMessage =
+              false; // Set _isSendingMessage back to false after receiving the API response
         });
       } catch (e) {
         // Handle API call errors
-        print('Error: $e');
-        _isSendingMessage = false; // Set _isSendingMessage back to false on API call error
+        if (kDebugMode) {
+          print('Error: $e');
+        }
+        _isSendingMessage =
+            false; // Set _isSendingMessage back to false on API call error
       }
 
-      _textEditingController.clear(); // Clear the input field after sending message
+      _textEditingController
+          .clear(); // Clear the input field after sending message
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -86,7 +91,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
       body: SafeArea(
         child: Column(
           children: [
-            Container(
+            SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height * .1,
                 child: Row(
@@ -181,19 +186,15 @@ class _ChatbotPageState extends State<ChatbotPage> {
                         ),
                       ),
                     ),
-                    !_isSendingMessage?
-                    IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: _sendMessage,
-                    ):
-                        const SizedBox(
-                          height: 25,
-                          width: 25,
-                          child: CircularProgressIndicator(
-                            color: Colors.black,
-                          ),
-                        )
-
+                    !_isSendingMessage
+                        ? IconButton(
+                            icon: const Icon(Icons.send),
+                            onPressed: _sendMessage,
+                          )
+                        : Image.asset(
+                            'assets/loading.gif',
+                            height: 40,
+                          )
                   ],
                 ),
               ),
@@ -219,31 +220,29 @@ class ChatMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Align(
       alignment: isUserMessage ? Alignment.centerRight : Alignment.centerLeft,
-      child: Container(
-        child: Column(
-          children: [
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                maxWidth: MediaQuery.of(context).size.width * 0.8,
+      child: Column(
+        children: [
+          ConstrainedBox(
+            constraints: BoxConstraints(
+              maxWidth: MediaQuery.of(context).size.width * 0.8,
+            ),
+            child: Container(
+              margin: const EdgeInsets.symmetric(vertical: 5.0),
+              padding: const EdgeInsets.all(12.0),
+              decoration: BoxDecoration(
+                color: isUserMessage
+                    ? const Color(0xffA7CCED)
+                    : const Color(0xffF4C095),
+                borderRadius: BorderRadius.circular(17.0),
               ),
-              child: Container(
-                margin: const EdgeInsets.symmetric(vertical: 5.0),
-                padding: const EdgeInsets.all(12.0),
-                decoration: BoxDecoration(
-                  color: isUserMessage
-                      ? const Color(0xffA7CCED)
-                      : const Color(0xffF4C095),
-                  borderRadius: BorderRadius.circular(17.0),
-                ),
-                child: Text(
-                  message,
-                  style: const TextStyle(
-                      fontSize: 14.0, fontWeight: FontWeight.w600),
-                ),
+              child: Text(
+                message,
+                style: const TextStyle(
+                    fontSize: 14.0, fontWeight: FontWeight.w600),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

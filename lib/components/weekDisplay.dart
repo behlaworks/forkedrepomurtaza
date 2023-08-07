@@ -23,7 +23,7 @@ class _WeekDisplayState extends State<WeekDisplay> {
                       Text(
                         Constants.weekdays[i - 1],
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.w400),
                       ),
@@ -33,16 +33,16 @@ class _WeekDisplayState extends State<WeekDisplay> {
                       Text(
                         '${Constants.dayCalculator(DateTime.now(), i)}',
                         style: const TextStyle(
-                            color: Colors.white,
+                            color: Colors.black,
                             fontSize: 15,
                             fontWeight: FontWeight.w400),
                       ),
                     ],
                   )
                 : Container(
-                    decoration: BoxDecoration(
-                        color: const Color(0xff3A49F9).withOpacity(0.3),
-                        borderRadius: const BorderRadius.all(Radius.elliptical(250, 360))
+                    decoration: const BoxDecoration(
+                        color: Color(0xffEEA243),
+                        borderRadius: BorderRadius.all(Radius.elliptical(250, 360))
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(3.0),
@@ -51,7 +51,7 @@ class _WeekDisplayState extends State<WeekDisplay> {
                           Text(
                             Constants.weekdays[i - 1],
                             style: const TextStyle(
-                                color: Color(0xff9C2CF3),
+                                color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400),
                           ),
@@ -61,7 +61,7 @@ class _WeekDisplayState extends State<WeekDisplay> {
                           Text(
                             '${Constants.dayCalculator(DateTime.now(), i)}',
                             style: const TextStyle(
-                                color: Color(0xff9C2CF3),
+                                color: Colors.black,
                                 fontSize: 15,
                                 fontWeight: FontWeight.w400),
                           ),

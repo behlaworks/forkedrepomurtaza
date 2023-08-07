@@ -109,8 +109,9 @@ class _HomeState extends State<Home> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Image.asset('assets/diamond.png', height: 30,),
-                              const Text('Premium', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),)
+                              Image.asset('assets/menu.png', height: 25,),
+                              const SizedBox(height: 2,),
+                              const Text('Menu', style: TextStyle(fontSize: 13, fontWeight: FontWeight.w300),)
                             ],
                           ),
                         ),

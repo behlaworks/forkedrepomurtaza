@@ -4,13 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 import '../data/constants.dart';
-import '../models/cloud_firestore.dart';
 import '../models/videoController.dart';
 
 class TopicsPlayer extends StatefulWidget {
-  final int index;
+  final int page;
 
-  const TopicsPlayer({Key? key, required this.index}) : super(key: key);
+  const TopicsPlayer({Key? key, required this.page}) : super(key: key);
 
   @override
   State<TopicsPlayer> createState() => _TopicsPlayerState();
@@ -18,18 +17,24 @@ class TopicsPlayer extends StatefulWidget {
 
 class _TopicsPlayerState extends State<TopicsPlayer> {
   final c = Get.put(PCC());
-  bool processing = false;
+  bool processing = true;
   int lastSeen = 0;
+  late PreloadPageController controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = PreloadPageController(
+        initialPage: widget.page
+    );
+    processing = false;
+  }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
         c.disposeAll();
-        Constants.urls = [];
-        Constants.units = [];
-        Constants.titles = [];
-        Constants.notes = [];
         Navigator.pop(context);
         return true;
       },
@@ -39,10 +44,10 @@ class _TopicsPlayerState extends State<TopicsPlayer> {
               ? Container(
                   height: MediaQuery.of(context).size.height,
                   width: MediaQuery.of(context).size.width,
-                  color: Constants.dark,
+                  color: Colors.white,
                   child: const Center(
                     child: CircularProgressIndicator(
-                      color: Colors.white,
+                      color: Colors.black,
                       strokeWidth: 4,
                     ),
                   ),
@@ -57,7 +62,7 @@ class _TopicsPlayerState extends State<TopicsPlayer> {
                   },
                   //If you are increasing or decreasing preload page count change accordingly in the player widget
                   preloadPagesCount: 1,
-                  controller: Constants.controller,
+                  controller: controller,
                   itemCount: Constants.urls.length,
                   scrollDirection: Axis.vertical,
                   physics: const AlwaysScrollableScrollPhysics(),

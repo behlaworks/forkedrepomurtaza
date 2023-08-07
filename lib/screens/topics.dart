@@ -143,7 +143,7 @@ class SubTopicList extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => UnitPage(unit: i,)));
+                                  builder: (context) => TopicsPlayer(page: i,)));
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(
