@@ -265,8 +265,35 @@ class PastPapers extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Past Papers"),
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              height: 50,
+              width: 100,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.red, width: 2)
+              ),
+              child: const Center(child: Text("Topical")),
+            ),
+            const SizedBox(width: 10,),
+            Container(
+              height: 50,
+              width: 100,
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: Colors.black, width: 2)
+              ),
+              child: const Center(child: Text("Yearly")),
+            ),
+          ],
+        )
+      ],
     );
   }
 }

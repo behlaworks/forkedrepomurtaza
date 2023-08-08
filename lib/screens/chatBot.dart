@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-
 import '../models/cloud_firestore.dart';
 
 Future<String> sendMessageToAPI(String message) async {
@@ -35,6 +34,10 @@ class _ChatbotPageState extends State<ChatbotPage> {
     const ChatMessage(
         message:
             'Hey! This is your personal counselor. You can ask your queries here either about your course content or your academics.',
+        isUserMessage: false),
+    const ChatMessage(
+        message:
+        'You are given 10 free queries. Use them carefully!',
         isUserMessage: false),
   ];
 
@@ -75,6 +78,13 @@ class _ChatbotPageState extends State<ChatbotPage> {
             });
           } else{
             setState(() {
+              messages.insert(
+                0,
+                const ChatMessage(
+                  message: "You have ran out of free queries. Buy a subscription to continue chatting.",
+                  isUserMessage: false,
+                ),
+              );
               _isSendingMessage = false;
             });
           }
@@ -93,7 +103,6 @@ class _ChatbotPageState extends State<ChatbotPage> {
           .clear(); // Clear the input field after sending message
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -130,7 +139,7 @@ class _ChatbotPageState extends State<ChatbotPage> {
                           "Counselor",
                           style: TextStyle(
                               fontSize: 19, fontWeight: FontWeight.w600),
-                        )
+                        ),
                       ],
                     ),
                     GestureDetector(

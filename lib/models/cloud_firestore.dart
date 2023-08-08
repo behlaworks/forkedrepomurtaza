@@ -35,6 +35,7 @@ class DatabaseService {
         'age': Constants.age,
         'referralID': referralId,
         'referrals': 0,
+        'chats' : 0,
         'examSeries': Constants.examDate
       });
       final reference = FirebaseFirestore.instance
