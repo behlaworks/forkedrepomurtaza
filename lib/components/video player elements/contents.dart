@@ -49,10 +49,10 @@ class _ContentsState extends State<Contents> {
                           onTap: () {
                             Navigator.pop(context);
                             // PCC().updateAPI(i);
-                            Constants.controller.jumpToPage(i);
-                            Constants.controller.animateToPage(i,
-                                duration: const Duration(seconds: 5),
-                                curve: Curves.decelerate);
+                            // Constants.controller.jumpToPage(i);
+                            // Constants.controller.animateToPage(i,
+                            //     duration: const Duration(seconds: 5),
+                            //     curve: Curves.decelerate);
                           },
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.95,

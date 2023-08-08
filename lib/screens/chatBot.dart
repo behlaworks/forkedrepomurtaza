@@ -3,9 +3,10 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../models/cloud_firestore.dart';
+
 Future<String> sendMessageToAPI(String message) async {
-  const apiUrl =
-      'http://murtaza1-001-site1.htempurl.com/api/ChatBot'; // Replace with your actual API URL
+  const apiUrl = 'http://murtaza1-001-site1.htempurl.com/api/ChatBot';
   final response = await http.post(
     Uri.parse(apiUrl),
     headers: {'Content-Type': 'application/json'},
@@ -57,20 +58,28 @@ class _ChatbotPageState extends State<ChatbotPage> {
 
       // Call the API and get the chatbot's response
       try {
-        final apiResponse = await sendMessageToAPI(userMessage);
+        DatabaseService().updateChatNumber().then((value) async {
+          if (value == 'true') {
+            final apiResponse = await sendMessageToAPI(userMessage);
 
-        // Add the chatbot's response as a new message in the chat
-        setState(() {
-          messages.insert(
-            0,
-            ChatMessage(
-              message: apiResponse,
-              isUserMessage: false,
-            ),
-          );
-          _isSendingMessage =
-              false; // Set _isSendingMessage back to false after receiving the API response
+            // Add the chatbot's response as a new message in the chat
+            setState(() {
+              messages.insert(
+                0,
+                ChatMessage(
+                  message: apiResponse,
+                  isUserMessage: false,
+                ),
+              );
+              _isSendingMessage = false;
+            });
+          } else{
+            setState(() {
+              _isSendingMessage = false;
+            });
+          }
         });
+        // Set _isSendingMessage back to false after receiving the API response
       } catch (e) {
         // Handle API call errors
         if (kDebugMode) {

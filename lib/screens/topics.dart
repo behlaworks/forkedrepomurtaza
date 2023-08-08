@@ -1,3 +1,4 @@
+import 'package:aire/screens/test.dart';
 import 'package:aire/screens/topicsPlayer.dart';
 import 'package:aire/screens/unit.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
@@ -180,6 +181,36 @@ class SubTopicList extends StatelessWidget {
                         ),
                       )),
                 )),
+          Padding(
+              padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Container(
+                    clipBehavior: Clip.hardEdge,
+                    height: 75,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.black),
+                        borderRadius: BorderRadius.circular(12),
+                        color: const Color(0xffF0544F)),
+                    child: InkWell(
+                      onTap: () async {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MCQTest()));
+                      },
+                      child: const Center(
+                        child: Text(
+                          "End of unit test",
+                          style: TextStyle(
+                              fontSize: 17,
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600),
+                        ),
+                      ),
+                    )),
+              )),
         ],
       ),
     );

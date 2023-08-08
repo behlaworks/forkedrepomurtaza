@@ -16,6 +16,17 @@ class Player extends StatefulWidget {
 }
 
 class _PlayerState extends State<Player> {
+  late String title;
+
+  @override
+  void initState() {
+    super.initState();
+    title = "${Constants.units[widget.i]}: ${Constants.titles[widget.i]}";
+    if (title.length > 20) {
+      title = "${title.substring(0, 19)}....";
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final c = Get.put(PCC());
@@ -110,13 +121,41 @@ class _PlayerState extends State<Player> {
                       Column(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                            child: Text(
-                              "${Constants.units[widget.i]}: ${Constants.titles[widget.i]}",
-                              style: const TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600),
-                            ),
+                          Stack(
+                            children: [
+                              Row(
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                                    child: GestureDetector(
+                                        onTap: () {
+                                          c.disposeAll();
+                                          Navigator.pop(context);
+                                        },
+                                        child: const Icon(
+                                          Icons.arrow_back_ios,
+                                          size: 20,
+                                        )),
+                                  )
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                                    child: Text(
+                                      title,
+                                      style: const TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                           Column(
                             children: [
@@ -170,7 +209,9 @@ class _PlayerState extends State<Player> {
                                         size: 30,
                                       ),
                                     ),
-                                    const SizedBox(width: 20,),
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
                                     Container(
                                       height: 1,
                                       width: MediaQuery.of(context).size.width *
@@ -217,6 +258,7 @@ class _PlayerState extends State<Player> {
             print('AutoPlaying ${c.api}');
           }
         }
+
         return SafeArea(
           child: Scaffold(
             backgroundColor: Colors.white,
@@ -230,21 +272,49 @@ class _PlayerState extends State<Player> {
                             child: SizedBox(
                               height:
                                   (MediaQuery.of(context).size.width * 16) / 9,
-                              child: VideoPlayer(
-                                  c.videoPlayerControllers[c.api]!),
+                              child:
+                                  VideoPlayer(c.videoPlayerControllers[c.api]!),
                             ),
                           ),
                           Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                                child: Text(
-                                  "${Constants.units[widget.i]}: ${Constants.titles[widget.i]}",
-                                  style: const TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w600),
-                                ),
+                              Stack(
+                                children: [
+                                  Row(
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.fromLTRB(20, 20, 0, 0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            c.disposeAll();
+                                            Navigator.pop(context);
+                                          },
+                                          child: const Icon(
+                                            Icons.arrow_back_ios,
+                                            size: 20,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 20, 0, 0),
+                                        child: Text(
+                                          title,
+                                          style: const TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
                               ),
                               Column(
                                 children: [
@@ -303,7 +373,7 @@ class _PlayerState extends State<Player> {
                                       children: [
                                         Center(
                                           child: GestureDetector(
-                                            onTap: (){
+                                            onTap: () {
                                               c.togglePaused();
                                               // if (c.videoPlayerControllers[c.api]!.value
                                               //     .isPlaying) {
@@ -314,18 +384,22 @@ class _PlayerState extends State<Player> {
                                               //   c.videoPlayerControllers[c.api]!.play();
                                               // }
                                             },
-                                            child: !c.paused? const Icon(
-                                              Icons.pause,
-                                              color: Colors.black,
-                                              size: 30,
-                                            ): const Icon(
-                                              Icons.play_arrow,
-                                              color: Colors.black,
-                                              size: 30,
-                                            ),
+                                            child: !c.paused
+                                                ? const Icon(
+                                                    Icons.pause,
+                                                    color: Colors.black,
+                                                    size: 30,
+                                                  )
+                                                : const Icon(
+                                                    Icons.play_arrow,
+                                                    color: Colors.black,
+                                                    size: 30,
+                                                  ),
                                           ),
                                         ),
-                                        const SizedBox(width: 20,),
+                                        const SizedBox(
+                                          width: 20,
+                                        ),
                                         SizedBox(
                                           width: MediaQuery.of(context)
                                                   .size

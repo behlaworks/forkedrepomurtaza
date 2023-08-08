@@ -75,6 +75,25 @@ class DatabaseService {
       return 'error';
     }
   }
+  Future updateChatNumber() async{
+    try{
+      var email = FirebaseAuth.instance.currentUser?.email.toString();
+      final reference = FirebaseFirestore.instance
+          .collection('users')
+          .doc(email);
+      final snapshot = await reference.get();
+      final data = snapshot.data() as Map<String, dynamic>;
+      if (data["chats"] == 10){
+        return 'false';
+      }
+      reference.update({
+        "chats": FieldValue.increment(1)
+      });
+      return 'true';
+    }catch (e){
+      return 'error';
+    }
+  }
 
   // function used while registering for referring others.
   Future addReferral(String code) async {
