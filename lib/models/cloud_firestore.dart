@@ -2,6 +2,7 @@ import 'package:aire/data/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class DatabaseService {
@@ -35,7 +36,7 @@ class DatabaseService {
         'age': Constants.age,
         'referralID': referralId,
         'referrals': 0,
-        'chats' : 0,
+        'chats': 0,
         'examSeries': Constants.examDate
       });
       final reference = FirebaseFirestore.instance
@@ -63,35 +64,39 @@ class DatabaseService {
   // this function runs when home page opens and fetches the user data to show on the screen.
   Future getUser() async {
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
       var email = FirebaseAuth.instance.currentUser?.email.toString();
-      print(email);
       CollectionReference users =
           FirebaseFirestore.instance.collection('users');
       final snapshot = await users.doc(email).get();
       final data = snapshot.data() as Map<String, dynamic>;
       Constants.referralId = data['referralID'];
       Constants.numberOfReferrals = data['referrals'];
+      await prefs.setString('name', data['full_name']);
+      await prefs.setString('age', data['age']);
+      await prefs.setInt('chats', data['chats']);
+      await prefs.setString('examSeries', data['examSeries']);
+      await prefs.setString('referralID', data['referralID']);
+      await prefs.setInt('referrals', data['referrals']);
       return data;
     } catch (e) {
       return 'error';
     }
   }
-  Future updateChatNumber() async{
-    try{
+
+  Future updateChatNumber() async {
+    try {
       var email = FirebaseAuth.instance.currentUser?.email.toString();
-      final reference = FirebaseFirestore.instance
-          .collection('users')
-          .doc(email);
+      final reference =
+          FirebaseFirestore.instance.collection('users').doc(email);
       final snapshot = await reference.get();
       final data = snapshot.data() as Map<String, dynamic>;
-      if (data["chats"] == 10){
+      if (data["chats"] == 10) {
         return 'false';
       }
-      reference.update({
-        "chats": FieldValue.increment(1)
-      });
+      reference.update({"chats": FieldValue.increment(1)});
       return 'true';
-    }catch (e){
+    } catch (e) {
       return 'error';
     }
   }
@@ -145,32 +150,42 @@ class DatabaseService {
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future<String> listOfTopics(String chapter) async {
     try {
-      CollectionReference subjects =
-          FirebaseFirestore.instance.collection('Subjects');
-      final snapshot = await subjects.doc('Physics').collection(chapter).get();
-      final data = snapshot.docs;
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      if (prefs.getStringList('units') == null || prefs.getStringList('titles') == null || prefs.getStringList('urls') == null) {
+        CollectionReference subjects =
+            FirebaseFirestore.instance.collection('Subjects');
+        final snapshot =
+            await subjects.doc('Physics').collection(chapter).get();
+        final data = snapshot.docs;
 
-      List<Future<String>> extractUrlFutures = [];
-      List<String> units = [];
-      List<String> titles = [];
-      List<dynamic> notes = [];
+        List<Future<String>> extractUrlFutures = [];
+        List<String> units = [];
+        List<String> titles = [];
 
-      for (var value in data) {
-        var a = value.data();
-        units.add(a['unit'].toString());
-        titles.add(a['title'].toString());
-        notes.add(a['notes']);
-        extractUrlFutures.add(extractVideoUrl(a['url']));
+        for (var value in data) {
+          var a = value.data();
+          units.add(a['unit'].toString());
+          titles.add(a['title'].toString());
+          extractUrlFutures.add(extractVideoUrl(a['url']));
+        }
+
+        List<String> links = await Future.wait<String>(extractUrlFutures);
+
+        Constants.urls = links;
+        Constants.units = units;
+        Constants.titles = titles;
+        await prefs.setStringList('urls', links);
+        await prefs.setStringList('units', units);
+        await prefs.setStringList('titles', titles);
+
+        return 'Success';
+      } else {
+        Constants.urls = prefs.getStringList('urls')!;
+        Constants.units = prefs.getStringList('units')!;
+        Constants.titles = prefs.getStringList('titles')!;
+
+        return 'Success';
       }
-
-      List<String> links = await Future.wait<String>(extractUrlFutures);
-
-      Constants.urls = links;
-      Constants.units = units;
-      Constants.titles = titles;
-      Constants.notes = notes;
-
-      return 'Success';
     } catch (e) {
       return 'Fail';
     }
@@ -231,7 +246,6 @@ class DatabaseService {
           count++;
         }
         ratios.add(count / (int.parse(data2[key])));
-
       });
       Constants.completedUnits = completed;
       total = [];
@@ -240,7 +254,7 @@ class DatabaseService {
       for (var i = 0; i < (sub - rat); i++) {
         ratios.add(0);
       }
-      var x = (completed.length/hello) * 100;
+      var x = (completed.length / hello) * 100;
       return x;
     } catch (e) {
       if (kDebugMode) {

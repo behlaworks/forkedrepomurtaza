@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../data/constants.dart';
 import '../screens/topics.dart';
+import 'common ui elements/dialog.dart';
 
 class ChapterBox extends StatefulWidget {
   final String name;
@@ -36,67 +37,14 @@ class _ChapterBoxState extends State<ChapterBox> {
                           builder: (context) => Topics(
                                 unit: widget.unit,
                               )))
-                  // ? Navigator.push(
-                  //     context,
-                  //     MaterialPageRoute(
-                  //         builder: (context) => TopicsPlayer(
-                  //               name: widget.name,
-                  //             )))
-                  : showDialog(
+              : showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return AlertDialog(
-                          backgroundColor: Constants.dark,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(12))),
-                          title: const Center(
-                              child: Text(
-                            "Content locked",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700),
-                          )),
-                          content: SizedBox(
-                              height: 50,
-                              child: Center(
-                                  child: Column(
-                                children: [
-                                  const Text("refer to 5 friends to unlock!",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600)),
-                                  Text(
-                                      "Current referrals: ${Constants.numberOfReferrals}",
-                                      style: const TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 12,
-                                          fontWeight: FontWeight.w600)),
-                                ],
-                              ))),
-                          actions: [
-                            Center(
-                              child: ElevatedButton(
-                                onPressed: () {
-                                  Navigator.pop(context);
-                                },
-                                style: ButtonStyle(
-                                    fixedSize: MaterialStateProperty.all(
-                                        const Size.fromWidth(200)),
-                                    backgroundColor:
-                                        MaterialStateProperty.all(Colors.white)),
-                                child: const Text(
-                                  "Back",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontWeight: FontWeight.w500),
-                                ),
-                              ),
-                            ),
-                          ],
+                        return CustomAlertDialog(
+                          title: "Content locked",
+                          text: "Refer to 5 friends to unlock. \n Current referrals: ${Constants.numberOfReferrals}",
                         );
+
                       });
             },
             child: Row(

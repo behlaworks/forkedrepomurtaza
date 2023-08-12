@@ -1,9 +1,6 @@
 import 'package:aire/screens/test.dart';
 import 'package:aire/screens/topicsPlayer.dart';
-import 'package:aire/screens/unit.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/material.dart';
-import '../components/common ui elements/backButton.dart';
 import '../data/constants.dart';
 import '../models/cloud_firestore.dart';
 
@@ -98,7 +95,9 @@ class _TopicsState extends State<Topics> {
                             style: TextStyle(
                                 fontWeight: FontWeight.w600, fontSize: 18),
                           ),
-                          const SizedBox(height: 5,),
+                          const SizedBox(
+                            height: 5,
+                          ),
                           Text(
                               "Unit ${widget.unit} : ${Constants.physicsChapters[widget.unit - 1]}")
                         ],
@@ -144,7 +143,9 @@ class SubTopicList extends StatelessWidget {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => TopicsPlayer(page: i,)));
+                                  builder: (context) => TopicsPlayer(
+                                        page: i,
+                                      )));
                           // Navigator.push(
                           //     context,
                           //     MaterialPageRoute(
@@ -190,7 +191,7 @@ class SubTopicList extends StatelessWidget {
                     height: 75,
                     width: MediaQuery.of(context).size.width * 0.8,
                     decoration: BoxDecoration(
-                      border: Border.all(width: 2, color: Colors.black),
+                        border: Border.all(width: 2, color: Colors.black),
                         borderRadius: BorderRadius.circular(12),
                         color: const Color(0xffF0544F)),
                     child: InkWell(

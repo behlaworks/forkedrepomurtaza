@@ -2,54 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-class MCQTest extends StatefulWidget {
-  const MCQTest({Key? key}) : super(key: key);
+class MCQCampaign extends StatefulWidget {
+  const MCQCampaign({Key? key}) : super(key: key);
 
   @override
-  State<MCQTest> createState() => _MCQTestState();
+  State<MCQCampaign> createState() => _MCQCampaignState();
 }
 
-class _MCQTestState extends State<MCQTest> {
-  int remainingTime = 15 * 60; // 30 minutes in seconds
-  late Timer timer;
-  bool isTimerRunning = false;
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void startTimer() {
-    timer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (remainingTime > 0) {
-          remainingTime--;
-        } else {
-          stopTimer();
-        }
-      });
-    });
-    setState(() {
-      isTimerRunning = true;
-    });
-  }
-
-  void stopTimer() {
-    timer.cancel();
-    isTimerRunning = false;
-  }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  }
-
-  String formatTime(int timeInSeconds) {
-    int minutes = timeInSeconds ~/ 60;
-    int seconds = timeInSeconds % 60;
-    return '$minutes:${seconds.toString().padLeft(2, '0')}';
-  }
+class _MCQCampaignState extends State<MCQCampaign> {
+  bool isStarted = false;
 
   @override
   Widget build(BuildContext context) {
@@ -75,56 +36,9 @@ class _MCQTestState extends State<MCQTest> {
                       width: 15,
                     ),
                     const Text(
-                      "MCQs Test",
+                      "MCQs Campaign",
                       style:
                           TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
-                    )
-                  ],
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-              Container(
-                height: 55,
-                width: MediaQuery.of(context).size.width * 0.76,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(8),
-                    border: Border.all(color: Colors.red, width: 2)),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 0, 0, 0),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            'assets/timer.png',
-                            height: 25,
-                          ),
-                          const SizedBox(
-                            width: 8,
-                          ),
-                          const Text(
-                            'Timer',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w600,
-                                fontSize: 22),
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 16, 0),
-                      child: Text(
-                        formatTime(remainingTime),
-                        style: const TextStyle(
-                            color: Colors.red,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 22),
-                      ),
                     )
                   ],
                 ),
@@ -134,7 +48,7 @@ class _MCQTestState extends State<MCQTest> {
               ),
               Column(
                 children: [
-                  !isTimerRunning
+                  !isStarted
                       ? Container(
                           height: MediaQuery.of(context).size.height * 0.5,
                           width: MediaQuery.of(context).size.width * 0.9,
@@ -155,7 +69,7 @@ class _MCQTestState extends State<MCQTest> {
                                 height: 10,
                               ),
                               const Text(
-                                "Grab a pen and a paper!",
+                                "Unlimited time to think!",
                                 style: TextStyle(
                                     fontWeight: FontWeight.w700, fontSize: 17),
                               ),
@@ -165,7 +79,7 @@ class _MCQTestState extends State<MCQTest> {
                               const Padding(
                                 padding: EdgeInsets.all(8.0),
                                 child: Text(
-                                    "You have 15 minutes to solve all these questions to pass this unit. Good Luck!",
+                                    "Sit back and start solving in this never ending campaign mode.",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
                                         fontWeight: FontWeight.w500,
@@ -176,7 +90,9 @@ class _MCQTestState extends State<MCQTest> {
                               ),
                               GestureDetector(
                                 onTap: () {
-                                  startTimer();
+                                  setState(() {
+                                    isStarted = true;
+                                  });
                                 },
                                 child: Container(
                                   height: 50,
@@ -199,9 +115,9 @@ class _MCQTestState extends State<MCQTest> {
                             ],
                           ),
                         )
-                      : Column(
+                      : const Column(
                           children: [
-                            const McqBox(
+                            McqBox(
                                 question:
                                     "Which of the following is a vector quantity?",
                                 options: [
@@ -211,40 +127,19 @@ class _MCQTestState extends State<MCQTest> {
                                   'None'
                                 ],
                                 num: 1),
-                            const McqBox(
+                            McqBox(
                                 question: "Which of the following is correct?",
                                 options: ["Wrong", 'What?', 'Correct', 'Right'],
                                 num: 2),
-                            const McqBox(
+                            McqBox(
                                 question: "Which of the following is correct?",
                                 options: ["Wrong", 'What?', 'Correct', 'Right'],
                                 num: 3),
-                            const McqBox(
+                            McqBox(
                                 question: "Which of the following is correct?",
                                 options: ["Wrong", 'What?', 'Correct', 'Right'],
                                 num: 4),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              height: 50,
-                              width: MediaQuery.of(context).size.width * 0.8,
-                              decoration: BoxDecoration(
-                                  border:
-                                      Border.all(color: Colors.red, width: 2),
-                                  borderRadius: BorderRadius.circular(8),
-                                  color: Colors.white),
-                              child: const Center(
-                                  child: Text(
-                                "Submit",
-                                style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: 16
-                                ),
-                              )),
-                            ),
-                            const SizedBox(
+                            SizedBox(
                               height: 20,
                             ),
                           ],

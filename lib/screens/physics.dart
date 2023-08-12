@@ -1,3 +1,4 @@
+import 'package:aire/screens/campaignMCQ.dart';
 import 'package:flutter/material.dart';
 import 'package:aire/models/cloud_firestore.dart';
 import '../components/chapterBox.dart';
@@ -254,8 +255,39 @@ class Practice extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text("Practice"),
+    return Column(
+      children: [
+        Padding(
+            padding: const EdgeInsets.fromLTRB(12, 12, 12, 0),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+              child: Container(
+                  clipBehavior: Clip.hardEdge,
+                  height: 75,
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  decoration: BoxDecoration(
+                      border: Border.all(width: 2, color: Colors.black),
+                      borderRadius: BorderRadius.circular(12),
+                      color: const Color(0xffF0544F)),
+                  child: InkWell(
+                    onTap: () async {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const MCQCampaign()));
+                    },
+                    child: const Center(
+                      child: Text(
+                        "P1 campaign mode",
+                        style: TextStyle(
+                            fontSize: 17,
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  )),
+            )),
+      ],
     );
   }
 }

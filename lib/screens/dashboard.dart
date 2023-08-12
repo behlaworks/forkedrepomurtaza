@@ -3,6 +3,7 @@ import 'package:aire/screens/profilePage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import '../components/common ui elements/dialog.dart';
 import '../components/subjectBox.dart';
 import '../data/constants.dart';
 import '../models/app_state_manager.dart';
@@ -151,56 +152,9 @@ class _DashboardState extends State<Dashboard> {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
-                                  return AlertDialog(
-                                    backgroundColor: Constants.dark,
-                                    shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(12))),
-                                    title: const Center(
-                                        child: Text(
-                                          "In development!",
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w700),
-                                        )),
-                                    content: const SizedBox(
-                                        height: 50,
-                                        child: Center(
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                    "Payment gateway coming soon!",
-                                                    style: TextStyle(
-                                                        color: Colors.white,
-                                                        fontSize: 12,
-                                                        fontWeight:
-                                                        FontWeight.w600)),
-                                              ],
-                                            ))),
-                                    actions: [
-                                      Center(
-                                        child: ElevatedButton(
-                                          onPressed: () {
-                                            Navigator.pop(context);
-                                          },
-                                          style: ButtonStyle(
-                                              fixedSize:
-                                              MaterialStateProperty.all(
-                                                  const Size.fromWidth(
-                                                      200)),
-                                              backgroundColor:
-                                              MaterialStateProperty.all(
-                                                  Colors.white)),
-                                          child: const Text(
-                                            "Back",
-                                            style: TextStyle(
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.w500),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
+                                  return const CustomAlertDialog(
+                                    title: "Hold your horses!",
+                                    text: "We are actively working on adding more subjects."
                                   );
                                 });
                           },

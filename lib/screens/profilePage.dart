@@ -1,10 +1,5 @@
-import 'package:aire/components/common%20ui%20elements/blackButton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-import '../data/constants.dart';
-import '../models/app_state_manager.dart';
 
 class ProfilePage extends StatelessWidget {
   final String name;
