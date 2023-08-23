@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../components/common ui elements/dialog.dart';
 
 class PremiumSubscriptions extends StatelessWidget {
   const PremiumSubscriptions({Key? key}) : super(key: key);
@@ -108,7 +109,16 @@ class PremiumSubscriptions extends StatelessWidget {
                       height: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const CustomAlertDialog(
+                                  title: "Subscribed!",
+                                  text: "Thank you for showing interest. Feature coming soon."
+                              );
+                            });
+                      },
                       child: Material(
                         borderRadius: BorderRadius.circular(15),
                         elevation: 5,
@@ -197,7 +207,16 @@ class PremiumSubscriptions extends StatelessWidget {
                       height: 10,
                     ),
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return const CustomAlertDialog(
+                                  title: "Subscribed!",
+                                  text: "Thank you for showing interest. Feature coming soon."
+                              );
+                            });
+                      },
                       child: Material(
                         borderRadius: BorderRadius.circular(15),
                         elevation: 5,

@@ -51,7 +51,14 @@ class AppStateManager extends ChangeNotifier {
     notifyListeners();
   }
 
-  void logout() {
+  Future<void> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('name');
+    await prefs.remove('age');
+    await prefs.remove('chats');
+    await prefs.remove('examSeries');
+    await prefs.remove('referralID');
+    await prefs.remove('referrals');
     _loggedIn = false;
     notifyListeners();
   }

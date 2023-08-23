@@ -26,81 +26,100 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: MediaQuery.of(context).size.width * 0.3,
-              ),
-              const Image(image: AssetImage('assets/onboardingLady.png')),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  "Let's revolutionize education together!",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      color: Constants.dark,
-                      fontSize: 30,
-                      fontWeight: FontWeight.w900),
-                ),
-              ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height * 0.15,
-              ),
-              Row(
+        color: const Color(0xfff2f3f7),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              height: MediaQuery.of(context).size.height * 0.8,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    minWidth: MediaQuery.of(context).size.width*0.45,
-                    height: 56,
-                    color: Constants.dark,
-                    child: const Center(
-                        child: Text(
-                      'Login',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 15,
-                          fontWeight: FontWeight.w700),
-                    )),
+                  Image.asset(
+                    "assets/education.png",
+                    height: 300,
                   ),
-                  SizedBox(width: MediaQuery.of(context).size.width*0.03,),
-                  MaterialButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const RegistrationPage()),
-                      );
-                    },
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8)),
-                    minWidth: MediaQuery.of(context).size.width*0.45,
-                    height: 56,
-                    color: Constants.dark,
-                    child: const Center(
-                        child: Text(
-                          'Register',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700),
-                        )),
-                  )
+                  const SizedBox(height: 20,),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      "Formal education for everyone!",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Constants.dark,
+                        fontSize: 30,
+                        fontWeight: FontWeight.w900,
+                      ),
+                    ),
+                  ),
                 ],
-              )
-            ],
-          ),
+              ),
+            ),
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 25),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        minWidth: MediaQuery.of(context).size.width * 0.45,
+                        height: 56,
+                        color: Constants.brown,
+                        child: const Center(
+                          child: Text(
+                            'Login',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: MediaQuery.of(context).size.width * 0.03),
+                      MaterialButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const RegistrationPage()),
+                          );
+                        },
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        minWidth: MediaQuery.of(context).size.width * 0.45,
+                        height: 56,
+                        color: Constants.blue,
+                        child: const Center(
+                          child: Text(
+                            'Register',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ],
         ),
       ),
     );

@@ -11,6 +11,9 @@ class Calender extends StatefulWidget {
 }
 
 class _CalenderState extends State<Calender> {
+  bool _isChecked1 = false;
+  bool _isChecked2 = false;
+
   @override
   Widget build(BuildContext context) {
     return AnnotatedRegion<SystemUiOverlayStyle>(
@@ -22,9 +25,9 @@ class _CalenderState extends State<Calender> {
             children: [
               Material(
                 elevation: 10,
-            borderRadius: const BorderRadius.only(
-                bottomLeft: Radius.circular(20),
-                bottomRight: Radius.circular(20)),
+                borderRadius: const BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20)),
                 child: Container(
                   height: 300,
                   width: MediaQuery.of(context).size.width,
@@ -41,9 +44,11 @@ class _CalenderState extends State<Calender> {
                           Padding(
                             padding: const EdgeInsets.fromLTRB(15, 50, 15, 0),
                             child: GestureDetector(
-                              onTap: () => {Navigator.pop(context)},
-                              child: Image.asset('assets/nextrev.png', height: 30,)
-                            ),
+                                onTap: () => {Navigator.pop(context)},
+                                child: Image.asset(
+                                  'assets/nextrev.png',
+                                  height: 30,
+                                )),
                           ),
                         ],
                       ),
@@ -60,28 +65,94 @@ class _CalenderState extends State<Calender> {
                               style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 35,
-                                  fontWeight: FontWeight.w900
-                              ),
+                                  fontWeight: FontWeight.w900),
                             ),
                           ),
                         ],
                       ),
-                      const SizedBox(height: 40,),
+                      const SizedBox(
+                        height: 40,
+                      ),
                       const WeekDisplay()
                     ],
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height*0.5,
-                child: const Center(
-                  child:Padding(
-                    padding: EdgeInsets.all(8.0),
-                    child: Text('Subscribe to create a personalized schedule!',textAlign: TextAlign.center, style: TextStyle(color: Colors.black, fontSize: 20, fontWeight: FontWeight.w700),),
-                  ),
+              const SizedBox(
+                height: 40,
+              ),
+              const Flexible(
+                  child: Text(
+                "Tasks for today(Still in development)",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.w600),
+              )),
+              const SizedBox(
+                height: 20,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red, width: 3)),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: _isChecked1,
+                      activeColor: Colors.red,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked1 = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'Unit 1.1 video',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.9,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Colors.red, width: 3)),
+                child: Row(
+                  children: [
+                    Checkbox(
+                      value: _isChecked2,
+                      activeColor: Colors.red,
+                      onChanged: (bool? value) {
+                        setState(() {
+                          _isChecked2 = value!;
+                        });
+                      },
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    const Text(
+                      'Revise notes',
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.red),
+                    ),
+                  ],
                 ),
               )
-
             ],
           )),
     );

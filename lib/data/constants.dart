@@ -1,12 +1,12 @@
 import 'dart:math';
 import 'dart:ui';
-
-import 'package:preload_page_view/preload_page_view.dart';
 import 'package:youtube_explode_dart/youtube_explode_dart.dart';
 
 class Constants{
   static Color dark = const Color(0xff07122a);
   static Color grey = const Color(0xffefefef);
+  static Color brown = const Color(0xfff8dac4);
+  static Color blue = const Color(0xffcbe1f1);
   static List<String> subjects = ['Mathematics', 'Computer', 'Chemistry', 'Biology', 'English', 'Business', 'Accounts', 'Economics'];
   static List<String> physicsChapters = ['Physical quantities and units', 'Kinematics', 'Dynamics', 'Forces, density and pressure', 'Work, energy and power', 'Deformation of solids', 'Waves', 'Superposition', 'Electricity', 'D.C circuits', 'Particle Physics'];
   static List urls = [];
@@ -23,6 +23,7 @@ class Constants{
   static String email = '';
   static String referrerEmail = '';
   static String examDate = '';
+  static String text = "Hey, download Aire app now. Here is my referral code: $referralId";
 
   static int dayCalculator(DateTime date, int weekday) {
     if(date.weekday > weekday){

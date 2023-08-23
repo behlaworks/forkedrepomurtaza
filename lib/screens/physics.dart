@@ -1,4 +1,11 @@
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
+import 'package:path/path.dart';
+import 'package:http/http.dart' as http;
+import 'package:path_provider/path_provider.dart';
+import 'dart:io'; // Import 'File' class
+import 'package:flutter/foundation.dart'; // Import 'kDebugMode'
 import 'package:aire/screens/campaignMCQ.dart';
+import 'package:aire/screens/pdfScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:aire/models/cloud_firestore.dart';
 import '../components/chapterBox.dart';
@@ -37,6 +44,7 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
       // ProfilePage(name: name, age: age, refID: referralID, intake: intake)
     ];
     return Scaffold(
+        backgroundColor: const Color(0xfff2f3f7),
         body: processing
             ? Center(
                 child: CircularProgressIndicator(
@@ -146,7 +154,7 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     setState(() {
                                       _selectedIndex = 0;
                                     });
@@ -155,7 +163,11 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                     height: 40,
                                     width: 70,
                                     decoration: BoxDecoration(
-                                      border: Border.all(color: _selectedIndex == 0? Colors.red :Colors.transparent , width: 3),
+                                        border: Border.all(
+                                            color: _selectedIndex == 0
+                                                ? Colors.red
+                                                : Colors.transparent,
+                                            width: 3),
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white),
                                     child: const Center(
@@ -167,7 +179,7 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     setState(() {
                                       _selectedIndex = 1;
                                     });
@@ -176,7 +188,11 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                     height: 40,
                                     width: 70,
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: _selectedIndex == 1? Colors.red :Colors.transparent , width: 3),
+                                        border: Border.all(
+                                            color: _selectedIndex == 1
+                                                ? Colors.red
+                                                : Colors.transparent,
+                                            width: 3),
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white),
                                     child: const Center(
@@ -188,7 +204,7 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: (){
+                                  onTap: () {
                                     setState(() {
                                       _selectedIndex = 2;
                                     });
@@ -197,7 +213,11 @@ class _PhysicsContentPageState extends State<PhysicsContentPage> {
                                     height: 40,
                                     width: 70,
                                     decoration: BoxDecoration(
-                                        border: Border.all(color: _selectedIndex == 2? Colors.red :Colors.transparent , width: 3),
+                                        border: Border.all(
+                                            color: _selectedIndex == 2
+                                                ? Colors.red
+                                                : Colors.transparent,
+                                            width: 3),
                                         borderRadius: BorderRadius.circular(10),
                                         color: Colors.white),
                                     child: const Center(
@@ -292,8 +312,21 @@ class Practice extends StatelessWidget {
   }
 }
 
-class PastPapers extends StatelessWidget {
+class PastPapers extends StatefulWidget {
   const PastPapers({Key? key}) : super(key: key);
+
+  @override
+  State<PastPapers> createState() => _PastPapersState();
+}
+
+class _PastPapersState extends State<PastPapers> {
+  int selected = 1;
+  bool anyButtonLoading = false;
+  void updateAnyButtonLoading(bool isLoading) {
+    setState(() {
+      anyButtonLoading = isLoading;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -302,30 +335,221 @@ class PastPapers extends StatelessWidget {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Container(
-              height: 50,
-              width: 100,
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: Colors.red, width: 2)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selected = 1;
+                });
+              },
+              child: Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.45,
+                decoration: BoxDecoration(
+                    color: selected == 1 ? Colors.white : Colors.transparent,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12))),
+                child: const Center(
+                  child: Text("Topical papers"),
+                ),
               ),
-              child: const Center(child: Text("Topical")),
             ),
-            const SizedBox(width: 10,),
-            Container(
-              height: 50,
-              width: 100,
-              decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(12),
-                  border: Border.all(color: Colors.black, width: 2)
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  selected = 2;
+                });
+              },
+              child: Container(
+                height: 60,
+                width: MediaQuery.of(context).size.width * 0.45,
+                decoration: BoxDecoration(
+                    color: selected == 2 ? Colors.white : Colors.transparent,
+                    borderRadius:
+                        const BorderRadius.vertical(top: Radius.circular(12))),
+                child: const Center(
+                  child: Text("Yearly papers"),
+                ),
               ),
-              child: const Center(child: Text("Yearly")),
-            ),
+            )
           ],
+        ),
+        Expanded(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius:
+                      BorderRadius.vertical(bottom: Radius.circular(12))),
+              width: MediaQuery.of(context).size.width * 0.9,
+              child: selected == 1
+                  ? SingleChildScrollView(
+                    child: Column(
+                        children: [
+                          const SizedBox(
+                            height: 30,
+                          ),
+                          PastPaperButton(
+                              updateAnyButtonLoading: updateAnyButtonLoading,
+                            anyButtonLoading: anyButtonLoading,
+                              url:
+                                  "https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/Chapter%201.pdf?alt=media&token=c8dc98e7-3e14-4e37-8411-a72228e89357",
+                              ms: false,
+                            title: "P1 QP chapter 1"
+                          ),
+                          PastPaperButton(
+                              updateAnyButtonLoading: updateAnyButtonLoading,
+                              anyButtonLoading: anyButtonLoading,
+                              url:
+                                  "https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/pastpapers%2Fphysicalquantities-and-measure_qp.pdf?alt=media&token=4fc31e5b-d213-4230-b7df-83f5bb4e020f",
+                              ms: false,
+                          title: "P2 QP chapter 1"),
+                          PastPaperButton(
+                              updateAnyButtonLoading: updateAnyButtonLoading,
+                              anyButtonLoading: anyButtonLoading,
+                              url:
+                              "https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/pastpapers%2Ftpch1ms.pdf?alt=media&token=f6762406-1795-45b7-9343-9b4c1dc54928",
+                              ms: true,
+                              title: "P2 MS chapter 1"
+                          ),
+                        ],
+                      ),
+                  )
+                  : Column(
+                      children: [
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        PastPaperButton(
+                            updateAnyButtonLoading: updateAnyButtonLoading,
+                            anyButtonLoading: anyButtonLoading,
+                            url:
+                            "https://firebasestorage.googleapis.com/v0/b/a-level-pro.appspot.com/o/pastpapers%2F9702_s22_qp_22.pdf?alt=media&token=e2d45d96-4ac7-42d5-906c-94df0bfe40d0",
+                            ms: false,
+                            title: "M/J 22 P2"
+                        ),
+                      ],
+                    ),
+            ),
+          ),
         )
       ],
+    );
+  }
+}
+
+class PastPaperButton extends StatefulWidget {
+  final String url;
+  final bool ms;
+  final String title;
+  final bool anyButtonLoading;
+  final Function(bool) updateAnyButtonLoading;
+
+  const PastPaperButton({Key? key, required this.url, required this.ms, required this.title, required this.anyButtonLoading, required this.updateAnyButtonLoading})
+      : super(key: key);
+
+  @override
+  State<PastPaperButton> createState() => _PastPaperButtonState();
+}
+
+class _PastPaperButtonState extends State<PastPaperButton> {
+  final cacheManager = DefaultCacheManager();
+  bool loading = false;
+
+  Future<File> loadPdfFromNetwork(String url) async {
+    var temp = await cacheManager.getFileFromCache(url);
+    if (temp == null) {
+      final response = await http.get(Uri.parse(url));
+      final bytes = response.bodyBytes;
+      var file = await _storeFile(url, bytes);
+
+      // Store the downloaded file's bytes in the cache
+      await cacheManager.putFile(url, bytes);
+
+      return file;
+    }
+    return temp.file;
+  }
+
+  Future<File> _storeFile(String url, List<int> bytes) async {
+    final filename = basename(url);
+    final dir = await getApplicationDocumentsDirectory();
+    final file = File('${dir.path}/$filename');
+    await file.writeAsBytes(bytes, flush: true);
+    if (kDebugMode) {
+      print('$file');
+    }
+    return file;
+  }
+
+  void openPdf(BuildContext context, File file) => Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (context) => PdfScreen(
+            file: file,
+          ),
+        ),
+      );
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 0, 8, 10),
+      child: Container(
+          clipBehavior: Clip.hardEdge,
+          height: 75,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: !widget.ms
+                  ? const Color(0xffECCFC3)
+                  : const Color(0xffcde0f6)),
+          child: InkWell(
+            onTap:  widget.anyButtonLoading
+                ? null
+                : () async {
+              widget.updateAnyButtonLoading(true);
+              setState(() {
+                loading = true;
+              });
+              final file = await loadPdfFromNetwork(widget.url);
+              setState(() {
+                loading = false;
+              });
+              widget.updateAnyButtonLoading(false);
+              openPdf(context, file);
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                 Row(
+                  children: [
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    Text(
+                      widget.title,
+                      style:
+                          const TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 10, 0),
+                  child: loading
+                      ? const SizedBox(
+                    height: 20,
+                          width: 20,
+                          child: CircularProgressIndicator(
+                          color: Colors.red,
+                          strokeWidth: 4,
+                        ))
+                      : Image.asset(
+                          'assets/next.png',
+                          height: 20,
+                        ),
+                )
+              ],
+            ),
+          )),
     );
   }
 }

@@ -37,6 +37,7 @@ class DatabaseService {
         'referralID': referralId,
         'referrals': 0,
         'chats': 0,
+        'start_date' : DateTime.now(),
         'examSeries': Constants.examDate
       });
       final reference = FirebaseFirestore.instance
@@ -150,8 +151,6 @@ class DatabaseService {
   // topics titles, urls and notes links. Saves them in Constants file for quick access.
   Future<String> listOfTopics(String chapter) async {
     try {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      if (prefs.getStringList('units') == null || prefs.getStringList('titles') == null || prefs.getStringList('urls') == null) {
         CollectionReference subjects =
             FirebaseFirestore.instance.collection('Subjects');
         final snapshot =
@@ -174,18 +173,7 @@ class DatabaseService {
         Constants.urls = links;
         Constants.units = units;
         Constants.titles = titles;
-        await prefs.setStringList('urls', links);
-        await prefs.setStringList('units', units);
-        await prefs.setStringList('titles', titles);
-
-        return 'Success';
-      } else {
-        Constants.urls = prefs.getStringList('urls')!;
-        Constants.units = prefs.getStringList('units')!;
-        Constants.titles = prefs.getStringList('titles')!;
-
-        return 'Success';
-      }
+        return 'success';
     } catch (e) {
       return 'Fail';
     }
